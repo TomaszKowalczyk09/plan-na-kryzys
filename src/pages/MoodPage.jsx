@@ -2,13 +2,6 @@ import { useMemo, useState } from 'react'
 import { EMOTIONS } from '../data/emotions'
 import { useMoodEntries } from '../hooks/useIndexedDB'
 
-const MOOD_PRESETS = [
-  { id: 'calm', label: 'Calm', emotion: 'spokojny', emoji: '😌', color: 'moodCard--green', activeIndex: 5 },
-  { id: 'happy', label: 'Happy', emotion: 'zadowolony', emoji: '😊', color: 'moodCard--yellow', activeIndex: 4 },
-  { id: 'overwhelmed', label: 'Overwhelmed', emotion: 'przytłoczony', emoji: '😵', color: 'moodCard--orange', activeIndex: 3 },
-  { id: 'sad', label: 'Sad', emotion: 'smutny', emoji: '😔', color: 'moodCard--brown', activeIndex: 2 },
-]
-
 export default function MoodPage() {
   const { addEntry, getEntriesFromDays, loading } = useMoodEntries()
   const [selected, setSelected] = useState([])
@@ -35,45 +28,11 @@ export default function MoodPage() {
     }
   }
 
-  const setPreset = (emotion) => {
-    setSelected([emotion])
-  }
-
   return (
     <div className="screen">
       <div className="card">
-        <h1 className="sectionTitle">Mood selector</h1>
-        <p className="sectionSub">Wybierz szybki nastrój lub przejdź do szczegółów poniżej.</p>
-
-        <div className="moodCardGrid mt12">
-          {MOOD_PRESETS.map((preset) => (
-            <div key={preset.id} className={`moodCard ${preset.color}`}>
-              <div className="moodCardTitle">I&apos;m Feeling {preset.label}</div>
-              <div className="moodCardEmote" aria-hidden="true">{preset.emoji}</div>
-              <div className="moodSlider" aria-hidden="true">
-                {Array.from({ length: 6 }).map((_, index) => (
-                  <span
-                    key={index}
-                    className={`moodSliderDot ${index === preset.activeIndex ? 'isActive' : ''}`}
-                  />
-                ))}
-              </div>
-              <button
-                type="button"
-                className="moodPrimaryButton"
-                onClick={() => setPreset(preset.emotion)}
-              >
-                Set Mood
-              </button>
-              <div className="moodCardDivider" />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="card">
-        <h1 className="h1">Szybki wpis</h1>
-        <p className="p">Wybierz 1–3 emocje (albo więcej, jeśli potrzebujesz).</p>
+        <h1 className="sectionTitle">Wybór nastroju</h1>
+        <p className="sectionSub">Wybierz 1–3 emocje (albo więcej, jeśli potrzebujesz).</p>
 
         <div className="row mt12">
           {EMOTIONS.map((e) => (
