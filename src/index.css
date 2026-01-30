@@ -1,0 +1,316 @@
+:root {
+  --bg: #f4f5f7;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --muted: #6b7280;
+
+  /* accent (jak na screenie: teal/niebieski) */
+  --accent: #0b7a78;
+  --accent-2: #086866;
+
+  --danger: #dc2626;
+  --border: rgba(15, 23, 42, 0.08);
+  --shadow: 0 12px 26px rgba(15, 23, 42, 0.10);
+  --shadow-soft: 0 8px 18px rgba(15, 23, 42, 0.08);
+
+  color-scheme: light;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  letter-spacing: 0.1px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(11, 122, 120, 0.28);
+  outline-offset: 2px;
+}
+
+.container {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 16px 18px;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Nagłówek jak w aplikacjach z obrazka: wysoki, w kolorze, zaokrąglona "fala" */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--accent);
+  color: #fff;
+  border-bottom: none;
+  border-bottom-left-radius: 22px;
+  border-bottom-right-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.header::after {
+  content: '';
+  display: block;
+  height: 26px;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120' preserveAspectRatio='none'%3E%3Cpath fill='%23ffffff' d='M0,64 C240,112 480,112 720,64 C960,16 1200,16 1440,64 L1440,120 L0,120 Z'/%3E%3C/svg%3E")
+      center bottom / 100% 100% no-repeat;
+}
+
+.headerInner {
+  padding: 18px 16px 28px;
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* tekst pomocniczy w nagłówku (na kolorowym tle) */
+.headerDescription {
+  max-width: 760px;
+  margin: -18px auto 0;
+  padding: 0 16px 18px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.brand {
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  font-size: 20px;
+}
+
+.brandRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brandLogo {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+  padding: 4px;
+}
+
+.main {
+  flex: 1;
+  padding-bottom: 96px; /* miejsce na dolną nawigację */
+  padding-top: 14px;
+}
+
+.h1 {
+  font-size: 17px;
+  margin: 0;
+  letter-spacing: 0.2px;
+}
+
+.p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 14.5px;
+}
+
+/* sekcyjny opis na białym tle */
+.pOnSurface {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  border-radius: 20px;
+  padding: 14px;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.card:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 520px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* przyciski / chipy */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  padding: 10px 16px;
+  font-weight: 700;
+  background: rgba(15, 23, 42, 0.03);
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 0.08s ease, background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn:hover {
+  background: rgba(15, 23, 42, 0.06);
+  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.08);
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.995);
+}
+
+.btnPrimary {
+  background: rgba(11, 122, 120, 0.12);
+  border-color: rgba(11, 122, 120, 0.22);
+  color: var(--accent-2);
+  box-shadow: 0 6px 14px rgba(11, 122, 120, 0.18);
+}
+
+.btnPrimary:hover {
+  background: rgba(11, 122, 120, 0.16);
+}
+
+.btnDanger {
+  background: rgba(220, 38, 38, 0.10);
+  border-color: rgba(220, 38, 38, 0.20);
+  color: var(--danger);
+  box-shadow: 0 6px 14px rgba(220, 38, 38, 0.18);
+}
+
+.btnDanger:hover {
+  background: rgba(220, 38, 38, 0.14);
+}
+
+.input,
+.textarea {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid rgba(15, 23, 42, 0.10);
+  background: var(--surface);
+  color: var(--text);
+  padding: 10px 12px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: rgba(11, 122, 120, 0.55);
+  box-shadow: 0 0 0 3px rgba(11, 122, 120, 0.12);
+  outline: none;
+}
+
+input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+}
+
+.label {
+  display: block;
+  margin: 10px 0 6px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* dolna nawigacja w stylu pill bar */
+.nav {
+  position: fixed;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  border-top: none;
+  background: transparent;
+}
+
+.navInner {
+  max-width: 520px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  padding: 8px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+}
+
+.navLink {
+  padding: 10px 8px;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  transition: color 0.15s ease, background 0.15s ease, transform 0.08s ease;
+}
+
+.navLink:active {
+  transform: translateY(1px);
+}
+
+.navLinkActive {
+  color: #fff;
+  background: var(--accent);
+}
+
+.badgeDanger {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 800;
+  color: #fff;
+  background: rgba(220, 38, 38, 0.95);
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  padding: 6px 10px;
+  border-radius: 999px;
+}
