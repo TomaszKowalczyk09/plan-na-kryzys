@@ -655,3 +655,70 @@ body[data-theme='dark'] {
 .faqBody {
   padding: 0 16px 16px;
 }
+
+.moodReport {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+.moodMetric {
+  background: #fffaf5;
+  border: 1px solid rgba(31, 26, 23, 0.06);
+  border-radius: var(--radius-lg);
+  padding: 12px;
+}
+
+.moodMetricValue {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.moodMetricLabel {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.moodLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  align-items: center;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.moodLegendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.moodTimeline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
+  gap: 6px;
+  padding: 8px 0;
+}
+
+.moodDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  display: inline-block;
+  background: #ddd;
+  border: 1px solid rgba(31, 26, 23, 0.12);
+}
+
+.moodDotPositive {
+  background: var(--mood-green);
+}
+
+.moodDotNeutral {
+  background: var(--mood-yellow);
+}
+
+.moodDotNegative {
+  background: var(--mood-orange);
+}
