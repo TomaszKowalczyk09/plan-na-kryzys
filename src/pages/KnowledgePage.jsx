@@ -1,16 +1,16 @@
-import { useState } from 'react'
-import { KNOWLEDGE_ARTICLES } from '../data/knowledge'
+import { useState } from 'react';
+import { KNOWLEDGE_ARTICLES } from '../data/knowledge';
 
 export default function KnowledgePage() {
-  const [activeId, setActiveId] = useState(KNOWLEDGE_ARTICLES[0]?.id)
-  const active = KNOWLEDGE_ARTICLES.find((a) => a.id === activeId)
+  const [activeId, setActiveId] = useState(KNOWLEDGE_ARTICLES[0]?.id);
+  const active = KNOWLEDGE_ARTICLES.find((a) => a.id === activeId);
 
   return (
-    <div style={{ display: 'grid', gap: 12 }}>
+    <div className="screen">
       <div className="card">
         <h1 className="h1">Artykuły</h1>
         <p className="p">Krótkie treści. Jeśli czujesz, że robi Ci się gorzej — przejdź do „Kryzys”.</p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 12 }}>
+        <div className="row mt12">
           {KNOWLEDGE_ARTICLES.map((a) => (
             <button
               key={a.id}
@@ -28,13 +28,13 @@ export default function KnowledgePage() {
         <div className="card">
           <h1 className="h1">{active.title}</h1>
           {active.warning ? (
-            <p className="p" style={{ borderLeft: '3px solid rgba(239, 68, 68, 0.6)', paddingLeft: 10 }}>
-              {active.warning}
-            </p>
+            <p className="p warningNote">{active.warning}</p>
           ) : null}
-          <div style={{ display: 'grid', gap: 10, marginTop: 12 }}>
+          <div className="stackSm mt12">
             {active.body.map((p) => (
-              <div key={p} style={{ color: 'var(--text)' }}>{p}</div>
+              <div key={p} className="textBody">
+                {p}
+              </div>
             ))}
           </div>
         </div>

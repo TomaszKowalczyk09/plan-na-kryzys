@@ -1,6 +1,6 @@
 export default function TermsPage() {
   return (
-    <div style={{ display: 'grid', gap: 12 }}>
+    <div className="screen">
       <div className="card">
         <h1 className="h1">Regulamin</h1>
         <p className="p">Ostatnia aktualizacja: 30 stycznia 2026</p>
@@ -19,14 +19,14 @@ export default function TermsPage() {
 
       <div className="card">
         <h1 className="h1">2. Charakter usługi</h1>
-        <div style={{ display: 'grid', gap: 8, marginTop: 10 }}>
-          <div className="card" style={{ padding: 12 }}>
+        <div className="stackSm mt10">
+          <div className="cardInset">
             Aplikacja nie jest usługą ratunkową. Nie dzwoni automatycznie na 112 i nie wzywa służb.
           </div>
-          <div className="card" style={{ padding: 12 }}>
+          <div className="cardInset">
             Aplikacja nie stanowi diagnozy ani terapii i nie zastępuje kontaktu ze specjalistą.
           </div>
-          <div className="card" style={{ padding: 12 }}>
+          <div className="cardInset">
             W bezpośrednim zagrożeniu życia lub zdrowia należy niezwłocznie zadzwonić na 112.
           </div>
         </div>

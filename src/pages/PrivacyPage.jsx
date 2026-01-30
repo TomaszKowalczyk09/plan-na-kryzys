@@ -1,6 +1,6 @@
 export default function PrivacyPage() {
   return (
-    <div style={{ display: 'grid', gap: 12 }}>
+    <div className="screen">
       <div className="card">
         <h1 className="h1">Polityka prywatności</h1>
         <p className="p">Ostatnia aktualizacja: 23 stycznia 2026</p>
@@ -19,14 +19,14 @@ export default function PrivacyPage() {
         <p className="p">
           Aplikacja może zapisywać lokalnie na Twoim urządzeniu dane, które sam/a wpiszesz, np.:
         </p>
-        <div style={{ display: 'grid', gap: 8, marginTop: 10 }}>
-          <div className="card" style={{ padding: 12 }}>
+        <div className="stackSm mt10">
+          <div className="cardInset">
             wpisy nastroju (data/godzina, wybrane emocje, opcjonalna notatka)
           </div>
-          <div className="card" style={{ padding: 12 }}>
+          <div className="cardInset">
             plan bezpieczeństwa (treści pól formularza)
           </div>
-          <div className="card" style={{ padding: 12 }}>
+          <div className="cardInset">
             ustawienia (np. potwierdzenie zapoznania się z informacjami prawnymi)
           </div>
         </div>

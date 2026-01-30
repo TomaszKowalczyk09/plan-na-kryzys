@@ -2,6 +2,13 @@ import { useMemo, useState } from 'react'
 import { EMOTIONS } from '../data/emotions'
 import { useMoodEntries } from '../hooks/useIndexedDB'
 
+const MOOD_PRESETS = [
+  { id: 'calm', label: 'Calm', emotion: 'spokojny', emoji: '😌', color: 'moodCard--green', activeIndex: 5 },
+  { id: 'happy', label: 'Happy', emotion: 'zadowolony', emoji: '😊', color: 'moodCard--yellow', activeIndex: 4 },
+  { id: 'overwhelmed', label: 'Overwhelmed', emotion: 'przytłoczony', emoji: '😵', color: 'moodCard--orange', activeIndex: 3 },
+  { id: 'sad', label: 'Sad', emotion: 'smutny', emoji: '😔', color: 'moodCard--brown', activeIndex: 2 },
+]
+
 export default function MoodPage() {
   const { addEntry, getEntriesFromDays, loading } = useMoodEntries()
   const [selected, setSelected] = useState([])
@@ -28,19 +35,54 @@ export default function MoodPage() {
     }
   }
 
+  const setPreset = (emotion) => {
+    setSelected([emotion])
+  }
+
   return (
-    <div style={{ display: 'grid', gap: 12 }}>
+    <div className="screen">
+      <div className="card">
+        <h1 className="sectionTitle">Mood selector</h1>
+        <p className="sectionSub">Wybierz szybki nastrój lub przejdź do szczegółów poniżej.</p>
+
+        <div className="moodCardGrid mt12">
+          {MOOD_PRESETS.map((preset) => (
+            <div key={preset.id} className={`moodCard ${preset.color}`}>
+              <div className="moodCardTitle">I&apos;m Feeling {preset.label}</div>
+              <div className="moodCardEmote" aria-hidden="true">{preset.emoji}</div>
+              <div className="moodSlider" aria-hidden="true">
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <span
+                    key={index}
+                    className={`moodSliderDot ${index === preset.activeIndex ? 'isActive' : ''}`}
+                  />
+                ))}
+              </div>
+              <button
+                type="button"
+                className="moodPrimaryButton"
+                onClick={() => setPreset(preset.emotion)}
+              >
+                Set Mood
+              </button>
+              <div className="moodCardDivider" />
+            </div>
+          ))}
+        </div>
+      </div>
+
       <div className="card">
         <h1 className="h1">Szybki wpis</h1>
         <p className="p">Wybierz 1–3 emocje (albo więcej, jeśli potrzebujesz).</p>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 12 }}>
+        <div className="row mt12">
           {EMOTIONS.map((e) => (
             <button
               key={e}
               type="button"
               onClick={() => toggle(e)}
-              className={selected.includes(e) ? 'btn btnPrimary' : 'btn'}
+              className={selected.includes(e) ? 'btn btnPrimary btnConfirm isActive' : 'btn'}
+              aria-pressed={selected.includes(e)}
             >
               {e}
             </button>
@@ -50,13 +92,13 @@ export default function MoodPage() {
         <label className="label" htmlFor="notes">Notatka (opcjonalnie)</label>
         <textarea
           id="notes"
-          className="textarea"
+          className="textarea expressionTextarea"
           value={notes}
           onChange={(ev) => setNotes(ev.target.value)}
           placeholder="Co się wydarzyło? Co było trudne / co pomogło?"
         />
 
-        <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
+        <div className="row mt12">
           <button
             type="button"
             className="btn btnPrimary"
@@ -80,16 +122,16 @@ export default function MoodPage() {
         ) : recent.length === 0 ? (
           <p className="p">Brak wpisów. Spróbuj dodać pierwszy.</p>
         ) : (
-          <div style={{ display: 'grid', gap: 10, marginTop: 12 }}>
+          <div className="stackSm mt12">
             {recent.map((it) => (
-              <div key={it.id ?? it.timestamp} className="card" style={{ padding: 12 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10 }}>
-                  <div style={{ fontWeight: 700 }}>{new Date(it.date).toLocaleString()}</div>
-                  <div style={{ color: 'var(--muted)', fontSize: 13 }}>
+              <div key={it.id ?? it.timestamp} className="cardInset">
+                <div className="rowBetween">
+                  <div className="textStrong">{new Date(it.date).toLocaleString()}</div>
+                  <div className="textMuted textSm">
                     {Array.isArray(it.emotions) ? it.emotions.join(', ') : ''}
                   </div>
                 </div>
-                {it.notes ? <div style={{ marginTop: 6, color: 'var(--muted)' }}>{it.notes}</div> : null}
+                {it.notes ? <div className="textMuted mt6">{it.notes}</div> : null}
               </div>
             ))}
           </div>

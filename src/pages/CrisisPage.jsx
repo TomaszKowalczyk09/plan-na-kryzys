@@ -46,17 +46,17 @@ export default function CrisisPage() {
   }
 
   return (
-    <div style={{ display: 'grid', gap: 12 }}>
-      <div className="card" style={{ borderColor: 'rgba(239, 68, 68, 0.35)' }}>
+    <div className="screen">
+      <div className="card cardSoft">
         <div className="badgeDanger">Wysokie ryzyko</div>
-        <h1 className="h1" style={{ marginTop: 10 }}>
+        <h1 className="h1 mt10">
           Jeśli masz myśli o zrobieniu sobie krzywdy — spróbuj nie być z tym sam/a.
         </h1>
         <p className="p">To poważna sytuacja. Pomoc jest możliwa teraz.</p>
 
-        <div style={{ display: 'grid', gap: 8, marginTop: 12 }}>
+        <div className="stackSm mt12">
           {STEPS_NOW.map((s) => (
-            <div key={s} className="card" style={{ padding: 12 }}>
+            <div key={s} className="cardInset">
               {s}
             </div>
           ))}
@@ -67,14 +67,14 @@ export default function CrisisPage() {
         <h1 className="h1">Infolinie</h1>
         <p className="p">Aplikacja nie dzwoni sama — Ty wybierasz.</p>
 
-        <div style={{ display: 'grid', gap: 10, marginTop: 12 }}>
+        <div className="stackSm mt12">
           {HOTLINES.map((h) => (
-            <a key={h.id} className="card" style={{ padding: 12 }} href={`tel:${h.phone}`}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10 }}>
-                <div style={{ fontWeight: 700 }}>{h.name}</div>
-                <div style={{ color: 'var(--text)', fontWeight: 800 }}>{h.phone}</div>
+            <a key={h.id} className="cardInset cardMuted" href={`tel:${h.phone}`}>
+              <div className="rowBetween">
+                <div className="textStrong">{h.name}</div>
+                <div className="textEmphasis">{h.phone}</div>
               </div>
-              <div className="p">{h.note}</div>
+              <div className="p mt6">{h.note}</div>
             </a>
           ))}
         </div>
@@ -124,7 +124,7 @@ export default function CrisisPage() {
               placeholder="Np. odsunąć poza zasięg, poprosić kogoś o schowanie…"
             />
 
-            <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
+            <div className="row mt12">
               <button type="button" className="btn btnPrimary" disabled={saving} onClick={onSave}>
                 {saving ? 'Zapisuję…' : 'Zapisz plan'}
               </button>
@@ -133,7 +133,7 @@ export default function CrisisPage() {
         )}
       </div>
 
-      <div className="card">
+      <div className="card cardMuted">
         <p className="p">
           Jeśli jesteś w bezpośrednim zagrożeniu życia, wybierz 112.
         </p>

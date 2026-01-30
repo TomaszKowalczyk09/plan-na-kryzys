@@ -18,18 +18,18 @@ export default function AboutPage() {
   }
 
   return (
-    <div style={{ display: 'grid', gap: 12 }}>
+    <div className="screen">
       <div className="card">
         <h1 className="h1">O aplikacji</h1>
         <p className="p">
-          Kompakt Wsparcia to aplikacja PWA wspierająca w trudnych emocjach.
+          Plan na kryzys to aplikacja PWA wspierająca w trudnych emocjach.
           Nie zastępuje profesjonalnej pomocy.
         </p>
       </div>
 
       <div className="card">
         <h1 className="h1">Dokumenty</h1>
-        <div style={{ display: 'flex', gap: 8, marginTop: 12, flexWrap: 'wrap' }}>
+        <div className="row mt12">
           <Link className="btn" to="/terms">Regulamin</Link>
           <Link className="btn" to="/privacy">Polityka prywatności</Link>
         </div>
@@ -37,14 +37,14 @@ export default function AboutPage() {
 
       <div className="card">
         <h1 className="h1">Ważne zastrzeżenia</h1>
-        <div style={{ display: 'grid', gap: 8, marginTop: 10 }}>
-          <div className="card" style={{ padding: 12 }}>
+        <div className="stackSm mt10">
+          <div className="cardInset">
             To nie jest usługa ratunkowa. Aplikacja nie dzwoni automatycznie na 112 i nie wzywa służb.
           </div>
-          <div className="card" style={{ padding: 12 }}>
+          <div className="cardInset">
             Jeśli jesteś w bezpośrednim zagrożeniu życia lub zdrowia, zadzwoń na 112.
           </div>
-          <div className="card" style={{ padding: 12 }}>
+          <div className="cardInset">
             Treści są ogólne i informacyjne. Jeśli czujesz, że sytuacja Cię przerasta, poproś o pomoc zaufaną osobę dorosłą lub specjalistę.
           </div>
         </div>
@@ -64,11 +64,13 @@ export default function AboutPage() {
       <div className="card">
         <h1 className="h1">Usuń moje dane</h1>
         <p className="p">Usuwa lokalnie: wpisy nastroju, plan bezpieczeństwa i ustawienia tej aplikacji w tej przeglądarce.</p>
-        <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
+        <div className="row mt12">
           <button type="button" className="btn btnDanger" onClick={onClear} disabled={clearing}>
             {clearing ? 'Usuwam…' : 'Usuń dane'}
           </button>
-          {done ? <span style={{ alignSelf: 'center', color: 'var(--muted)', fontWeight: 700 }}>Gotowe</span> : null}
+          {done ? (
+            <span className="textMuted textSm alignCenter">Gotowe</span>
+          ) : null}
         </div>
       </div>
 
