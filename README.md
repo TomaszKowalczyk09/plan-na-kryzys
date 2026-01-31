@@ -49,7 +49,8 @@ Aplikacja nie jest dostępna w Google Play ani App Store, aby zapewnić Ci pełn
 
 ## ⚠️ Ważna Informacja
 
-Aplikacja ma charakter wspomagający i edukacyjny. **Nie zastępuje ona profesjonalnej psychoterapii ani pomocy lekarskiej.** W sytuacji bezpośredniego zagrożenia życia lub zdrowia, zawsze kontaktuj się z numerem alarmowym **112**.
+Aplikacja ma charakter wspomagający i edukacyjny. 
+**Nie zastępuje ona profesjonalnej psychoterapii ani pomocy lekarskiej.** W sytuacji bezpośredniego zagrożenia życia lub zdrowia, zawsze kontaktuj się z numerem alarmowym **112**.
 
 ---
 

@@ -8,6 +8,27 @@ const EMOTION_GROUPS = {
   negative: new Set(['przytłoczony', 'smutny', 'zły', 'samotny']),
 }
 
+const EMOTION_SECTIONS = [
+  {
+    key: 'positive',
+    label: 'Pozytywne',
+    description: 'Lekkość, spokój, wdzięczność',
+    items: EMOTIONS.filter((e) => EMOTION_GROUPS.positive.has(e)),
+  },
+  {
+    key: 'neutral',
+    label: 'Neutralne',
+    description: 'Stany przejściowe i napięcie',
+    items: EMOTIONS.filter((e) => EMOTION_GROUPS.neutral.has(e)),
+  },
+  {
+    key: 'negative',
+    label: 'Trudne',
+    description: 'Ból, przeciążenie, smutek',
+    items: EMOTIONS.filter((e) => EMOTION_GROUPS.negative.has(e)),
+  },
+]
+
 const getCategoryForEntry = (entry) => {
   const emotions = Array.isArray(entry.emotions) ? entry.emotions : []
   if (emotions.length === 0) return 'neutral'
@@ -61,6 +82,17 @@ export default function MoodPage() {
     return counts
   }, [recent])
 
+  const distribution = useMemo(() => {
+    const total = categoryCounts.positive + categoryCounts.neutral + categoryCounts.negative
+    const safeTotal = total || 1
+    return {
+      total,
+      positive: Math.round((categoryCounts.positive / safeTotal) * 100),
+      neutral: Math.round((categoryCounts.neutral / safeTotal) * 100),
+      negative: Math.round((categoryCounts.negative / safeTotal) * 100),
+    }
+  }, [categoryCounts])
+
   const toggle = (e) => {
     setSelected((prev) =>
       prev.includes(e) ? prev.filter((x) => x !== e) : [...prev, e],
@@ -82,21 +114,59 @@ export default function MoodPage() {
   return (
     <div className="screen">
       <div className="card">
-        <h1 className="sectionTitle">Wybór nastroju</h1>
-        <p className="sectionSub">Wybierz 1–3 emocje (albo więcej, jeśli potrzebujesz).</p>
+        <div className="rowBetween">
+          <div>
+            <h1 className="sectionTitle">Jak się czujesz teraz?</h1>
+            <p className="sectionSub">Wybierz 1–3 emocje (albo więcej, jeśli potrzebujesz).</p>
+          </div>
+          <div className="selectionBadge">Wybrane: {selected.length}</div>
+        </div>
 
-        <div className="row mt12">
-          {EMOTIONS.map((e) => (
-            <button
-              key={e}
-              type="button"
-              onClick={() => toggle(e)}
-              className={selected.includes(e) ? 'btn btnPrimary btnConfirm isActive' : 'btn'}
-              aria-pressed={selected.includes(e)}
-            >
-              {e}
-            </button>
-          ))}
+        <div className="emotionGroupGrid mt12">
+          {EMOTION_SECTIONS.map((section) => {
+            const selectedInSection = selected.filter((e) => section.items.includes(e)).length
+            return (
+              <div
+                key={section.key}
+                className={`emotionGroupCard emotionGroupCard--${section.key}`}
+              >
+                <div className="emotionGroupHeader">
+                  <div>
+                    <div className="emotionGroupTitle">{section.label}</div>
+                    <div className="emotionGroupSub">{section.description}</div>
+                  </div>
+                  <div className="emotionGroupTag">{selectedInSection}</div>
+                </div>
+
+                <div className="emotionButtons">
+                  {section.items.map((e) => (
+                    <button
+                      key={e}
+                      type="button"
+                      onClick={() => toggle(e)}
+                      className={selected.includes(e) ? 'emotionBtn isActive' : 'emotionBtn'}
+                      aria-pressed={selected.includes(e)}
+                    >
+                      {e}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+
+        <div className="selectionTray mt12">
+          <div className="textMuted textSm">Wybrane emocje</div>
+          <div className="row mt10">
+            {selected.length === 0 ? (
+              <span className="subtleText">Nic nie wybrano.</span>
+            ) : (
+              selected.map((e) => (
+                <span key={e} className="pill pillActive">{e}</span>
+              ))
+            )}
+          </div>
         </div>
 
         <label className="label" htmlFor="notes">Notatka (opcjonalnie)</label>
@@ -137,10 +207,29 @@ export default function MoodPage() {
             <div className="moodMetricLabel">Najczęstsza emocja</div>
           </div>
           <div className="moodMetric">
-            <div className="moodMetricValue">{recentSorted.at(-1)?.date ? new Date(recentSorted.at(-1).date).toLocaleDateString() : '—'}</div>
+            <div className="moodMetricValue">
+              {recentSorted.at(-1)?.date ? new Date(recentSorted.at(-1).date).toLocaleDateString() : '—'}
+            </div>
             <div className="moodMetricLabel">Ostatni wpis</div>
           </div>
         </div>
+
+        {distribution.total === 0 ? (
+          <p className="p mt12">Dodaj pierwszy wpis, aby zobaczyć rozkład nastroju.</p>
+        ) : (
+          <div className="moodDistribution mt12">
+            <div className="moodBar" aria-label="Rozkład nastroju z ostatnich 14 dni">
+              <span className="moodBarSegment moodBarPositive" style={{ width: `${distribution.positive}%` }} />
+              <span className="moodBarSegment moodBarNeutral" style={{ width: `${distribution.neutral}%` }} />
+              <span className="moodBarSegment moodBarNegative" style={{ width: `${distribution.negative}%` }} />
+            </div>
+            <div className="moodBarLegend">
+              <span className="moodLegendItem"><span className="moodDot moodDotPositive" />Pozytywne {distribution.positive}%</span>
+              <span className="moodLegendItem"><span className="moodDot moodDotNeutral" />Neutralne {distribution.neutral}%</span>
+              <span className="moodLegendItem"><span className="moodDot moodDotNegative" />Trudne {distribution.negative}%</span>
+            </div>
+          </div>
+        )}
 
         <div className="moodLegend mt12">
           <div className="moodLegendItem"><span className="moodDot moodDotPositive" />Pozytywne ({categoryCounts.positive})</div>
