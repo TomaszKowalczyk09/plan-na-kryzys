@@ -22,9 +22,10 @@ export default function AboutPage() {
       <div className="card">
         <h1 className="h1">O aplikacji</h1>
         <p className="p">
-          Plan na kryzys to aplikacja PWA wspierająca w trudnych emocjach.
-          Nie zastępuje profesjonalnej pomocy.
+          Plan na kryzys to aplikacja PWA wspierająca w trudnych emocjach. Nie zastępuje profesjonalnej pomocy.
         </p>
+        <p className="p">Inicjatywa: Młodzieżowa Rada Miejska w Gryfinie.</p>
+        <p className="p">Administrator i osoba odpowiedzialna: Tomasz Kowalczyk (tomasz.kowalczyk@gminagryfino.pl).</p>
       </div>
 
       <div className="card">
@@ -72,6 +73,13 @@ export default function AboutPage() {
             <span className="textMuted textSm alignCenter">Gotowe</span>
           ) : null}
         </div>
+      </div>
+
+      <div className="card">
+        <h1 className="h1">Zgłoszenia</h1>
+        <p className="p">
+          Błędy, sugestie oraz nieaktualne numery telefonów możesz zgłaszać na: tomasz.kowalczyk@gminagryfino.pl.
+        </p>
       </div>
 
       <div className="card">

@@ -1,3 +1,8 @@
+export const HOTLINES_META = {
+  lastUpdated: '2026-02-04',
+  note: 'Numery i godziny działania mogą się zmieniać. W nagłym zagrożeniu życia: 112.',
+}
+
 export const HOTLINES = [
   {
     id: '116111',

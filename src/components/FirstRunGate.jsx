@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { useSettings } from '../hooks/useIndexedDB'
 
 export default function FirstRunGate({ children }) {
-  const { value: accepted, set: setAccepted, loading } = useSettings('legal_ack_v1', false)
+  const { value: accepted, set: setAccepted, loading } = useSettings('legal_ack_v1_2026-02-04', false)
   const [checked, setChecked] = useState(false)
   const [saving, setSaving] = useState(false)
 
@@ -79,9 +79,8 @@ export default function FirstRunGate({ children }) {
           </div>
 
           <div className="card">
-            <p className="p">
-              Kontynuując, potwierdzasz zapoznanie się z dokumentami:
-            </p>
+            <p className="p">Administrator: Tomasz Kowalczyk (tomasz.kowalczyk@gminagryfino.pl)</p>
+            <p className="p">Kontynuując, potwierdzasz zapoznanie się z dokumentami:</p>
             <div style={{ display: 'flex', gap: 8, marginTop: 10, flexWrap: 'wrap' }}>
               <Link className="btn" to="/terms">Regulamin</Link>
               <Link className="btn" to="/privacy">Polityka prywatności</Link>
