@@ -1,0 +1,7 @@
+{
+  "esversion": 11,
+  "asi": true,
+  "module": true,
+  "strict": "implied",
+  "jsx": true
+}
