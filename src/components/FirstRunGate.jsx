@@ -1,3 +1,4 @@
+/* jshint esversion: 11, asi: true, module: true, jsx: true */
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useSettings } from '../hooks/useIndexedDB'

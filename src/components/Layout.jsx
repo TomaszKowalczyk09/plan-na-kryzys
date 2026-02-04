@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
 import { NavLink, Outlet, useLocation, Link } from 'react-router-dom'
 import clsx from 'clsx'
+import { useCheckInNotifications } from '../hooks/useCheckInNotifications'
 
 export default function Layout() {
+  useCheckInNotifications()
   const { pathname } = useLocation()
 
   const systemPrefersDark = useMemo(() => {

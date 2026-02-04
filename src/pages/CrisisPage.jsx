@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
-import { HOTLINES } from '../data/hotlines'
-import { useSafetyPlan } from '../hooks/useIndexedDB'
+/* jshint esversion: 11, asi: true, module: true, jsx: true */
+import { useEffect, useState } from 'react';
+import { HOTLINES } from '../data/hotlines';
+import { useSafetyPlan } from '../hooks/useIndexedDB';
 
 const STEPS_NOW = [
   'Jeśli możesz, zostań w bezpiecznym miejscu.',
@@ -10,15 +11,15 @@ const STEPS_NOW = [
 ]
 
 export default function CrisisPage() {
-  const { plan, loading, savePlan } = useSafetyPlan()
-  const [saving, setSaving] = useState(false)
+  const { plan, loading, savePlan } = useSafetyPlan();
+  const [saving, setSaving] = useState(false);
 
   const [form, setForm] = useState({
     warningSignals: '',
     copingStrategies: '',
     safePlaces: '',
     limitAccessToMeans: '',
-  })
+  });
 
   // inicjalizacja formularza po wczytaniu
   useEffect(() => {
