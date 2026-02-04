@@ -21,7 +21,6 @@ function FirstRunGateInner({ children }) {
     }
   }
 
-  const onSkip = () => setStep(slidesCount - 1)
   const dotIndex = useMemo(() => Math.min(step, slidesCount - 1), [step])
 
   if (loading) return children
@@ -29,17 +28,7 @@ function FirstRunGateInner({ children }) {
 
   return (
     <div className="onbRoot onbRootWarm">
-      <div className="onbTop onbTopWarm">
-        <div className="onbBrand onbBrandWarm">
-          <img className="onbBrandLogo" src="/logo.svg" alt="Plan na kryzys" />
-          <span>Plan na kryzys</span>
-        </div>
-        {step < slidesCount - 1 ? (
-          <button type="button" className="onbSkip onbSkipWarm" onClick={onSkip}>
-            Pomiń
-          </button>
-        ) : null}
-      </div>
+      {/* usunięto wewnętrzny górny pasek (onbTop) */}
 
       <div className="onbSlide onbSlideWarm">
         {step === 0 ? (
@@ -71,9 +60,7 @@ function FirstRunGateInner({ children }) {
             </div>
 
             <div className="onbCtaRow">
-              <button type="button" className="onbBtn onbBtnGhost onbBtnGhostWarm" onClick={onSkip}>
-                Pomiń
-              </button>
+              <div />
               <button type="button" className="onbBtn onbBtnPrimary onbBtnPrimaryWarm" onClick={() => setStep(1)}>
                 Dalej
               </button>

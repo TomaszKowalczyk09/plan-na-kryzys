@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes, Outlet } from 'react-router-dom'
 import Layout from './components/Layout.jsx'
 import FirstRunGate from './components/FirstRunGate.jsx'
 import Dashboard from './pages/Dashboard.jsx'
@@ -10,6 +10,14 @@ import AboutPage from './pages/AboutPage.jsx'
 import PrivacyPage from './pages/PrivacyPage.jsx'
 import TermsPage from './pages/TermsPage.jsx'
 
+function FirstRunLayout() {
+  return (
+    <FirstRunGate>
+      <Outlet />
+    </FirstRunGate>
+  )
+}
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -20,22 +28,15 @@ export default function App() {
           <Route path="/terms" element={<TermsPage />} />
 
           {/* Reszta aplikacji za bramką pierwszego uruchomienia */}
-          <Route
-            path="*"
-            element={
-              <FirstRunGate>
-                <Routes>
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/mood" element={<MoodPage />} />
-                  <Route path="/crisis" element={<CrisisPage />} />
-                  <Route path="/knowledge" element={<KnowledgePage />} />
-                  <Route path="/friend" element={<FriendPage />} />
-                  <Route path="/about" element={<AboutPage />} />
-                  <Route path="*" element={<Navigate to="/" replace />} />
-                </Routes>
-              </FirstRunGate>
-            }
-          />
+          <Route element={<FirstRunLayout />}>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/mood" element={<MoodPage />} />
+            <Route path="/crisis" element={<CrisisPage />} />
+            <Route path="/knowledge" element={<KnowledgePage />} />
+            <Route path="/friend" element={<FriendPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
