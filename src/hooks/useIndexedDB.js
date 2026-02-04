@@ -142,3 +142,98 @@ export async function clearAllLocalData() {
     db.settings.clear(),
   ])
 }
+
+const csvEscape = (value) => {
+  const s = String(value ?? '')
+  if (/[",\n\r;]/.test(s)) return `"${s.replace(/"/g, '""')}"`
+  return s
+}
+
+export async function exportAllLocalDataJSON() {
+  const [moodEntries, safetyPlans, settings] = await Promise.all([
+    db.moodEntries.toArray(),
+    db.safetyPlan.toArray(),
+    db.settings.toArray(),
+  ])
+
+  return JSON.stringify(
+    {
+      exportedAt: new Date().toISOString(),
+      schemaVersion: 1,
+      data: {
+        moodEntries,
+        safetyPlans,
+        settings,
+      },
+    },
+    null,
+    2,
+  )
+}
+
+export async function exportMoodEntriesCSV() {
+  const moodEntries = await db.moodEntries.toArray()
+  moodEntries.sort((a, b) => (a.timestamp ?? 0) - (b.timestamp ?? 0))
+
+  const header = ['id', 'timestamp', 'dateISO', 'emotions', 'notes']
+  const rows = moodEntries.map((e) => {
+    const emotions = Array.isArray(e.emotions) ? e.emotions.join('|') : ''
+    const dateISO = e.date ? new Date(e.date).toISOString() : ''
+    return [
+      csvEscape(e.id ?? ''),
+      csvEscape(e.timestamp ?? ''),
+      csvEscape(dateISO),
+      csvEscape(emotions),
+      csvEscape(e.notes ?? ''),
+    ].join(',')
+  })
+
+  return [header.join(','), ...rows].join('\n')
+}
+
+export async function exportSafetyPlanText() {
+  const planId = 'safety_plan_1'
+  const plan = await db.safetyPlan.get(planId)
+
+  if (!plan) {
+    return [
+      'Mój plan bezpieczeństwa',
+      '',
+      '(Brak zapisanych danych.)',
+      '',
+      `Wygenerowano: ${new Date().toLocaleString()}`,
+    ].join('\n')
+  }
+
+  const supportPeople = Array.isArray(plan.supportPeople) ? plan.supportPeople : []
+  const supportLines = supportPeople.length
+    ? supportPeople.map((p, idx) => `${idx + 1}. ${String(p?.name ?? '').trim()}${p?.contact ? ` — ${String(p.contact).trim()}` : ''}`)
+    : ['(brak)']
+
+  const lines = [
+    'Mój plan bezpieczeństwa',
+    '',
+    `Ostatnia edycja: ${plan.lastEdited ? new Date(plan.lastEdited).toLocaleString() : '—'}`,
+    '',
+    '1) Moje sygnały ostrzegawcze',
+    String(plan.warningSignals ?? '').trim() || '—',
+    '',
+    '2) Co pomaga mi, gdy jest bardzo trudno',
+    String(plan.copingStrategies ?? '').trim() || '—',
+    '',
+    '3) Osoby, z którymi mogę porozmawiać',
+    ...supportLines,
+    '',
+    '4) Miejsca, w których czuję się bezpiecznie',
+    String(plan.safePlaces ?? '').trim() || '—',
+    '',
+    '5) Jak ograniczyć dostęp do rzeczy, którymi mógłbym/mogłabym zrobić sobie krzywdę',
+    String(plan.limitAccessToMeans ?? '').trim() || '—',
+    '',
+    '---',
+    'To nie jest usługa ratunkowa. W bezpośrednim zagrożeniu życia lub zdrowia: 112.',
+    `Wygenerowano: ${new Date().toLocaleString()}`,
+  ]
+
+  return lines.join('\n')
+}

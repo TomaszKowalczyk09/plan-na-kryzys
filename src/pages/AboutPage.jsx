@@ -1,10 +1,13 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { clearAllLocalData } from '../hooks/useIndexedDB'
+import { clearAllLocalData, exportAllLocalDataJSON, exportMoodEntriesCSV, exportSafetyPlanText } from '../hooks/useIndexedDB'
 
 export default function AboutPage() {
   const [clearing, setClearing] = useState(false)
   const [done, setDone] = useState(false)
+
+  const [exporting, setExporting] = useState(false)
+  const [exportDone, setExportDone] = useState('')
 
   const onClear = async () => {
     setClearing(true)
@@ -14,6 +17,29 @@ export default function AboutPage() {
       setDone(true)
     } finally {
       setClearing(false)
+    }
+  }
+
+  const downloadTextFile = async ({ filename, mime, getText }) => {
+    setExporting(true)
+    setExportDone('')
+    try {
+      const text = await getText()
+      const blob = new Blob([text], { type: mime })
+      const url = URL.createObjectURL(blob)
+
+      const a = document.createElement('a')
+      a.href = url
+      a.download = filename
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+
+      // cleanup
+      setTimeout(() => URL.revokeObjectURL(url), 0)
+      setExportDone('Gotowe')
+    } finally {
+      setExporting(false)
     }
   }
 
@@ -71,6 +97,58 @@ export default function AboutPage() {
           </button>
           {done ? (
             <span className="textMuted textSm alignCenter">Gotowe</span>
+          ) : null}
+        </div>
+      </div>
+
+      <div className="card">
+        <h1 className="h1">Eksportuj moje dane</h1>
+        <p className="p">Eksportuje lokalnie: wpisy nastroju, plan bezpieczeństwa i ustawienia tej aplikacji w tej przeglądarce.</p>
+        <div className="row mt12">
+          <button
+            type="button"
+            className="btn"
+            onClick={() =>
+              downloadTextFile({
+                filename: 'dane.json',
+                mime: 'application/json',
+                getText: exportAllLocalDataJSON,
+              })
+            }
+            disabled={exporting}
+          >
+            Eksportuj JSON
+          </button>
+          <button
+            type="button"
+            className="btn"
+            onClick={() =>
+              downloadTextFile({
+                filename: 'wpisy-nastroju.csv',
+                mime: 'text/csv',
+                getText: exportMoodEntriesCSV,
+              })
+            }
+            disabled={exporting}
+          >
+            Eksportuj wpisy nastroju (CSV)
+          </button>
+          <button
+            type="button"
+            className="btn"
+            onClick={() =>
+              downloadTextFile({
+                filename: 'plan-bezpieczenstwa.txt',
+                mime: 'text/plain',
+                getText: exportSafetyPlanText,
+              })
+            }
+            disabled={exporting}
+          >
+            Eksportuj plan bezpieczeństwa (TXT)
+          </button>
+          {exportDone ? (
+            <span className="textMuted textSm alignCenter">{exportDone}</span>
           ) : null}
         </div>
       </div>
