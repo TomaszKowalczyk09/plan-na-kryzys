@@ -13,21 +13,31 @@ import TermsPage from './pages/TermsPage.jsx'
 export default function App() {
   return (
     <BrowserRouter>
-      <FirstRunGate>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/mood" element={<MoodPage />} />
-            <Route path="/crisis" element={<CrisisPage />} />
-            <Route path="/knowledge" element={<KnowledgePage />} />
-            <Route path="/friend" element={<FriendPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/privacy" element={<PrivacyPage />} />
-            <Route path="/terms" element={<TermsPage />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Route>
-        </Routes>
-      </FirstRunGate>
+      <Routes>
+        <Route element={<Layout />}>
+          {/* Trasy dostępne bez onboardingu */}
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+
+          {/* Reszta aplikacji za bramką pierwszego uruchomienia */}
+          <Route
+            path="*"
+            element={
+              <FirstRunGate>
+                <Routes>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/mood" element={<MoodPage />} />
+                  <Route path="/crisis" element={<CrisisPage />} />
+                  <Route path="/knowledge" element={<KnowledgePage />} />
+                  <Route path="/friend" element={<FriendPage />} />
+                  <Route path="/about" element={<AboutPage />} />
+                  <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
+              </FirstRunGate>
+            }
+          />
+        </Route>
+      </Routes>
     </BrowserRouter>
   )
 }

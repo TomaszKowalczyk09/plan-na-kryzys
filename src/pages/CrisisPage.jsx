@@ -1,5 +1,5 @@
 /* jshint esversion: 11, asi: true, module: true, jsx: true */
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { HOTLINES, HOTLINES_META } from '../data/hotlines';
 import { useSafetyPlan } from '../hooks/useIndexedDB';
 
@@ -21,6 +21,7 @@ export default function CrisisPage() {
     copingStrategies: '',
     safePlaces: '',
     limitAccessToMeans: '',
+    supportPeople: [],
   });
 
   // inicjalizacja formularza po wczytaniu
@@ -31,10 +32,42 @@ export default function CrisisPage() {
       copingStrategies: plan.copingStrategies ?? '',
       safePlaces: plan.safePlaces ?? '',
       limitAccessToMeans: plan.limitAccessToMeans ?? '',
+      supportPeople: Array.isArray(plan.supportPeople) ? plan.supportPeople : [],
     });
   }, [plan]);
 
   const update = (key) => (ev) => setForm((p) => ({ ...p, [key]: ev.target.value }));
+
+  const addSupportPerson = () => {
+    setForm((p) => ({
+      ...p,
+      supportPeople: [...(p.supportPeople ?? []), { name: '', contact: '' }],
+    }));
+  };
+
+  const removeSupportPerson = (idx) => {
+    setForm((p) => ({
+      ...p,
+      supportPeople: (p.supportPeople ?? []).filter((_, i) => i !== idx),
+    }));
+  };
+
+  const updateSupportPerson = (idx, key) => (ev) => {
+    const value = ev.target.value;
+    setForm((p) => ({
+      ...p,
+      supportPeople: (p.supportPeople ?? []).map((sp, i) => (i === idx ? { ...sp, [key]: value } : sp)),
+    }));
+  };
+
+  const normalizedSupportPeople = useMemo(() => {
+    return (form.supportPeople ?? [])
+      .map((p) => ({
+        name: String(p?.name ?? '').trim(),
+        contact: String(p?.contact ?? '').trim(),
+      }))
+      .filter((p) => p.name || p.contact);
+  }, [form.supportPeople]);
 
   const onSave = async () => {
     setSaving(true);
@@ -42,6 +75,7 @@ export default function CrisisPage() {
       await savePlan({
         ...plan,
         ...form,
+        supportPeople: normalizedSupportPeople,
       });
     } finally {
       setSaving(false);
@@ -133,6 +167,51 @@ export default function CrisisPage() {
                 onChange={update('limitAccessToMeans')}
                 placeholder="Np. odsunąć poza zasięg, poprosić kogoś o schowanie…"
               />
+
+              <div className="card" style={{ padding: 12, marginTop: 12 }}>
+                <h1 className="h1">Osoby, z którymi mogę porozmawiać</h1>
+                <p className="p">Imię + sposób kontaktu (np. telefon, messenger). To prywatne i lokalne.</p>
+
+                <div className="stackSm mt12">
+                  {(form.supportPeople ?? []).length === 0 ? (
+                    <div className="cardInset">Brak dodanych osób. Dodaj przynajmniej jedną, jeśli możesz.</div>
+                  ) : null}
+
+                  {(form.supportPeople ?? []).map((sp, idx) => (
+                    <div key={`${idx}`} className="cardInset">
+                      <div className="rowBetween" style={{ gap: 10, alignItems: 'flex-start' }}>
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <label className="label" htmlFor={`sp-name-${idx}`}>Imię</label>
+                          <input
+                            id={`sp-name-${idx}`}
+                            className="input"
+                            value={sp?.name ?? ''}
+                            onChange={updateSupportPerson(idx, 'name')}
+                            placeholder="Np. mama, tata, Ola…"
+                          />
+
+                          <label className="label" htmlFor={`sp-contact-${idx}`}>Kontakt</label>
+                          <input
+                            id={`sp-contact-${idx}`}
+                            className="input"
+                            value={sp?.contact ?? ''}
+                            onChange={updateSupportPerson(idx, 'contact')}
+                            placeholder="Np. 123 456 789 / @nick / Messenger"
+                          />
+                        </div>
+
+                        <button type="button" className="btn btnDanger" onClick={() => removeSupportPerson(idx)}>
+                          Usuń
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="row mt12">
+                  <button type="button" className="btn" onClick={addSupportPerson}>Dodaj osobę</button>
+                </div>
+              </div>
 
               <div className="row mt12">
                 <button type="button" className="btn btnPrimary" disabled={saving} onClick={onSave}>

@@ -1,12 +1,15 @@
 /* jshint esversion: 11, asi: true, module: true, jsx: true */
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useSettings } from '../hooks/useIndexedDB'
 
-export default function FirstRunGate({ children }) {
+function FirstRunGateInner({ children }) {
   const { value: accepted, set: setAccepted, loading } = useSettings('legal_ack_v1_2026-02-04', false)
+  const [step, setStep] = useState(0)
   const [checked, setChecked] = useState(false)
   const [saving, setSaving] = useState(false)
+
+  const slidesCount = 3
 
   const onContinue = async () => {
     if (!checked) return
@@ -18,82 +21,165 @@ export default function FirstRunGate({ children }) {
     }
   }
 
+  const onSkip = () => setStep(slidesCount - 1)
+  const dotIndex = useMemo(() => Math.min(step, slidesCount - 1), [step])
+
   if (loading) return children
   if (accepted) return children
 
   return (
-    <div className="app">
-      <header className="header">
-        <div className="headerInner">
-          <div className="brandRow">
-            <img className="brandLogo" src="/logo.svg" alt="Plan na kryzys" />
-            <div className="brand">Plan na kryzys</div>
-          </div>
+    <div className="onbRoot onbRootWarm">
+      <div className="onbTop onbTopWarm">
+        <div className="onbBrand onbBrandWarm">
+          <img className="onbBrandLogo" src="/logo.svg" alt="Plan na kryzys" />
+          <span>Plan na kryzys</span>
         </div>
-        <div className="headerDescription">Krótko i jasno — dla Twojego bezpieczeństwa.</div>
-      </header>
+        {step < slidesCount - 1 ? (
+          <button type="button" className="onbSkip onbSkipWarm" onClick={onSkip}>
+            Pomiń
+          </button>
+        ) : null}
+      </div>
 
-      <main className="main">
-        <div className="container" style={{ display: 'grid', gap: 12 }}>
-          <div className="card">
-            <h1 className="h1">To nie jest usługa ratunkowa</h1>
-            <p className="p">Aplikacja nie dzwoni automatycznie na 112 i nie wzywa służb.</p>
-          </div>
+      <div className="onbSlide onbSlideWarm">
+        {step === 0 ? (
+          <>
+            <div className="onbHero">
+              <h1 className="onbTitle onbTitleWarm">Twoje narzędzia w jednym miejscu</h1>
+              <p className="onbBody onbBodyWarm">
+                Aplikacja pomaga przejść przez trudne chwile i lepiej rozumieć emocje. Bez oceniania, krótko i konkretnie.
+              </p>
+            </div>
 
-          <div className="card">
-            <h1 className="h1">W nagłym zagrożeniu</h1>
-            <p className="p">Jeśli jest bezpośrednie zagrożenie życia lub zdrowia — zadzwoń na 112.</p>
-          </div>
+            <div className="onbCardGrid">
+              <div className="onbCard">
+                <div className="onbCardTitle">Mój nastrój</div>
+                <div className="onbCardText">Szybkie wpisy i prosty podgląd ostatnich 14 dni.</div>
+              </div>
+              <div className="onbCard">
+                <div className="onbCardTitle">Kryzys</div>
+                <div className="onbCardText">Kroki „tu i teraz”, infolinie i plan bezpieczeństwa.</div>
+              </div>
+              <div className="onbCard">
+                <div className="onbCardTitle">Wiedza</div>
+                <div className="onbCardText">Krótkie teksty psychoedukacyjne napisane prostym językiem.</div>
+              </div>
+              <div className="onbCard">
+                <div className="onbCardTitle">Dla przyjaciela</div>
+                <div className="onbCardText">Jak wspierać kogoś w kryzysie i kiedy poprosić dorosłego.</div>
+              </div>
+            </div>
 
-          <div className="card">
-            <h1 className="h1">Prywatność</h1>
-            <p className="p">
-              Dane (np. wpisy nastroju, plan bezpieczeństwa) są przechowywane lokalnie na Twoim urządzeniu.
-              Nie wysyłamy ich na serwer.
-            </p>
-          </div>
-
-          <div className="card">
-            <label style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-              <input
-                type="checkbox"
-                checked={checked}
-                onChange={(e) => setChecked(e.target.checked)}
-                style={{ marginTop: 2 }}
-              />
-              <span style={{ fontWeight: 700 }}>
-                Rozumiem i chcę korzystać z aplikacji.
-              </span>
-            </label>
-
-            <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
-              <button
-                type="button"
-                className="btn btnPrimary"
-                onClick={onContinue}
-                disabled={!checked || saving}
-              >
-                {saving ? 'Zapisuję…' : 'Kontynuuj'}
+            <div className="onbCtaRow">
+              <button type="button" className="onbBtn onbBtnGhost onbBtnGhostWarm" onClick={onSkip}>
+                Pomiń
+              </button>
+              <button type="button" className="onbBtn onbBtnPrimary onbBtnPrimaryWarm" onClick={() => setStep(1)}>
+                Dalej
               </button>
             </div>
-          </div>
+          </>
+        ) : null}
 
-          <div className="card">
-            <p className="p">Administrator: Tomasz Kowalczyk (tomasz.kowalczyk@gminagryfino.pl)</p>
-            <p className="p">Kontynuując, potwierdzasz zapoznanie się z dokumentami:</p>
-            <div style={{ display: 'flex', gap: 8, marginTop: 10, flexWrap: 'wrap' }}>
-              <Link className="btn" to="/terms">Regulamin</Link>
-              <Link className="btn" to="/privacy">Polityka prywatności</Link>
+        {step === 1 ? (
+          <>
+            <div className="onbHero">
+              <h1 className="onbTitle onbTitleWarm">Prywatnie. Offline‑first.</h1>
+              <p className="onbBody onbBodyWarm">
+                Nie ma kont i logowania. Wpisy nastroju i plan bezpieczeństwa zapisują się lokalnie na Twoim urządzeniu.
+              </p>
             </div>
-          </div>
 
-          <div className="card">
-            <p className="p">
-              Jeśli chcesz wrócić do tych informacji później, znajdziesz je w: O aplikacji.
-            </p>
-          </div>
+            <div className="onbPanel onbPanelWarm">
+              <div className="onbList">
+                <div className="onbListItem">
+                  <div className="onbListTitle">Dane tylko lokalnie</div>
+                  <div className="onbListText">Nie wysyłamy Twoich wpisów na serwer.</div>
+                </div>
+                <div className="onbListItem">
+                  <div className="onbListTitle">Brak kont</div>
+                  <div className="onbListText">To oznacza anonimowość i brak profilu.</div>
+                </div>
+                <div className="onbListItem">
+                  <div className="onbListTitle">Wspólne urządzenie</div>
+                  <div className="onbListText">Jeśli ktoś używa tej samej przeglądarki, może mieć dostęp do danych.</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="onbCtaRow">
+              <button type="button" className="onbBtn onbBtnGhost onbBtnGhostWarm" onClick={() => setStep(0)}>
+                Wstecz
+              </button>
+              <button type="button" className="onbBtn onbBtnPrimary onbBtnPrimaryWarm" onClick={() => setStep(2)}>
+                Dalej
+              </button>
+            </div>
+          </>
+        ) : null}
+
+        {step === 2 ? (
+          <>
+            <div className="onbHero">
+              <h1 className="onbTitle onbTitleWarm">W kryzysie: pomoc jest teraz</h1>
+              <p className="onbBody onbBodyWarm">
+                To nie jest usługa ratunkowa. Aplikacja nie dzwoni automatycznie. W bezpośrednim zagrożeniu życia lub zdrowia — 112.
+              </p>
+            </div>
+
+            <div className="onbPanel onbPanelWarm" onClick={(e) => e.stopPropagation()}>
+              <label className="onbCheck">
+                <input
+                  type="checkbox"
+                  checked={checked}
+                  onChange={(e) => setChecked(e.target.checked)}
+                />
+                <span>
+                  Rozumiem zasady: dane są lokalne, nie ma kont, a kontakt z pomocą inicjuję sam/a.
+                </span>
+              </label>
+
+              <div className="onbLinks">
+                <Link className="onbLinkBtn" to="/terms" aria-label="Otwórz regulamin">
+                  Regulamin
+                </Link>
+                <Link className="onbLinkBtn" to="/privacy" aria-label="Otwórz politykę prywatności">
+                  Polityka prywatności
+                </Link>
+              </div>
+
+              <button
+                type="button"
+                className="onbBtn onbBtnPrimary onbBtnPrimaryWarm"
+                onClick={onContinue}
+                disabled={!checked || saving}
+                style={{ width: '100%' }}
+              >
+                {saving ? 'Zapisuję…' : 'Zaczynam'}
+              </button>
+            </div>
+
+            <div className="onbCtaRow">
+              <button type="button" className="onbBtn onbBtnGhost onbBtnGhostWarm" onClick={() => setStep(1)}>
+                Wstecz
+              </button>
+              <div />
+            </div>
+          </>
+        ) : null}
+      </div>
+
+      <div className="onbProgress" aria-hidden="true">
+        <div className="onbDots">
+          {Array.from({ length: slidesCount }).map((_, i) => (
+            <div key={i} className={`onbDot ${i === dotIndex ? 'isActive' : ''}`} />
+          ))}
         </div>
-      </main>
+      </div>
     </div>
   )
+}
+
+export default function FirstRunGate({ children }) {
+  return <FirstRunGateInner>{children}</FirstRunGateInner>
 }
