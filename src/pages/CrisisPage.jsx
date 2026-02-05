@@ -10,6 +10,8 @@ const STEPS_NOW = [
   'Skup się na następnym małym kroku. Nie musisz rozwiązać wszystkiego naraz.',
 ];
 
+const STEPS_NOW_STORAGE_KEY = 'crisis_steps_now_checked_v1';
+
 const LEGAL_BAR = 'To nie jest usługa ratunkowa. W bezpośrednim zagrożeniu życia lub zdrowia: 112.';
 
 export default function CrisisPage() {
@@ -24,7 +26,16 @@ export default function CrisisPage() {
     supportPeople: [],
   });
 
-  // inicjalizacja formularza po wczytaniu
+  const [stepsChecked, setStepsChecked] = useState(() => {
+    try {
+      const raw = localStorage.getItem(STEPS_NOW_STORAGE_KEY);
+      const parsed = raw ? JSON.parse(raw) : null;
+      return Array.isArray(parsed) ? parsed.map(Boolean) : STEPS_NOW.map(() => false);
+    } catch {
+      return STEPS_NOW.map(() => false);
+    }
+  });
+
   useEffect(() => {
     if (!plan) return;
     setForm({
@@ -35,6 +46,14 @@ export default function CrisisPage() {
       supportPeople: Array.isArray(plan.supportPeople) ? plan.supportPeople : [],
     });
   }, [plan]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STEPS_NOW_STORAGE_KEY, JSON.stringify(stepsChecked));
+    } catch {
+      // brak akcji: offline/local-only
+    }
+  }, [stepsChecked]);
 
   const update = (key) => (ev) => setForm((p) => ({ ...p, [key]: ev.target.value }));
 
@@ -60,6 +79,14 @@ export default function CrisisPage() {
     }));
   };
 
+  const toggleStep = (idx) => (ev) => {
+    const checked = ev.target.checked;
+    setStepsChecked((prev) => prev.map((v, i) => (i === idx ? checked : v)));
+  };
+
+  const resetSteps = () => setStepsChecked(STEPS_NOW.map(() => false));
+  const markAllSteps = () => setStepsChecked(STEPS_NOW.map(() => true));
+
   const normalizedSupportPeople = useMemo(() => {
     return (form.supportPeople ?? [])
       .map((p) => ({
@@ -68,6 +95,8 @@ export default function CrisisPage() {
       }))
       .filter((p) => p.name || p.contact);
   }, [form.supportPeople]);
+
+  const checkedCount = useMemo(() => stepsChecked.filter(Boolean).length, [stepsChecked]);
 
   const onSave = async () => {
     setSaving(true);
@@ -97,11 +126,32 @@ export default function CrisisPage() {
           </h1>
           <p className="p">To poważna sytuacja. Pomoc jest możliwa teraz.</p>
 
+          <div className="rowBetween mt12" style={{ gap: 10, alignItems: 'center' }}>
+            <div className="p" style={{ margin: 0 }}>
+              Checklist: {checkedCount}/{STEPS_NOW.length}
+            </div>
+            <div className="row" style={{ gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+              <button type="button" className="btn" onClick={resetSteps}>
+                Odznacz wszystko
+              </button>
+              <button type="button" className="btn btnPrimary" onClick={markAllSteps}>
+                Odhaczyłem/am
+              </button>
+            </div>
+          </div>
+
           <div className="stackSm mt12">
-            {STEPS_NOW.map((s) => (
-              <div key={s} className="cardInset">
-                {s}
-              </div>
+            {STEPS_NOW.map((s, idx) => (
+              <label key={s} className="cardInset" style={{ display: 'flex', gap: 10, cursor: 'pointer' }}>
+                <input
+                  type="checkbox"
+                  checked={Boolean(stepsChecked?.[idx])}
+                  onChange={toggleStep(idx)}
+                  aria-label={s}
+                  style={{ marginTop: 2 }}
+                />
+                <div style={{ flex: 1, minWidth: 0 }}>{s}</div>
+              </label>
             ))}
           </div>
         </div>
