@@ -122,6 +122,18 @@ export default function Layout() {
         </div>
       </main>
 
+      <footer
+        className="footer"
+        style={{
+          padding: '10px 16px',
+          textAlign: 'center',
+          fontSize: 12,
+          opacity: 0.75,
+        }}
+      >
+        Developed by Tomasz Kowalczyk and Łukasz Majka
+      </footer>
+
       <nav className="nav" aria-label="Nawigacja główna">
         <div className="navInner" style={{ '--active': navActiveIndex }}>
           <div className="navHighlight" aria-hidden="true" />
