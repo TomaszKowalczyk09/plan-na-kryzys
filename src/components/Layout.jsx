@@ -2,12 +2,18 @@ import { useEffect, useMemo, useState } from 'react'
 import { NavLink, Outlet, useLocation, Link } from 'react-router-dom'
 import clsx from 'clsx'
 import { useCheckInNotifications } from '../hooks/useCheckInNotifications'
+import { useSettings } from '../hooks/useIndexedDB'
 
 export default function Layout() {
   useCheckInNotifications()
   const { pathname } = useLocation()
 
   const hideHeader = pathname === '/privacy' || pathname === '/terms'
+
+  const { value: accepted, loading: acceptedLoading } = useSettings('legal_ack_v1_2026-02-04', false)
+  const isOnboardingActive = !acceptedLoading && !accepted
+
+  const hideBottomNav = pathname === '/' && isOnboardingActive
 
   const systemPrefersDark = useMemo(() => {
     if (typeof window === 'undefined') return false
@@ -116,7 +122,7 @@ export default function Layout() {
         </header>
       ) : null}
 
-      <main className="main">
+      <main className="main" style={hideBottomNav ? { paddingBottom: 24 } : undefined}>
         <div className="container">
           <Outlet />
         </div>
@@ -134,36 +140,38 @@ export default function Layout() {
         Developed by Tomasz Kowalczyk and Łukasz Majka
       </footer>
 
-      <nav className="nav" aria-label="Nawigacja główna">
-        <div className="navInner" style={{ '--active': navActiveIndex }}>
-          <div className="navHighlight" aria-hidden="true" />
-          <NavLink
-            to="/"
-            end
-            className={({ isActive }) => clsx('navLink', isActive && 'navLinkActive')}
-          >
-            Start
-          </NavLink>
-          <NavLink
-            to="/mood"
-            className={({ isActive }) => clsx('navLink', isActive && 'navLinkActive')}
-          >
-            Nastrój
-          </NavLink>
-          <NavLink
-            to="/crisis"
-            className={({ isActive }) => clsx('navLink', isActive && 'navLinkActive')}
-          >
-            Kryzys
-          </NavLink>
-          <NavLink
-            to="/knowledge"
-            className={({ isActive }) => clsx('navLink', isActive && 'navLinkActive')}
-          >
-            Wiedza
-          </NavLink>
-        </div>
-      </nav>
+      {hideBottomNav ? null : (
+        <nav className="nav" aria-label="Nawigacja główna">
+          <div className="navInner" style={{ '--active': navActiveIndex }}>
+            <div className="navHighlight" aria-hidden="true" />
+            <NavLink
+              to="/"
+              end
+              className={({ isActive }) => clsx('navLink', isActive && 'navLinkActive')}
+            >
+              Start
+            </NavLink>
+            <NavLink
+              to="/mood"
+              className={({ isActive }) => clsx('navLink', isActive && 'navLinkActive')}
+            >
+              Nastrój
+            </NavLink>
+            <NavLink
+              to="/crisis"
+              className={({ isActive }) => clsx('navLink', isActive && 'navLinkActive')}
+            >
+              Kryzys
+            </NavLink>
+            <NavLink
+              to="/knowledge"
+              className={({ isActive }) => clsx('navLink', isActive && 'navLinkActive')}
+            >
+              Wiedza
+            </NavLink>
+          </div>
+        </nav>
+      )}
     </div>
   )
 }
