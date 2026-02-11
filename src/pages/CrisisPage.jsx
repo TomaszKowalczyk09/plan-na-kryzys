@@ -112,14 +112,14 @@ export default function CrisisPage() {
   };
 
   return (
-    <div style={{ display: 'grid', gap: 12 }}>
-      <div className="card" style={{ borderColor: 'rgba(220, 38, 38, 0.20)' }}>
+    <div className="pageAnim" style={{ display: 'grid', gap: 12 }}>
+      <div className="card pageAnimItem" style={{ borderColor: 'rgba(220, 38, 38, 0.20)' }}>
         <div style={{ fontWeight: 800, color: 'var(--danger)' }}>Ważne</div>
         <p className="p">{LEGAL_BAR}</p>
       </div>
 
       <div className="screen">
-        <div className="card cardSoft">
+        <div className="card cardSoft pageAnimItem">
           <div className="badgeDanger">Wysokie ryzyko</div>
           <h1 className="h1 mt10">
             Jeśli masz myśli o zrobieniu sobie krzywdy — spróbuj nie być z tym sam/a.
@@ -156,7 +156,7 @@ export default function CrisisPage() {
           </div>
         </div>
 
-        <div className="card">
+        <div className="card pageAnimItem">
           <h1 className="h1">Infolinie</h1>
           <p className="p">Aplikacja nie dzwoni sama — Ty wybierasz.</p>
           <p className="p">Aktualizacja listy: {HOTLINES_META.lastUpdated}. {HOTLINES_META.note}</p>
@@ -174,7 +174,7 @@ export default function CrisisPage() {
           </div>
         </div>
 
-        <div className="card">
+        <div className="card pageAnimItem">
           <h1 className="h1">Mój plan bezpieczeństwa</h1>
           <p className="p">To jest tylko na Twoim telefonie. Offline.</p>
 
@@ -272,7 +272,7 @@ export default function CrisisPage() {
           )}
         </div>
 
-        <div className="card cardMuted">
+        <div className="card cardMuted pageAnimItem">
           <p className="p">
             Jeśli jesteś w bezpośrednim zagrożeniu życia, wybierz 112.
           </p>

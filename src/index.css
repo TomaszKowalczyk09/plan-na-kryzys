@@ -22,6 +22,7 @@
   --radius-md: 16px;
 
   --onb-bottombar-h: 84px;
+  --bottom-nav-h: 76px;
 
   color-scheme: light;
   font-family: 'Urbanist', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -188,8 +189,18 @@ textarea:focus-visible {
 
 .main {
   flex: 1;
-  padding-bottom: 96px; /* miejsce na dolną nawigację */
+  padding-bottom: 16px; /* domyślnie niewielki odstęp */
   padding-top: 16px;
+}
+
+/* gdy jest dolne menu, zarezerwuj na nie miejsce */
+.appHasBottomNav .main {
+  padding-bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom, 0px) + 24px);
+}
+
+/* stopka zawsze nad menu */
+.appHasBottomNav .footer {
+  padding-bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom, 0px) + 18px);
 }
 
 .h1 {
@@ -511,14 +522,18 @@ input[type='checkbox'] {
 /* dolna nawigacja w stylu pill bar */
 .nav {
   position: fixed;
-  bottom: 12px;
   left: 0;
   right: 0;
+  bottom: env(safe-area-inset-bottom, 0px);
+  padding: 8px 12px;
   border-top: none;
   background: transparent;
+  z-index: 40;
+  pointer-events: none; /* tylko wnętrze klikalne */
 }
 
 .navInner {
+  pointer-events: auto;
   max-width: 520px;
   margin: 0 auto;
   display: grid;
@@ -567,6 +582,15 @@ input[type='checkbox'] {
 .navLinkActive {
   color: #fff;
   background: transparent;
+}
+
+.appHasBottomNav .main {
+  padding-bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom, 0px) + 12px);
+}
+
+/* stopka ma być nad dolnymi elementami */
+.footer {
+  padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
 }
 
  @media (prefers-reduced-motion: reduce) {
@@ -1481,6 +1505,7 @@ input[type='checkbox'] {
 @media (max-width: 430px) {
   :root {
     --onb-bottombar-h: 74px;
+    --bottom-nav-h: 82px;
   }
 
   .onbSlide {
@@ -1533,6 +1558,10 @@ input[type='checkbox'] {
 
   .onbDot.isActive {
     width: 20px;
+  }
+
+  .nav {
+    padding: 6px 10px;
   }
 }
 
@@ -1611,5 +1640,77 @@ input[type='checkbox'] {
   }
   .guideStepAnim {
     animation: none;
+  }
+}
+
+/* ===== Global page / UI animations ===== */
+.pageAnim {
+  animation: pageIn 260ms cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+
+.pageAnimItem {
+  animation: itemIn 300ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+
+.pageAnimItem:nth-child(1) { animation-delay: 20ms; }
+.pageAnimItem:nth-child(2) { animation-delay: 60ms; }
+.pageAnimItem:nth-child(3) { animation-delay: 100ms; }
+.pageAnimItem:nth-child(4) { animation-delay: 140ms; }
+.pageAnimItem:nth-child(5) { animation-delay: 180ms; }
+.pageAnimItem:nth-child(6) { animation-delay: 220ms; }
+
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes itemIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* micro-interakcje: subtelne, przyjemne */
+.card,
+.featureCard,
+.faqItem {
+  transition: transform 140ms ease, box-shadow 140ms ease;
+}
+
+.card:active,
+.featureCard:active,
+.faqItem:active {
+  transform: translateY(1px) scale(0.995);
+}
+
+.faqItem[open] {
+  animation: accordionPop 220ms cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+
+@keyframes accordionPop {
+  from { transform: translateY(2px); }
+  to { transform: translateY(0); }
+}
+
+/* delikatny highlight dla summary */
+.faqSummary {
+  transition: background 160ms ease;
+}
+
+.faqItem[open] .faqSummary {
+  background: color-mix(in srgb, var(--bg) 70%, var(--surface) 30%);
+}
+
+/* redukcja ruchu */
+@media (prefers-reduced-motion: reduce) {
+  .pageAnim,
+  .pageAnimItem {
+    animation: none !important;
+  }
+
+  .card,
+  .featureCard,
+  .faqItem,
+  .faqSummary {
+    transition: none !important;
   }
 }

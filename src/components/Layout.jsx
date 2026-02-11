@@ -13,7 +13,7 @@ export default function Layout() {
   const { value: accepted, loading: acceptedLoading } = useSettings('legal_ack_v1_2026-02-04', false)
   const isOnboardingActive = !acceptedLoading && !accepted
 
-  const hideBottomNav = pathname === '/' && isOnboardingActive
+  const hideBottomNav = isOnboardingActive
 
   const systemPrefersDark = useMemo(() => {
     if (typeof window === 'undefined') return false
@@ -54,7 +54,7 @@ export default function Layout() {
     pathname === '/mood' ? 1 : pathname === '/crisis' ? 2 : pathname === '/knowledge' ? 3 : 0
 
   return (
-    <div className="app">
+    <div className={clsx('app', !hideBottomNav && 'appHasBottomNav')}>
       {!hideHeader ? (
         <header className="header">
           <div className="headerInner">
@@ -122,23 +122,11 @@ export default function Layout() {
         </header>
       ) : null}
 
-      <main className="main" style={hideBottomNav ? { paddingBottom: 24 } : undefined}>
+      <main className="main">
         <div className="container">
           <Outlet />
         </div>
       </main>
-
-      <footer
-        className="footer"
-        style={{
-          padding: '10px 16px',
-          textAlign: 'center',
-          fontSize: 12,
-          opacity: 0.75,
-        }}
-      >
-        Developed by Tomasz Kowalczyk and Łukasz Majka
-      </footer>
 
       {hideBottomNav ? null : (
         <nav className="nav" aria-label="Nawigacja główna">
@@ -172,6 +160,18 @@ export default function Layout() {
           </div>
         </nav>
       )}
+
+      <footer
+        className="footer"
+        style={{
+          padding: '10px 16px',
+          textAlign: 'center',
+          fontSize: 12,
+          opacity: 0.75,
+        }}
+      >
+        Developed by Tomasz Kowalczyk and Łukasz Majka
+      </footer>
     </div>
   )
 }
