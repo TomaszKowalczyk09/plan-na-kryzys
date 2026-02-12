@@ -94,7 +94,7 @@ function FirstRunGateInner({ children }) {
                 <div className="onbHero">
                   <h1 className="onbTitle onbTitleWarm">W kryzysie: pomoc jest teraz</h1>
                   <p className="onbBody onbBodyWarm">
-                    To nie jest usługa ratunkowa. Aplikacja nie dzwoni automatycznie. W bezpośrednim zagrożeniu życia lub zdrowia — 112.
+                    To nie jest usługa ratunkowa. Aplikacja nie dzwoni automatycznie. Jeśli jesteś w bezpośrednim zagrożeniu — zadzwoń pod 112.
                   </p>
                 </div>
 

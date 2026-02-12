@@ -67,7 +67,7 @@ export default function AboutPage() {
             To nie jest usługa ratunkowa. Aplikacja nie dzwoni automatycznie na 112 i nie wzywa służb.
           </div>
           <div className="cardInset">
-            Jeśli jesteś w bezpośrednim zagrożeniu życia lub zdrowia, zadzwoń na 112.
+            Jeśli jesteś w bezpośrednim zagrożeniu — zadzwoń pod 112.
           </div>
           <div className="cardInset">
             Treści są ogólne i informacyjne. Jeśli czujesz, że sytuacja Cię przerasta, poproś o pomoc zaufaną osobę dorosłą lub specjalistę.

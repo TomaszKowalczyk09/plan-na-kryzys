@@ -12,7 +12,7 @@ const STEPS_NOW = [
 
 const STEPS_NOW_STORAGE_KEY = 'crisis_steps_now_checked_v1';
 
-const LEGAL_BAR = 'To nie jest usługa ratunkowa. W bezpośrednim zagrożeniu życia lub zdrowia: 112.';
+const LEGAL_BAR = 'To nie jest usługa ratunkowa. Jeśli jesteś w bezpośrednim zagrożeniu — zadzwoń pod 112.';
 
 export default function CrisisPage() {
   const { plan, loading, savePlan } = useSafetyPlan();

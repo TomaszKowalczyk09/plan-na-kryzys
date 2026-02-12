@@ -231,7 +231,7 @@ export async function exportSafetyPlanText() {
     String(plan.limitAccessToMeans ?? '').trim() || '—',
     '',
     '---',
-    'To nie jest usługa ratunkowa. W bezpośrednim zagrożeniu życia lub zdrowia: 112.',
+    'To nie jest usługa ratunkowa. Jeśli jesteś w bezpośrednim zagrożeniu — zadzwoń pod 112.',
     `Wygenerowano: ${new Date().toLocaleString()}`,
   ]
 
