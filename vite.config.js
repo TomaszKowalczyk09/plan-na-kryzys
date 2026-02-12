@@ -4,6 +4,9 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
   base: '/',
+  server: {
+    allowedHosts: ['kryzys.gminagryfino.pl'],
+  },
   plugins: [
     react(),
     VitePWA({
@@ -13,8 +16,8 @@ export default defineConfig({
       filename: 'sw.js',
       includeAssets: ['logo.svg', 'icons/icon-192.png', 'icons/icon-512.png'],
       manifest: {
-        name: 'Kompakt Wsparcia',
-        short_name: 'Wsparcie',
+        name: 'Plan na kryzys',
+        short_name: 'Plan na kryzys',
         description: 'Aplikacja wspierająca młodzież w trudnych sytuacjach emocjonalnych',
         start_url: '/',
         scope: '/',
