@@ -2,7 +2,7 @@
 
 ### Twoje cyfrowe wsparcie w trudnych chwilach – 100% prywatności.
 
-**PlanNaKryzys.pl** to progresywna aplikacja internetowa (PWA) stworzona dla osób potrzebujących natychmiastowego dostępu do narzędzi regulacji emocji i planu bezpieczeństwa. Aplikacja została zaprojektowana z myślą o maksymalnej dyskrecji i bezpieczeństwie danych.
+**[PlanNaKryzys.pl](https://kryzys.gminagryfino.pl)** to progresywna aplikacja internetowa (PWA) stworzona dla osób potrzebujących natychmiastowego dostępu do narzędzi regulacji emocji i planu bezpieczeństwa. Aplikacja została zaprojektowana z myślą o maksymalnej dyskrecji i bezpieczeństwie danych.
 
 ---
 
