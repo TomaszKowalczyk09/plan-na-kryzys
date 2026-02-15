@@ -123,4 +123,63 @@ export const KNOWLEDGE_ARTICLES = [
       'Jeśli boisz się reakcji: poproś o konkrety: „Posłuchaj 5 minut, bez rad”.',
     ],
   },
+  {
+    id: 'myth-fact-1',
+    title: 'Mit/Fakt: „Jeśli proszę o pomoc, to znaczy że jestem słaby/a”',
+    body: [
+      'Mit: proszenie o pomoc to słabość.',
+      'Fakt: to umiejętność. Czasem najdojrzalszy krok to powiedzieć „potrzebuję wsparcia”.',
+      'W praktyce: zacznij od jednej osoby i jednego zdania. Nie musisz tłumaczyć wszystkiego.',
+    ],
+  },
+  {
+    id: 'myth-fact-2',
+    title: 'Mit/Fakt: „Muszę mieć pewność, że jest źle, zanim pójdę do specjalisty”',
+    body: [
+      'Mit: pomoc jest dopiero „na samym końcu”.',
+      'Fakt: im wcześniej, tym łatwiej. Wystarczy, że jest Ci trudno i chcesz to uporządkować.',
+      'W praktyce: to może być jedna rozmowa konsultacyjna — żeby zobaczyć, co dalej.',
+    ],
+  },
+  {
+    id: 'myth-fact-3',
+    title: 'Mit/Fakt: „Inni mają gorzej, więc nie powinienem/powinnam narzekać”',
+    body: [
+      'Mit: Twoje trudności są „nieważne”, bo ktoś ma trudniej.',
+      'Fakt: porównywanie często ucisza potrzeby. Masz prawo szukać wsparcia, nawet jeśli nie jest „najgorzej”.',
+      'W praktyce: zamień „inni mają gorzej” na „ja mam trudno i chcę sobie pomóc”.',
+    ],
+  },
+  {
+    id: 'normal-1',
+    title: 'Co jest normalne, gdy jest dużo stresu',
+    body: [
+      'Gorsza koncentracja i „mgła” w głowie.',
+      'Napięcie w ciele: brzuch, klatka, szczęka, barki.',
+      'Chęć izolowania się albo odwrotnie: potrzeba bycia blisko kogoś.',
+      'To sygnał, że układ nerwowy jest przeciążony — nie dowód, że „coś z Tobą nie tak”.',
+    ],
+  },
+  {
+    id: 'normal-2',
+    title: 'Co jest normalne po trudnym wydarzeniu',
+    body: [
+      'Skoki nastroju: raz lepiej, raz gorzej.',
+      'Powracające myśli i „odtwarzanie” sytuacji.',
+      'Problemy ze snem przez kilka dni.',
+      'Jeśli objawy trwają długo lub nasilają się — warto pogadać z kimś zaufanym lub specjalistą.',
+    ],
+  },
+  {
+    id: 'ask-help',
+    title: 'Kiedy poprosić o pomoc (krótka checklista)',
+    body: [
+      'Gdy trudny stan trwa większość dni przez 2+ tygodnie.',
+      'Gdy zaczyna to psuć sen, jedzenie, szkołę/pracę, relacje lub codzienne funkcjonowanie.',
+      'Gdy masz poczucie „nie ogarniam” i nie wiesz, co dalej.',
+      'Gdy czujesz, że tracisz kontrolę nad emocjami albo zachowaniem.',
+      'Wtedy: pogadaj z zaufaną osobą dorosłą lub specjalistą. Jeśli jesteś w bezpośrednim zagrożeniu — zadzwoń pod 112.',
+    ],
+    warning: 'Jeśli czujesz, że robi Ci się gorzej po czytaniu, przejdź do zakładki „Kryzys”.',
+  },
 ];

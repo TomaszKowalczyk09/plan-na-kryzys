@@ -165,6 +165,12 @@ export default function AboutPage() {
           <div className="cardInset">
             Administrator i osoba odpowiedzialna: Tomasz Kowalczyk (tomasz.kowalczyk@gminagryfino.pl).
           </div>
+          <div className="cardInset">
+            Serwer Discord: <a href="https://discord.gg/kjHr5E35js" target="_blank" rel="noreferrer">dołącz</a>
+          </div>
+          <div className="cardInset">
+            Osoba odpowiedzialna za serwer Discord: Łukasz Majka (lukasz.majka@gminagryfino.pl).
+          </div>
         </div>
       </div>
 

@@ -73,6 +73,26 @@ export default function Dashboard() {
             <Link className="btn" to="/friend">Otwórz</Link>
           </div>
         </div>
+
+        <div className="featureCard">
+          <div className="featureHeader">
+            <div className="featureIcon">D</div>
+            <div>
+              <h2 className="featureTitle">Discord</h2>
+              <p className="featureSub">Dołącz do serwera społeczności i znajdź informacje oraz wsparcie.</p>
+            </div>
+          </div>
+          <div className="row mt12">
+            <a
+              className="btn"
+              href="https://discord.gg/kjHr5E35js"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Dołącz
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   )
