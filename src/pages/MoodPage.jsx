@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { EMOTIONS } from '../data/emotions'
 import { useMoodEntries } from '../hooks/useIndexedDB'
+import { CloudIcon, CTAButton, StoryCard, StoryScreen } from '../components/StoryUI'
 
 const EMOTION_GROUPS = {
   positive: new Set(['spokojny', 'zadowolony', 'wdzięczny']),
@@ -112,24 +113,27 @@ export default function MoodPage() {
   }
 
   return (
-    <div className="screen">
-      <div className="card">
-        <div className="rowBetween">
+    <StoryScreen variant="light" className="pageAnim">
+      <StoryCard tone="surface" className="pageAnimItem">
+        <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
           <div>
-            <h1 className="sectionTitle">Jak się czujesz teraz?</h1>
-            <p className="sectionSub">Wybierz 1–3 emocje (albo więcej, jeśli potrzebujesz).</p>
+            <h1 className="storyTitle">
+              Jak się czujesz <span className="storyAccent">teraz</span>?
+            </h1>
+            <p className="storyLead">Wybierz 1–3 emocje (albo więcej, jeśli potrzebujesz).</p>
           </div>
-          <div className="selectionBadge">Wybrane: {selected.length}</div>
+          <CloudIcon mood="calm" label="Spokojna chmurka" />
+        </div>
+
+        <div style={{ marginTop: 12 }} className="pill">
+          Wybrane: {selected.length}
         </div>
 
         <div className="emotionGroupGrid mt12">
           {EMOTION_SECTIONS.map((section) => {
             const selectedInSection = selected.filter((e) => section.items.includes(e)).length
             return (
-              <div
-                key={section.key}
-                className={`emotionGroupCard emotionGroupCard--${section.key}`}
-              >
+              <div key={section.key} className={`emotionGroupCard emotionGroupCard--${section.key}`}>
                 <div className="emotionGroupHeader">
                   <div>
                     <div className="emotionGroupTitle">{section.label}</div>
@@ -156,19 +160,6 @@ export default function MoodPage() {
           })}
         </div>
 
-        <div className="selectionTray mt12">
-          <div className="textMuted textSm">Wybrane emocje</div>
-          <div className="row mt10">
-            {selected.length === 0 ? (
-              <span className="subtleText">Nic nie wybrano.</span>
-            ) : (
-              selected.map((e) => (
-                <span key={e} className="pill pillActive">{e}</span>
-              ))
-            )}
-          </div>
-        </div>
-
         <label className="label" htmlFor="notes">Notatka (opcjonalnie)</label>
         <textarea
           id="notes"
@@ -178,24 +169,28 @@ export default function MoodPage() {
           placeholder="Co się wydarzyło? Co było trudne / co pomogło?"
         />
 
-        <div className="row mt12">
-          <button
-            type="button"
-            className="btn btnPrimary"
-            disabled={saving || selected.length === 0}
+        <div className="row mt12" style={{ gap: 10 }}>
+          <CTAButton
+            tone="primary"
             onClick={onSave}
+            disabled={saving || selected.length === 0}
           >
             {saving ? 'Zapisuję…' : 'Zapisz'}
-          </button>
-          <button type="button" className="btn" onClick={() => setSelected([])} disabled={saving}>
+          </CTAButton>
+          <CTAButton tone="ghost" onClick={() => setSelected([])} disabled={saving}>
             Wyczyść
-          </button>
+          </CTAButton>
         </div>
-      </div>
+      </StoryCard>
 
-      <div className="card">
-        <h1 className="h1">Podsumowanie nastroju</h1>
-        <p className="p">Ostatnie 14 dni w skrócie.</p>
+      <StoryCard tone="surface" className="pageAnimItem">
+        <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
+          <div>
+            <h2 className="sectionTitle" style={{ fontSize: 20 }}>Podsumowanie (14 dni)</h2>
+            <p className="p" style={{ marginTop: 6 }}>Ostatnie 14 dni w skrócie.</p>
+          </div>
+          <CloudIcon mood="smile" label="Uśmiechnięta chmurka" />
+        </div>
 
         <div className="moodReport mt12">
           <div className="moodMetric">
@@ -226,7 +221,7 @@ export default function MoodPage() {
             <div className="moodBarLegend">
               <span className="moodLegendItem"><span className="moodDot moodDotPositive" />Pozytywne {distribution.positive}%</span>
               <span className="moodLegendItem"><span className="moodDot moodDotNeutral" />Neutralne {distribution.neutral}%</span>
-              <span className="moodLegendItem"><span className="moodDot moodDotNegative" />Trudne {distribution.negative}%</span>
+              <span className="moodDot moodDotNegative" />Trudne {distribution.negative}%
             </div>
           </div>
         )}
@@ -250,11 +245,11 @@ export default function MoodPage() {
             )
           })}
         </div>
-      </div>
+      </StoryCard>
 
-      <div className="card">
-        <h1 className="h1">Ostatnie 14 dni</h1>
-        <p className="p">To nie jest ocena. To tylko ślad, który może pomóc zauważyć zmianę.</p>
+      <StoryCard tone="surface" className="pageAnimItem">
+        <h2 className="sectionTitle" style={{ fontSize: 20 }}>Ostatnie wpisy</h2>
+        <p className="p" style={{ marginTop: 6 }}>To nie jest ocena. To tylko ślad, który może pomóc zauważyć zmianę.</p>
 
         {loading ? (
           <p className="p">Wczytuję…</p>
@@ -275,7 +270,7 @@ export default function MoodPage() {
             ))}
           </div>
         )}
-      </div>
-    </div>
+      </StoryCard>
+    </StoryScreen>
   )
 }

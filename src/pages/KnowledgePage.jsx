@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { KNOWLEDGE_ARTICLES } from '../data/knowledge'
+import { CTAButton, CloudIcon, StoryCard, StoryScreen } from '../components/StoryUI'
 
 function GroundingGuideModal({ open, onClose }) {
   const steps = useMemo(
@@ -150,27 +151,41 @@ export default function KnowledgePage() {
   const [guideOpen, setGuideOpen] = useState(false)
 
   return (
-    <div className="screen">
-      <div className="card">
-        <h1 className="h1">Wiedza — FAQ</h1>
-        <p className="p">Krótkie treści. Jeśli czujesz, że robi Ci się gorzej — przejdź do „Kryzys”.</p>
-        <div className="row mt12">
-          <button type="button" className="btn btnPrimary" onClick={() => setGuideOpen(true)}>
-            Uziemienie: przewodnik krok po kroku
-          </button>
+    <StoryScreen variant="violet" className="pageAnim">
+      <StoryCard tone="surface" className="pageAnimItem">
+        <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
+          <div>
+            <h1 className="storyTitle">
+              Szybka <span className="storyAccent">wiedza</span>
+            </h1>
+            <p className="storyLead">
+              Krótkie treści. Jeśli czujesz, że robi Ci się gorzej — przejdź do „Kryzys”.
+            </p>
+          </div>
+          <CloudIcon mood="calm" label="Spokojna chmurka" />
         </div>
-      </div>
+
+        <div className="row mt12">
+          <CTAButton as="button" type="button" tone="primary" onClick={() => setGuideOpen(true)}>
+            Uziemienie: przewodnik
+          </CTAButton>
+        </div>
+      </StoryCard>
 
       <GroundingGuideModal open={guideOpen} onClose={() => setGuideOpen(false)} />
 
-      <div className="stackSm">
+      <div className="tilesGrid">
         {KNOWLEDGE_ARTICLES.map((a) => (
-          <details key={a.id} className="faqItem">
-            <summary className="faqSummary">
-              <span className="textStrong">{a.title}</span>
-              <span className="faqChevron" aria-hidden="true">▾</span>
+          <details key={a.id} className="tileCard pageAnimItem">
+            <summary className="tileSummary">
+              <div className="tileIcon" aria-hidden="true">☁️</div>
+              <div style={{ minWidth: 0 }}>
+                <div className="tileTitle">{a.title}</div>
+                <div className="tileSub">Krótkie i na temat</div>
+              </div>
+              <span className="tileChevron" aria-hidden="true">▾</span>
             </summary>
-            <div className="faqBody">
+            <div className="tileBody">
               {a.warning ? <p className="p warningNote">{a.warning}</p> : null}
               <div className="stackSm mt12">
                 {a.body.map((p) => (
@@ -183,6 +198,6 @@ export default function KnowledgePage() {
           </details>
         ))}
       </div>
-    </div>
+    </StoryScreen>
   )
 }

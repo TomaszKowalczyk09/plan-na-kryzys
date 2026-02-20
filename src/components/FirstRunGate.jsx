@@ -2,6 +2,7 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useSettings } from '../hooks/useIndexedDB'
+import { CTAButton, CloudIcon, StoryCard, StoryScreen } from './StoryUI'
 
 function FirstRunGateInner({ children }) {
   const { value: accepted, set: setAccepted, loading } = useSettings('legal_ack_v1_2026-02-04', false)
@@ -27,145 +28,102 @@ function FirstRunGateInner({ children }) {
   if (accepted) return children
 
   return (
-    <div className="onbRoot onbRootWarm">
-      <div className="onbShell">
-        <div className="onbContent">
-          <div className="onbSlide onbSlideWarm">
-            {step === 0 ? (
-              <>
-                <div className="onbHero">
-                  <h1 className="onbTitle onbTitleWarm">Twoje narzędzia w jednym miejscu</h1>
-                  <p className="onbBody onbBodyWarm">
-                    Aplikacja pomaga przejść przez trudne chwile i lepiej rozumieć emocje. Bez oceniania, krótko i konkretnie.
-                  </p>
-                </div>
-
-                <div className="onbCardGrid">
-                  <div className="onbCard">
-                    <div className="onbCardTitle">Mój nastrój</div>
-                    <div className="onbCardText">Szybkie wpisy i prosty podgląd ostatnich 14 dni.</div>
-                  </div>
-                  <div className="onbCard">
-                    <div className="onbCardTitle">Kryzys</div>
-                    <div className="onbCardText">Kroki „tu i teraz”, infolinie i plan bezpieczeństwa.</div>
-                  </div>
-                  <div className="onbCard">
-                    <div className="onbCardTitle">Wiedza</div>
-                    <div className="onbCardText">Krótkie teksty psychoedukacyjne napisane prostym językiem.</div>
-                  </div>
-                  <div className="onbCard">
-                    <div className="onbCardTitle">Dla przyjaciela</div>
-                    <div className="onbCardText">Jak wspierać kogoś w kryzysie i kiedy poprosić dorosłego.</div>
-                  </div>
-                </div>
-              </>
-            ) : null}
-
-            {step === 1 ? (
-              <>
-                <div className="onbHero">
-                  <h1 className="onbTitle onbTitleWarm">Prywatnie. Offline‑first.</h1>
-                  <p className="onbBody onbBodyWarm">
-                    Nie ma kont i logowania. Wpisy nastroju i plan bezpieczeństwa zapisują się lokalnie na Twoim urządzeniu.
-                  </p>
-                </div>
-
-                <div className="onbPanel onbPanelWarm">
-                  <div className="onbList">
-                    <div className="onbListItem">
-                      <div className="onbListTitle">Dane tylko lokalnie</div>
-                      <div className="onbListText">Nie wysyłamy Twoich wpisów na serwer.</div>
-                    </div>
-                    <div className="onbListItem">
-                      <div className="onbListTitle">Brak kont</div>
-                      <div className="onbListText">To oznacza anonimowość i brak profilu.</div>
-                    </div>
-                    <div className="onbListItem">
-                      <div className="onbListTitle">Wspólne urządzenie</div>
-                      <div className="onbListText">Jeśli ktoś używa tej samej przeglądarki, może mieć dostęp do danych.</div>
-                    </div>
-                  </div>
-                </div>
-              </>
-            ) : null}
-
-            {step === 2 ? (
-              <>
-                <div className="onbHero">
-                  <h1 className="onbTitle onbTitleWarm">W kryzysie: pomoc jest teraz</h1>
-                  <p className="onbBody onbBodyWarm">
-                    To nie jest usługa ratunkowa. Aplikacja nie dzwoni automatycznie. Jeśli jesteś w bezpośrednim zagrożeniu — zadzwoń pod 112.
-                  </p>
-                </div>
-
-                <div className="onbPanel onbPanelWarm" onClick={(e) => e.stopPropagation()}>
-                  <label className="onbCheck">
-                    <input
-                      type="checkbox"
-                      checked={checked}
-                      onChange={(e) => setChecked(e.target.checked)}
-                    />
-                    <span>
-                      Rozumiem zasady: dane są lokalne, nie ma kont, a kontakt z pomocą inicjuję sam/a.
-                    </span>
-                  </label>
-
-                  <div className="onbLinks">
-                    <Link className="onbLinkBtn" to="/terms" aria-label="Otwórz regulamin">
-                      Regulamin
-                    </Link>
-                    <Link className="onbLinkBtn" to="/privacy" aria-label="Otwórz politykę prywatności">
-                      Polityka prywatności
-                    </Link>
-                  </div>
-                </div>
-              </>
-            ) : null}
+    <div className="onbRoot" style={{ minHeight: '100svh' }}>
+      {step === 0 ? (
+        <StoryScreen variant="light">
+          <StoryCard tone="surface">
+            <CloudIcon mood="smile" label="Uśmiechnięta chmurka" />
+            <h1 className="storyTitle" style={{ marginTop: 14 }}>
+              Zadbaj o swój <span className="storyAccent">nastrój</span>
+            </h1>
+            <p className="storyLead">
+              Proste wpisy, czytelne podsumowanie i narzędzia, które możesz mieć zawsze przy sobie.
+            </p>
+          </StoryCard>
+          <CTAButton tone="primary" onClick={() => setStep(1)}>
+            Przejdź dalej
+          </CTAButton>
+          <div className="textSm" style={{ textAlign: 'center', color: 'var(--t-ink-muted)' }}>
+            ↓ Przesuń dalej
           </div>
-        </div>
+        </StoryScreen>
+      ) : null}
 
-        <div className="onbBottomBar">
-          <div className="onbCtaRow">
-            {step === 0 ? (
-              <div />
-            ) : (
-              <button
-                type="button"
-                className="onbBtn onbBtnGhost onbBtnGhostWarm"
-                onClick={() => setStep((s) => Math.max(0, s - 1))}
-              >
-                Wstecz
-              </button>
-            )}
-
-            {step === 0 ? (
-              <button type="button" className="onbBtn onbBtnPrimary onbBtnPrimaryWarm" onClick={() => setStep(1)}>
-                Dalej
-              </button>
-            ) : step === 1 ? (
-              <button type="button" className="onbBtn onbBtnPrimary onbBtnPrimaryWarm" onClick={() => setStep(2)}>
-                Dalej
-              </button>
-            ) : (
-              <button
-                type="button"
-                className="onbBtn onbBtnPrimary onbBtnPrimaryWarm"
-                onClick={onContinue}
-                disabled={!checked || saving}
-                style={{ width: '100%' }}
-              >
-                {saving ? 'Zapisuję…' : 'Zaczynam'}
-              </button>
-            )}
+      {step === 1 ? (
+        <StoryScreen variant="violet">
+          <StoryCard tone="surface">
+            <CloudIcon mood="portal" label="Smutna chmurka w portalu" />
+            <h1 className="storyTitle" style={{ marginTop: 14 }}>
+              Pomoc w <span className="storyAccent">kryzysie</span> jest blisko
+            </h1>
+            <p className="storyLead">
+              Konkretne kroki „tu i teraz”, numery pomocy i plan bezpieczeństwa.
+            </p>
+          </StoryCard>
+          <div className="row" style={{ gap: 10 }}>
+            <CTAButton tone="ghost" onClick={() => setStep(0)}>
+              Wstecz
+            </CTAButton>
+            <CTAButton tone="primary" onClick={() => setStep(2)}>
+              Dalej
+            </CTAButton>
           </div>
+          <div className="textSm" style={{ textAlign: 'center', color: 'var(--t-ink-muted)' }}>
+            ↓ Przesuń dalej
+          </div>
+        </StoryScreen>
+      ) : null}
 
-          <div className="onbProgress" aria-hidden="true">
-            <div className="onbDots">
-              {Array.from({ length: slidesCount }).map((_, i) => (
-                <div key={i} className={`onbDot ${i === dotIndex ? 'isActive' : ''}`} />
-              ))}
+      {step === 2 ? (
+        <StoryScreen variant="dark">
+          <StoryCard tone="dark">
+            <CloudIcon mood="duo" label="Dwie chmurki obok siebie" />
+            <h1 className="storyTitle" style={{ marginTop: 14, color: '#fff' }}>
+              Nie jesteś z tym <span className="storyAccent">sam_a</span>
+            </h1>
+            <p className="storyLead" style={{ color: 'rgba(255,255,255,0.72)' }}>
+              To nie jest usługa ratunkowa. Jeśli jesteś w bezpośrednim zagrożeniu — zadzwoń pod 112.
+            </p>
+
+            <div className="cardInset" style={{ marginTop: 12, background: 'rgba(255,255,255,0.06)', borderColor: 'rgba(255,255,255,0.14)' }}>
+              <label className="onbCheck" style={{ color: '#fff' }}>
+                <input
+                  type="checkbox"
+                  checked={checked}
+                  onChange={(e) => setChecked(e.target.checked)}
+                />
+                <span>
+                  Rozumiem zasady: dane są lokalne, nie ma kont, a kontakt z pomocą inicjuję sam/a.
+                </span>
+              </label>
+
+              <div className="row mt12" style={{ justifyContent: 'space-between' }}>
+                <Link className="onbLinkBtn" to="/terms">
+                  Regulamin
+                </Link>
+                <Link className="onbLinkBtn" to="/privacy">
+                  Prywatność
+                </Link>
+              </div>
             </div>
+          </StoryCard>
+
+          <div className="row" style={{ gap: 10 }}>
+            <CTAButton tone="ghost" onClick={() => setStep(1)}>
+              Wstecz
+            </CTAButton>
+            <CTAButton tone="primary" onClick={onContinue} disabled={!checked || saving}>
+              {saving ? 'Zapisuję…' : 'Wejdź do aplikacji'}
+            </CTAButton>
           </div>
+        </StoryScreen>
+      ) : null}
+
+      <div aria-hidden="true" style={{ position: 'fixed', left: 0, right: 0, bottom: 10, display: 'grid', placeItems: 'center' }}>
+        <div className="onbDots" style={{ background: 'rgba(255,255,255,0.10)', padding: 8, borderRadius: 999 }}>
+          {Array.from({ length: slidesCount }).map((_, i) => (
+            <div key={i} className={`onbDot ${i === dotIndex ? 'isActive' : ''}`} />
+          ))}
         </div>
       </div>
     </div>

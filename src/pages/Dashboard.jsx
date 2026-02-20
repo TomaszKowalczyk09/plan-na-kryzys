@@ -1,99 +1,130 @@
+import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
+import { CloudIcon, StoryCard, StoryScreen, CTAButton } from '../components/StoryUI'
+import { useMoodEntries } from '../hooks/useIndexedDB'
 
 export default function Dashboard() {
+  const { getEntriesFromDays } = useMoodEntries()
+  const recent = useMemo(() => getEntriesFromDays(14), [getEntriesFromDays])
+  const recentSorted = useMemo(
+    () => [...recent].sort((a, b) => (a.timestamp ?? 0) - (b.timestamp ?? 0)),
+    [recent],
+  )
+
+  const last = recentSorted.at(-1)
+  const lastLabel = last?.date ? new Date(last.date).toLocaleString() : null
+  const lastEmotions = Array.isArray(last?.emotions) ? last.emotions.join(', ') : null
+
   return (
-    <div className="screen">
-      <div className="heroCard">
-        <div className="heroContent">
-          <h1 className="heroTitle">Plan na kryzys</h1>
-          <p className="heroSub">
-            Bezpieczna, prosta przestrzeń na gorsze dni. Wszystko zostaje na Twoim urządzeniu.
-          </p>
-          <div className="row mt12">
-            <Link className="btn btnPrimary" to="/mood">Dodaj nastrój</Link>
-            <Link className="btn btnDanger" to="/crisis">Tryb kryzysowy</Link>
+    <StoryScreen variant="light" className="pageAnim">
+      <StoryCard tone="surface" className="pageAnimItem">
+        <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
+          <div>
+            <h1 className="storyTitle">
+              Twoje <span className="storyAccent">centrum</span>
+            </h1>
+            <p className="storyLead">Skróty do najważniejszych modułów i szybkie podsumowanie.</p>
+          </div>
+          <CloudIcon mood="calm" label="Spokojna chmurka" />
+        </div>
+
+        <div className="moodReport mt12">
+          <div className="moodMetric">
+            <div className="moodMetricValue">{recent.length}</div>
+            <div className="moodMetricLabel">Wpisy (14 dni)</div>
+          </div>
+          <div className="moodMetric">
+            <div className="moodMetricValue">{lastLabel || '—'}</div>
+            <div className="moodMetricLabel">Ostatni wpis</div>
+          </div>
+          <div className="moodMetric">
+            <div className="moodMetricValue" style={{ fontSize: 14, fontWeight: 900 }}>
+              {lastEmotions || '—'}
+            </div>
+            <div className="moodMetricLabel">Ostatnie emocje</div>
           </div>
         </div>
-        <div className="heroVisual" aria-hidden="true">
-          <div className="heroOrb heroOrbWarm" />
-          <div className="heroOrb heroOrbSun" />
-          <div className="heroOrb heroOrbLeaf" />
-        </div>
+      </StoryCard>
+
+      <div
+        className="pageAnimItem"
+        style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}
+      >
+        <StoryCard tone="surface" style={{ padding: 16 }}>
+          <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
+            <div style={{ display: 'grid', gap: 4 }}>
+              <div className="textStrong">Mój nastrój</div>
+              <div className="textMuted textSm">Szybki wpis</div>
+            </div>
+            <CloudIcon mood="smile" label="Uśmiechnięta chmurka" />
+          </div>
+          <div style={{ marginTop: 12 }}>
+            <CTAButton as={Link} to="/mood" tone="primary">
+              Dodaj
+            </CTAButton>
+          </div>
+        </StoryCard>
+
+        <StoryCard tone="glass" style={{ padding: 16 }}>
+          <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
+            <div style={{ display: 'grid', gap: 4 }}>
+              <div className="textStrong">Kryzys</div>
+              <div className="textMuted textSm">Tu i teraz</div>
+            </div>
+            <CloudIcon mood="sad" label="Smutna chmurka" />
+          </div>
+          <div style={{ marginTop: 12 }}>
+            <CTAButton as={Link} to="/crisis" tone="dark">
+              Otwórz
+            </CTAButton>
+          </div>
+        </StoryCard>
+
+        <StoryCard tone="surface" style={{ padding: 16 }}>
+          <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
+            <div style={{ display: 'grid', gap: 4 }}>
+              <div className="textStrong">Wiedza</div>
+              <div className="textMuted textSm">Szybkie tematy</div>
+            </div>
+            <div style={{ fontSize: 22, fontWeight: 900 }}>📚</div>
+          </div>
+          <div style={{ marginTop: 12 }}>
+            <CTAButton as={Link} to="/knowledge" tone="ghost">
+              Przejdź
+            </CTAButton>
+          </div>
+        </StoryCard>
+
+        <StoryCard tone="surface" style={{ padding: 16 }}>
+          <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
+            <div style={{ display: 'grid', gap: 4 }}>
+              <div className="textStrong">Dla przyjaciela</div>
+              <div className="textMuted textSm">Jak pomóc</div>
+            </div>
+            <div style={{ fontSize: 22, fontWeight: 900 }}>🤝</div>
+          </div>
+          <div style={{ marginTop: 12 }}>
+            <CTAButton as={Link} to="/friend" tone="ghost">
+              Otwórz
+            </CTAButton>
+          </div>
+        </StoryCard>
       </div>
 
-      <div className="featureGrid">
-        <div className="featureCard featureCardMood">
-          <div className="featureHeader">
-            <div className="featureIcon">N</div>
-            <div>
-              <h2 className="featureTitle">Mój nastrój</h2>
-              <p className="featureSub">Szybki wpis i czytelne podsumowanie z 14 dni.</p>
-            </div>
+      <StoryCard tone="surface" className="pageAnimItem">
+        <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
+          <div style={{ display: 'grid', gap: 6 }}>
+            <div className="textStrong">Discord</div>
+            <div className="textMuted">Dołącz do serwera — informacje i kontakt ze społecznością.</div>
           </div>
-          <div className="row mt12">
-            <Link className="btn btnPrimary" to="/mood">Przejdź</Link>
-          </div>
+          <div style={{ fontSize: 22, fontWeight: 900 }}>#</div>
         </div>
-
-        <div className="featureCard featureCardCrisis">
-          <div className="featureHeader">
-            <div className="featureIcon">K</div>
-            <div>
-              <h2 className="featureTitle">Kryzys</h2>
-              <p className="featureSub">Kroki tu i teraz, numery pomocy, plan bezpieczeństwa.</p>
-            </div>
-          </div>
-          <div className="row mt12">
-            <Link className="btn btnDanger" to="/crisis">Otwórz</Link>
-          </div>
+        <div style={{ marginTop: 14 }}>
+          <CTAButton as="a" href="https://discord.gg/" target="_blank" rel="noreferrer" tone="primary">
+            Dołącz
+          </CTAButton>
         </div>
-
-        <div className="featureCard">
-          <div className="featureHeader">
-            <div className="featureIcon">W</div>
-            <div>
-              <h2 className="featureTitle">Wiedza</h2>
-              <p className="featureSub">Krótkie, konkretne odpowiedzi w formie FAQ.</p>
-            </div>
-          </div>
-          <div className="row mt12">
-            <Link className="btn" to="/knowledge">Czytaj</Link>
-          </div>
-        </div>
-
-        <div className="featureCard">
-          <div className="featureHeader">
-            <div className="featureIcon">P</div>
-            <div>
-              <h2 className="featureTitle">Dla przyjaciela</h2>
-              <p className="featureSub">Jak rozmawiać i kiedy poprosić dorosłego o wsparcie.</p>
-            </div>
-          </div>
-          <div className="row mt12">
-            <Link className="btn" to="/friend">Otwórz</Link>
-          </div>
-        </div>
-
-        <div className="featureCard">
-          <div className="featureHeader">
-            <div className="featureIcon">D</div>
-            <div>
-              <h2 className="featureTitle">Discord</h2>
-              <p className="featureSub">Dołącz do serwera społeczności i znajdź informacje oraz wsparcie.</p>
-            </div>
-          </div>
-          <div className="row mt12">
-            <a
-              className="btn"
-              href="https://discord.gg/kjHr5E35js"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Dołącz
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+      </StoryCard>
+    </StoryScreen>
   )
 }

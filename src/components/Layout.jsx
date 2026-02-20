@@ -135,24 +135,28 @@ export default function Layout() {
             <NavLink
               to="/"
               end
+              data-ico="🏠"
               className={({ isActive }) => clsx('navLink', isActive && 'navLinkActive')}
             >
               Start
             </NavLink>
             <NavLink
               to="/mood"
+              data-ico="☁️"
               className={({ isActive }) => clsx('navLink', isActive && 'navLinkActive')}
             >
               Nastrój
             </NavLink>
             <NavLink
               to="/crisis"
+              data-ico="🆘"
               className={({ isActive }) => clsx('navLink', isActive && 'navLinkActive')}
             >
               Kryzys
             </NavLink>
             <NavLink
               to="/knowledge"
+              data-ico="📚"
               className={({ isActive }) => clsx('navLink', isActive && 'navLinkActive')}
             >
               Wiedza

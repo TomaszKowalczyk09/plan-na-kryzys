@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { HOTLINES, HOTLINES_META } from '../data/hotlines';
 import { useSafetyPlan } from '../hooks/useIndexedDB';
+import { CTAButton, CloudIcon, StoryCard, StoryScreen } from '../components/StoryUI';
 
 const STEPS_NOW = [
   'Jeśli możesz, zostań w bezpiecznym miejscu.',
@@ -112,123 +113,169 @@ export default function CrisisPage() {
   };
 
   return (
-    <div className="pageAnim" style={{ display: 'grid', gap: 12 }}>
-      <div className="card pageAnimItem" style={{ borderColor: 'rgba(220, 38, 38, 0.20)' }}>
-        <div style={{ fontWeight: 800, color: 'var(--danger)' }}>Ważne</div>
-        <p className="p">{LEGAL_BAR}</p>
-      </div>
-
-      <div className="screen">
-        <div className="card cardSoft pageAnimItem">
-          <div className="badgeDanger">Wysokie ryzyko</div>
-          <h1 className="h1 mt10">
-            Jeśli masz myśli o zrobieniu sobie krzywdy — spróbuj nie być z tym sam/a.
-          </h1>
-          <p className="p">To poważna sytuacja. Pomoc jest możliwa teraz.</p>
-
-          <div className="rowBetween mt12" style={{ gap: 10, alignItems: 'center' }}>
-            <div className="p" style={{ margin: 0 }}>
-              Checklist: {checkedCount}/{STEPS_NOW.length}
-            </div>
-            <div className="row" style={{ gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-              <button type="button" className="btn" onClick={resetSteps}>
-                Odznacz wszystko
-              </button>
-              <button type="button" className="btn btnPrimary" onClick={markAllSteps}>
-                Odhaczyłem/am
-              </button>
-            </div>
+    <StoryScreen variant="dark" className="pageAnim">
+      <StoryCard tone="dark" className="pageAnimItem">
+        <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
+          <div>
+            <div className="badgeDanger">Ważne</div>
+            <h1 className="storyTitle" style={{ marginTop: 10, color: '#fff' }}>
+              Moduł <span className="storyAccent">Kryzys</span>
+            </h1>
+            <p className="storyLead" style={{ color: 'rgba(255,255,255,0.72)' }}>{LEGAL_BAR}</p>
           </div>
+          <CloudIcon mood="support" label="Wspierająca chmurka" />
+        </div>
+      </StoryCard>
 
-          <div className="stackSm mt12">
-            {STEPS_NOW.map((s, idx) => (
-              <label key={s} className="cardInset" style={{ display: 'flex', gap: 10, cursor: 'pointer' }}>
-                <input
-                  type="checkbox"
-                  checked={Boolean(stepsChecked?.[idx])}
-                  onChange={toggleStep(idx)}
-                  aria-label={s}
-                  style={{ marginTop: 2 }}
+      <StoryCard tone="dark" className="pageAnimItem">
+        <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
+          <div>
+            <div className="textStrong" style={{ color: '#fff' }}>Tu i teraz</div>
+            <p className="storyLead" style={{ marginTop: 8, color: 'rgba(255,255,255,0.72)' }}>
+              Zaznacz, co już zrobiłeś/aś. Skup się na jednym kroku.
+            </p>
+          </div>
+          <CloudIcon mood="sad" label="Smutna chmurka" />
+        </div>
+
+        <div className="rowBetween mt12" style={{ gap: 10, alignItems: 'center' }}>
+          <div className="textSm" style={{ color: 'rgba(255,255,255,0.72)' }}>
+            Checklist: {checkedCount}/{STEPS_NOW.length}
+          </div>
+          <div className="row" style={{ gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+            <CTAButton as="button" type="button" tone="ghost" onClick={resetSteps}>
+              Odznacz
+            </CTAButton>
+            <CTAButton as="button" type="button" tone="primary" onClick={markAllSteps}>
+              Odhaczyłem/am
+            </CTAButton>
+          </div>
+        </div>
+
+        <div className="stackSm mt12">
+          {STEPS_NOW.map((s, idx) => (
+            <label
+              key={s}
+              className="cardInset"
+              style={{
+                display: 'flex',
+                gap: 10,
+                cursor: 'pointer',
+                background: 'rgba(255,255,255,0.06)',
+                borderColor: 'rgba(255,255,255,0.14)',
+                color: '#fff',
+              }}
+            >
+              <input
+                type="checkbox"
+                checked={Boolean(stepsChecked?.[idx])}
+                onChange={toggleStep(idx)}
+                aria-label={s}
+                style={{ marginTop: 2 }}
+              />
+              <div style={{ flex: 1, minWidth: 0 }}>{s}</div>
+            </label>
+          ))}
+        </div>
+      </StoryCard>
+
+      <StoryCard tone="surface" className="pageAnimItem">
+        <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
+          <div>
+            <h2 className="sectionTitle" style={{ fontSize: 20 }}>Infolinie</h2>
+            <p className="p" style={{ marginTop: 6 }}>Aplikacja nie dzwoni sama — Ty wybierasz.</p>
+            <p className="textSm" style={{ marginTop: 6, color: 'var(--t-ink-muted)' }}>
+              Aktualizacja listy: {HOTLINES_META.lastUpdated}. {HOTLINES_META.note}
+            </p>
+          </div>
+          <CloudIcon mood="support" label="Wspierająca chmurka" />
+        </div>
+
+        <div className="stackSm mt12">
+          {HOTLINES.map((h) => (
+            <a key={h.id} className="cardInset cardMuted" href={`tel:${h.phone}`}>
+              <div className="rowBetween">
+                <div className="textStrong">{h.name}</div>
+                <div className="textEmphasis">{h.phone}</div>
+              </div>
+              <div className="p mt6">{h.note}</div>
+            </a>
+          ))}
+        </div>
+      </StoryCard>
+
+      <StoryCard tone="surface" className="pageAnimItem">
+        <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
+          <div>
+            <h2 className="sectionTitle" style={{ fontSize: 20 }}>Mój plan bezpieczeństwa</h2>
+            <p className="p" style={{ marginTop: 6 }}>To jest tylko na Twoim telefonie. Offline.</p>
+          </div>
+          <CloudIcon mood="calm" label="Spokojna chmurka" />
+        </div>
+
+        {loading ? (
+          <p className="p">Wczytuję…</p>
+        ) : (
+          <>
+            {/* krok po kroku: sekcje jako story */}
+            <div className="stackSm mt12">
+              <div className="cardInset">
+                <div className="textStrong">1) Moje sygnały ostrzegawcze</div>
+                <textarea
+                  id="warningSignals"
+                  className="textarea"
+                  value={form.warningSignals}
+                  onChange={update('warningSignals')}
+                  placeholder="Co u mnie oznacza, że jest gorzej?"
                 />
-                <div style={{ flex: 1, minWidth: 0 }}>{s}</div>
-              </label>
-            ))}
-          </div>
-        </div>
+              </div>
 
-        <div className="card pageAnimItem">
-          <h1 className="h1">Infolinie</h1>
-          <p className="p">Aplikacja nie dzwoni sama — Ty wybierasz.</p>
-          <p className="p">Aktualizacja listy: {HOTLINES_META.lastUpdated}. {HOTLINES_META.note}</p>
+              <div className="cardInset">
+                <div className="textStrong">2) Co pomaga mi, gdy jest bardzo trudno</div>
+                <textarea
+                  id="copingStrategies"
+                  className="textarea"
+                  value={form.copingStrategies}
+                  onChange={update('copingStrategies')}
+                  placeholder="Co mogę zrobić sam/a, żeby przetrwać najbliższe minuty/godziny?"
+                />
+              </div>
 
-          <div className="stackSm mt12">
-            {HOTLINES.map((h) => (
-              <a key={h.id} className="cardInset cardMuted" href={`tel:${h.phone}`}>
-                <div className="rowBetween">
-                  <div className="textStrong">{h.name}</div>
-                  <div className="textEmphasis">{h.phone}</div>
+              <div className="cardInset">
+                <div className="textStrong">3) Miejsca, w których czuję się bezpiecznie</div>
+                <textarea
+                  id="safePlaces"
+                  className="textarea"
+                  value={form.safePlaces}
+                  onChange={update('safePlaces')}
+                  placeholder="Np. dom, pokój, biblioteka, park…"
+                />
+              </div>
+
+              <div className="cardInset">
+                <div className="textStrong">4) Jak ograniczyć dostęp do rzeczy, którymi mógłbym/mogłabym zrobić sobie krzywdę</div>
+                <textarea
+                  id="limit"
+                  className="textarea"
+                  value={form.limitAccessToMeans}
+                  onChange={update('limitAccessToMeans')}
+                  placeholder="Np. odsunąć poza zasięg, poprosić kogoś o schowanie…"
+                />
+              </div>
+
+              <div className="cardInset">
+                <div className="textStrong">5) Osoby, z którymi mogę porozmawiać</div>
+                <div className="textSm" style={{ marginTop: 6, color: 'var(--muted)' }}>
+                  Imię + sposób kontaktu (np. telefon, messenger). To prywatne i lokalne.
                 </div>
-                <div className="p mt6">{h.note}</div>
-              </a>
-            ))}
-          </div>
-        </div>
-
-        <div className="card pageAnimItem">
-          <h1 className="h1">Mój plan bezpieczeństwa</h1>
-          <p className="p">To jest tylko na Twoim telefonie. Offline.</p>
-
-          {loading ? (
-            <p className="p">Wczytuję…</p>
-          ) : (
-            <>
-              <label className="label" htmlFor="warningSignals">Moje sygnały ostrzegawcze</label>
-              <textarea
-                id="warningSignals"
-                className="textarea"
-                value={form.warningSignals}
-                onChange={update('warningSignals')}
-                placeholder="Co u mnie oznacza, że jest gorzej?"
-              />
-
-              <label className="label" htmlFor="copingStrategies">Co pomaga mi, gdy jest bardzo trudno</label>
-              <textarea
-                id="copingStrategies"
-                className="textarea"
-                value={form.copingStrategies}
-                onChange={update('copingStrategies')}
-                placeholder="Co mogę zrobić sam/a, żeby przetrwać najbliższe minuty/godziny?"
-              />
-
-              <label className="label" htmlFor="safePlaces">Miejsca, w których czuję się bezpiecznie</label>
-              <textarea
-                id="safePlaces"
-                className="textarea"
-                value={form.safePlaces}
-                onChange={update('safePlaces')}
-                placeholder="Np. dom, pokój, biblioteka, park…"
-              />
-
-              <label className="label" htmlFor="limit">Jak ograniczyć dostęp do rzeczy, którymi mógłbym/mogłabym zrobić sobie krzywdę</label>
-              <textarea
-                id="limit"
-                className="textarea"
-                value={form.limitAccessToMeans}
-                onChange={update('limitAccessToMeans')}
-                placeholder="Np. odsunąć poza zasięg, poprosić kogoś o schowanie…"
-              />
-
-              <div className="card" style={{ padding: 12, marginTop: 12 }}>
-                <h1 className="h1">Osoby, z którymi mogę porozmawiać</h1>
-                <p className="p">Imię + sposób kontaktu (np. telefon, messenger). To prywatne i lokalne.</p>
 
                 <div className="stackSm mt12">
                   {(form.supportPeople ?? []).length === 0 ? (
-                    <div className="cardInset">Brak dodanych osób. Dodaj przynajmniej jedną, jeśli możesz.</div>
+                    <div className="cardInset cardMuted">Brak dodanych osób. Dodaj przynajmniej jedną, jeśli możesz.</div>
                   ) : null}
 
                   {(form.supportPeople ?? []).map((sp, idx) => (
-                    <div key={`${idx}`} className="cardInset">
+                    <div key={`${idx}`} className="cardInset cardMuted">
                       <div className="rowBetween" style={{ gap: 10, alignItems: 'flex-start' }}>
                         <div style={{ flex: 1, minWidth: 0 }}>
                           <label className="label" htmlFor={`sp-name-${idx}`}>Imię</label>
@@ -250,34 +297,34 @@ export default function CrisisPage() {
                           />
                         </div>
 
-                        <button type="button" className="btn btnDanger" onClick={() => removeSupportPerson(idx)}>
+                        <CTAButton as="button" type="button" tone="ghost" onClick={() => removeSupportPerson(idx)}>
                           Usuń
-                        </button>
+                        </CTAButton>
                       </div>
                     </div>
                   ))}
                 </div>
 
                 <div className="row mt12">
-                  <button type="button" className="btn" onClick={addSupportPerson}>Dodaj osobę</button>
+                  <CTAButton as="button" type="button" tone="ghost" onClick={addSupportPerson}>
+                    Dodaj osobę
+                  </CTAButton>
                 </div>
               </div>
 
-              <div className="row mt12">
-                <button type="button" className="btn btnPrimary" disabled={saving} onClick={onSave}>
-                  {saving ? 'Zapisuję…' : 'Zapisz plan'}
-                </button>
-              </div>
-            </>
-          )}
-        </div>
+              <CTAButton as="button" type="button" tone="primary" disabled={saving} onClick={onSave}>
+                {saving ? 'Zapisuję…' : 'Zapisz plan'}
+              </CTAButton>
+            </div>
+          </>
+        )}
+      </StoryCard>
 
-        <div className="card cardMuted pageAnimItem">
-          <p className="p">
-            Jeśli jesteś w bezpośrednim zagrożeniu życia, wybierz 112.
-          </p>
-        </div>
-      </div>
-    </div>
+      <StoryCard tone="dark" className="pageAnimItem">
+        <p className="storyLead" style={{ margin: 0, color: 'rgba(255,255,255,0.72)' }}>
+          Jeśli jesteś w bezpośrednim zagrożeniu — zadzwoń pod 112.
+        </p>
+      </StoryCard>
+    </StoryScreen>
   );
 }
