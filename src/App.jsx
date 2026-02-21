@@ -8,6 +8,7 @@ import KnowledgePage from './pages/KnowledgePage.jsx'
 import FriendPage from './pages/FriendPage.jsx'
 import AboutPage from './pages/AboutPage.jsx'
 import PrivacyPage from './pages/PrivacyPage.jsx'
+import AddictionConfigPage from './pages/AddictionConfigPage.jsx';
 import TermsPage from './pages/TermsPage.jsx'
 
 function FirstRunLayout() {
@@ -35,6 +36,8 @@ export default function App() {
             <Route path="/knowledge" element={<KnowledgePage />} />
             <Route path="/friend" element={<FriendPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/sobriety" element={import('./pages/SobrietyPage.jsx').then(mod => <mod.default />)} />
+           <Route path="/addiction-config" element={<AddictionConfigPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Route>

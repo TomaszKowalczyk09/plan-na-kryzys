@@ -80,6 +80,20 @@ export default function Dashboard() {
           </div>
         </StoryCard>
 
+          <StoryCard tone="surface" style={{ padding: 16 }}>
+            <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
+              <div style={{ display: 'grid', gap: 4 }}>
+                <div className="textStrong">Czystość</div>
+                <div className="textMuted textSm">Twój licznik</div>
+              </div>
+              <div style={{ fontSize: 22, fontWeight: 900 }}>🧼</div>
+            </div>
+            <div style={{ marginTop: 12 }}>
+              <CTAButton as={Link} to="/sobriety" tone="ghost">
+                Przejdź
+              </CTAButton>
+            </div>
+          </StoryCard>
         <StoryCard tone="surface" style={{ padding: 16 }}>
           <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
             <div style={{ display: 'grid', gap: 4 }}>

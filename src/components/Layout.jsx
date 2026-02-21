@@ -2,11 +2,20 @@ import { useEffect, useMemo, useState } from 'react'
 import { NavLink, Outlet, useLocation, Link } from 'react-router-dom'
 import clsx from 'clsx'
 import { useCheckInNotifications } from '../hooks/useCheckInNotifications'
-import { useSettings } from '../hooks/useIndexedDB'
+import { useSettings, useSobrietyTimer } from '../hooks/useIndexedDB'
 
 export default function Layout() {
   useCheckInNotifications()
   const { pathname } = useLocation()
+  // Licznik czystości
+  const {
+    startDate,
+    loading: sobrietyLoading,
+    setSobrietyStart,
+    resetSobriety,
+    getElapsed,
+  } = useSobrietyTimer();
+  const elapsed = getElapsed();
 
   const hideHeader = pathname === '/privacy' || pathname === '/terms'
 
@@ -66,6 +75,7 @@ export default function Layout() {
               <div className="brand brandRedesigned">Plan na kryzys</div>
               <div className="headerTitle">{title}</div>
               {pathname === '/crisis' ? <span className="badgeDanger badgeDangerRedesigned">Pilne</span> : null}
+              {/* ...existing code... */}
             </div>
             <div className="headerRight">
               <button
@@ -110,39 +120,77 @@ export default function Layout() {
       </main>
 
       {hideBottomNav ? null : (
-        <nav className="nav" aria-label="Nawigacja główna">
-          <div className="navInner" style={{ '--active': navActiveIndex }}>
-            <div className="navHighlight" aria-hidden="true" />
+        <nav
+          className="nav"
+          aria-label="Nawigacja główna"
+          style={{
+            position: 'fixed',
+            left: '50%',
+            bottom: 24,
+            transform: 'translateX(-50%)',
+            zIndex: 100,
+            background: 'rgba(30, 30, 60, 0.85)',
+            backdropFilter: 'blur(16px)',
+            borderRadius: 24,
+            boxShadow: '0 8px 32px #0004',
+            padding: '12px 24px',
+            display: 'flex',
+            gap: 8,
+            minWidth: 340,
+            maxWidth: 480,
+            width: 'calc(100vw - 32px)',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          {[{
+            to: '/',
+            end: true,
+            ico: '🏠',
+            label: 'Start',
+          }, {
+            to: '/mood',
+            ico: '☁️',
+            label: 'Nastrój',
+          }, {
+            to: '/crisis',
+            ico: '🆘',
+            label: 'Kryzys',
+          }, {
+            to: '/knowledge',
+            ico: '📚',
+            label: 'Wiedza',
+          }, {
+            to: '/addiction-config',
+            ico: '🧩',
+            label: 'Uzależnienie',
+          }].map(({ to, end, ico, label }) => (
             <NavLink
-              to="/"
-              end
-              data-ico="🏠"
-              className={({ isActive }) => clsx('navLink', isActive && 'navLinkActive')}
+              key={to}
+              to={to}
+              end={!!end}
+              className={({ isActive }) =>
+                clsx('navLink', isActive && 'navLinkActive')
+              }
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minWidth: 70,
+                padding: '8px 0',
+                borderRadius: 16,
+                fontSize: 15,
+                fontWeight: 500,
+                color: '#d0d0ff',
+                transition: 'background .2s,color .2s',
+                cursor: 'pointer',
+              }}
             >
-              Start
+              <span style={{ fontSize: 28, marginBottom: 2 }}>{ico}</span>
+              <span>{label}</span>
             </NavLink>
-            <NavLink
-              to="/mood"
-              data-ico="☁️"
-              className={({ isActive }) => clsx('navLink', isActive && 'navLinkActive')}
-            >
-              Nastrój
-            </NavLink>
-            <NavLink
-              to="/crisis"
-              data-ico="🆘"
-              className={({ isActive }) => clsx('navLink', isActive && 'navLinkActive')}
-            >
-              Kryzys
-            </NavLink>
-            <NavLink
-              to="/knowledge"
-              data-ico="📚"
-              className={({ isActive }) => clsx('navLink', isActive && 'navLinkActive')}
-            >
-              Wiedza
-            </NavLink>
-          </div>
+          ))}
         </nav>
       )}
 

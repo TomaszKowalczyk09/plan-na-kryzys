@@ -1,6 +1,77 @@
+// Hook do śledzenia czasu czystości
+export function useSobrietyTimer() {
+  const [startDate, setStartDate] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // Pobierz datę rozpoczęcia czystości
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    const entry = await db.sobriety.get('sobriety_timer');
+    setStartDate(entry?.startDate || null);
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    refresh();
+  }, [refresh]);
+
+  // Ustaw nową datę rozpoczęcia czystości
+  const setSobrietyStart = useCallback(async (date) => {
+    await db.sobriety.put({ id: 'sobriety_timer', startDate: date });
+    setStartDate(date);
+  }, []);
+
+  // Zresetuj licznik czystości
+  const resetSobriety = useCallback(async () => {
+    await db.sobriety.delete('sobriety_timer');
+    setStartDate(null);
+  }, []);
+
+  // Oblicz czas od rozpoczęcia czystości
+  const getElapsed = useCallback(() => {
+    if (!startDate) return null;
+    const now = Date.now();
+    const start = new Date(startDate).getTime();
+    const diff = now - start;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    return { days, hours, minutes };
+  }, [startDate]);
+
+  return { startDate, loading, setSobrietyStart, resetSobriety, getElapsed };
+}
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { db } from '../db/indexedDB'
 
+// Hook do obsługi konfiguracji uzależnienia
+export function useAddictionConfig() {
+  const [config, setConfig] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    const entry = await db.addictionConfig.get('user_config');
+    setConfig(entry || null);
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    refresh();
+  }, [refresh]);
+
+  const saveConfig = useCallback(async (data) => {
+    await db.addictionConfig.put({ id: 'user_config', ...data });
+    setConfig({ id: 'user_config', ...data });
+  }, []);
+
+  const clearConfig = useCallback(async () => {
+    await db.addictionConfig.delete('user_config');
+    setConfig(null);
+  }, []);
+
+  return { config, loading, saveConfig, clearConfig };
+}
 export function useMoodEntries() {
   const [entries, setEntries] = useState([])
   const [loading, setLoading] = useState(true)

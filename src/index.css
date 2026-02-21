@@ -1034,10 +1034,6 @@ input[type='checkbox'] {
   font-weight: 800;
 }
 
-.textMuted {
-  color: var(--muted);
-}
-
 .textSm {
   font-size: 12px;
 }
@@ -2074,8 +2070,10 @@ input[type='checkbox'] {
 }
 
 :root[data-theme='dark'] .navHighlight {
-  background: color-mix(in srgb, var(--t-purple) 70%, #000 30%);
-  opacity: 1;
+    color: #fff;
+    background: linear-gradient(90deg,#6a5cff,#a685ff);
+    box-shadow: 0 2px 12px #6a5cff44;
+    font-weight: 700;
 }
 
 /* ...existing code... */
