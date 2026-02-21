@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const tabs = [
@@ -12,44 +12,107 @@ const tabs = [
 ];
 
 export default function TabNavigation() {
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const currentIdx = tabs.findIndex(tab => tab.path === pathname);
 
-  const handleBack = () => {
-    if (currentIdx > 0) navigate(tabs[currentIdx - 1].path);
-  };
-  const handleNext = () => {
-    if (currentIdx < tabs.length - 1) navigate(tabs[currentIdx + 1].path);
+  const handleMenuClick = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const handleTabClick = (path) => {
+    setOpen(false);
+    navigate(path);
   };
 
   return (
-    <div style={{
-      position: 'fixed',
-      left: '50%',
-      bottom: 24,
-      transform: 'translateX(-50%)',
-      zIndex: 100,
-      background: 'rgba(30, 30, 60, 0.85)',
-      backdropFilter: 'blur(16px)',
-      borderRadius: 24,
-      boxShadow: '0 8px 32px #0004',
-      padding: '12px 24px',
-      display: 'flex',
-      gap: 12,
-      minWidth: 340,
-      maxWidth: 480,
-      width: 'calc(100vw - 32px)',
-      justifyContent: 'center',
-      alignItems: 'center',
-    }}>
-      <button onClick={handleBack} disabled={currentIdx <= 0} style={{ padding: '8px 16px', borderRadius: 12, fontWeight: 700, background: '#6a5cff', color: '#fff', border: 'none', cursor: currentIdx > 0 ? 'pointer' : 'not-allowed', opacity: currentIdx > 0 ? 1 : 0.5 }}>← Wstecz</button>
-      <select value={pathname} onChange={e => navigate(e.target.value)} style={{ padding: '8px', borderRadius: 12, fontWeight: 700, fontSize: 16 }}>
-        {tabs.map(tab => (
-          <option key={tab.path} value={tab.path}>{tab.label}</option>
-        ))}
-      </select>
-      <button onClick={handleNext} disabled={currentIdx >= tabs.length - 1} style={{ padding: '8px 16px', borderRadius: 12, fontWeight: 700, background: '#6a5cff', color: '#fff', border: 'none', cursor: currentIdx < tabs.length - 1 ? 'pointer' : 'not-allowed', opacity: currentIdx < tabs.length - 1 ? 1 : 0.5 }}>Dalej →</button>
-    </div>
+    <>
+      <div style={{
+        position: 'fixed',
+        left: '50%',
+        bottom: 24,
+        transform: 'translateX(-50%)',
+        zIndex: 100,
+        background: 'rgba(30, 30, 60, 0.85)',
+        backdropFilter: 'blur(16px)',
+        borderRadius: 24,
+        boxShadow: '0 8px 32px #0004',
+        padding: '12px 24px',
+        display: 'flex',
+        gap: 12,
+        minWidth: 80,
+        maxWidth: 120,
+        width: 'auto',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+        <button
+          aria-label="Menu"
+          onClick={handleMenuClick}
+          style={{
+            background: 'none',
+            border: 'none',
+            fontSize: 32,
+            color: '#fff',
+            cursor: 'pointer',
+            padding: 0,
+            borderRadius: 16,
+            width: 48,
+            height: 48,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <span role="img" aria-label="menu">☰</span>
+        </button>
+      </div>
+      {open && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          background: 'rgba(10,10,20,0.85)',
+          zIndex: 2000,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+          <button
+            onClick={handleClose}
+            aria-label="Zamknij menu"
+            style={{
+              position: 'absolute',
+              top: 32,
+              right: 32,
+              fontSize: 32,
+              background: 'none',
+              border: 'none',
+              color: '#fff',
+              cursor: 'pointer',
+            }}
+          >✕</button>
+          <nav style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
+            {tabs.map(tab => (
+              <button
+                key={tab.path}
+                onClick={() => handleTabClick(tab.path)}
+                style={{
+                  fontSize: 28,
+                  fontWeight: pathname === tab.path ? 800 : 500,
+                  color: pathname === tab.path ? '#a685ff' : '#fff',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: '12px 32px',
+                  borderRadius: 18,
+                  transition: 'color .2s',
+                }}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </nav>
+        </div>
+      )}
+    </>
   );
 }
