@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const tabs = [
@@ -11,13 +11,22 @@ const tabs = [
   { path: '/about', label: 'O aplikacji' },
 ];
 
+
 export default function TabNavigation() {
   const [open, setOpen] = useState(false);
+  const [animating, setAnimating] = useState(false);
+  const menuRef = useRef(null);
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const handleMenuClick = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleMenuClick = () => {
+    setOpen(true);
+    setTimeout(() => setAnimating(true), 10);
+  };
+  const handleClose = () => {
+    setAnimating(false);
+    setTimeout(() => setOpen(false), 300);
+  };
   const handleTabClick = (path) => {
     setOpen(false);
     navigate(path);
@@ -66,16 +75,22 @@ export default function TabNavigation() {
         </button>
       </div>
       {open && (
-        <div style={{
-          position: 'fixed',
-          inset: 0,
-          background: 'rgba(10,10,20,0.85)',
-          zIndex: 2000,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
+        <div
+          ref={menuRef}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(10,10,20,0.85)',
+            zIndex: 2000,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'opacity 0.3s, transform 0.3s',
+            opacity: animating ? 1 : 0,
+            transform: animating ? 'scale(1)' : 'scale(0.96)',
+          }}
+        >
           <button
             onClick={handleClose}
             aria-label="Zamknij menu"
@@ -88,6 +103,7 @@ export default function TabNavigation() {
               border: 'none',
               color: '#fff',
               cursor: 'pointer',
+              transition: 'color .2s',
             }}
           >✕</button>
           <nav style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
