@@ -134,7 +134,7 @@ export default function Dashboard() {
           <div style={{ fontSize: 22, fontWeight: 900 }}>#</div>
         </div>
         <div style={{ marginTop: 14 }}>
-          <CTAButton as="a" href="https://discord.gg/" target="_blank" rel="noreferrer" tone="primary">
+          <CTAButton as="a" href="https://discord.gg/kjHr5E35js" target="_blank" rel="noreferrer" tone="primary">
             Dołącz
           </CTAButton>
         </div>
