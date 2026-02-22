@@ -6,7 +6,7 @@ const tabs = [
   { path: '/mood', label: 'Nastrój' },
   { path: '/crisis', label: 'Kryzys' },
   { path: '/knowledge', label: 'Wiedza' },
-  { path: '/addiction-config', label: 'Uzależnienie' },
+  { path: '/sobriety', label: 'Uzależnienie' },
   { path: '/friend', label: 'Dla przyjaciela' },
   { path: '/about', label: 'O aplikacji' },
 ];

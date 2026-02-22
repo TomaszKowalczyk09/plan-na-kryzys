@@ -27,7 +27,7 @@ export function useSobrietyTimer() {
     setStartDate(null);
   }, []);
 
-  // Oblicz czas od rozpoczęcia czystości
+  // Oblicz czas od rozpoczęcia czystości (dodano sekundy)
   const getElapsed = useCallback(() => {
     if (!startDate) return null;
     const now = Date.now();
@@ -36,7 +36,8 @@ export function useSobrietyTimer() {
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
     const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    return { days, hours, minutes };
+    const seconds = Math.floor((diff / 1000) % 60);
+    return { days, hours, minutes, seconds };
   }, [startDate]);
 
   return { startDate, loading, setSobrietyStart, resetSobriety, getElapsed };

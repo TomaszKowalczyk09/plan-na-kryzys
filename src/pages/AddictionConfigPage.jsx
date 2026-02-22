@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAddictionConfig } from '../hooks/useIndexedDB';
+import { useNavigate } from 'react-router-dom';
 
 const questions = [
   'Dlaczego chcesz wyjść z uzależnienia?',
@@ -10,6 +11,7 @@ const questions = [
 
 export default function AddictionConfigPage() {
   const { config, saveConfig, loading } = useAddictionConfig();
+  const navigate = useNavigate();
   const [addiction, setAddiction] = useState('');
   const [answers, setAnswers] = useState(Array(questions.length).fill(''));
 
@@ -32,6 +34,7 @@ export default function AddictionConfigPage() {
     e.preventDefault();
     await saveConfig({ addiction, answers });
     alert('Konfiguracja uzależnienia zapisana!');
+    navigate('/sobriety');
   };
 
   return (

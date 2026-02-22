@@ -116,6 +116,7 @@ export default function Layout() {
 
       <main className="main">
         <div className="container">
+          {/* ...existing code... */}
           <Outlet />
         </div>
       </main>
