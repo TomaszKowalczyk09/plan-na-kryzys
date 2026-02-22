@@ -81,7 +81,6 @@ export default function LandingPage() {
         </h1>
         <p style={styles.subheading}>
           Twoje wsparcie w trudnych chwilach.<br />
-          <span style={styles.bold}>ma znaczenie</span><br />
           – poznaj funkcje, pobierz aplikację i zacznij korzystać!
         </p>
         <button
