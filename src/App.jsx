@@ -1,3 +1,4 @@
+import LandingPage from './pages/LandingPage.jsx';
 import { BrowserRouter, Navigate, Route, Routes, Outlet } from 'react-router-dom'
 import Layout from './components/Layout.jsx'
 import FirstRunGate from './components/FirstRunGate.jsx'
@@ -27,12 +28,13 @@ export default function App() {
       <Routes>
         <Route element={<Layout />}>
           {/* Trasy dostępne bez onboardingu */}
+          <Route path="/" element={<LandingPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />
 
           {/* Reszta aplikacji za bramką pierwszego uruchomienia */}
           <Route element={<FirstRunLayout />}>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/mood" element={<MoodPage />} />
             <Route path="/crisis" element={<CrisisPage />} />
             <Route path="/knowledge" element={<KnowledgePage />} />
