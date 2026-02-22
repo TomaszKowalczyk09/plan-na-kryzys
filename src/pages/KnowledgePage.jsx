@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { KNOWLEDGE_ARTICLES } from '../data/knowledge'
 import { CTAButton, CloudIcon, StoryCard, StoryScreen } from '../components/StoryUI'
+import { Link } from 'react-router-dom';
 
 function GroundingGuideModal({ open, onClose }) {
   const steps = useMemo(
@@ -166,7 +167,7 @@ export default function KnowledgePage() {
         </div>
 
         <div className="row mt12">
-          <CTAButton as="button" type="button" tone="primary" onClick={() => setGuideOpen(true)}>
+          <CTAButton as={Link} to="/knowledge/grounding" tone="primary">
             Uziemienie: przewodnik
           </CTAButton>
         </div>

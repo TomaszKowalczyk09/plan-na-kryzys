@@ -23,7 +23,7 @@ export default function Layout() {
   const { value: accepted, loading: acceptedLoading } = useSettings('legal_ack_v1_2026-02-04', false)
   const isOnboardingActive = !acceptedLoading && !accepted
 
-  const hideBottomNav = isOnboardingActive
+  const hideBottomNav = isOnboardingActive || pathname === '/knowledge/grounding'
 
   const systemPrefersDark = useMemo(() => {
     if (typeof window === 'undefined') return false

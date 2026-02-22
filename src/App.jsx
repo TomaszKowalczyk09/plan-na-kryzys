@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard.jsx'
 import MoodPage from './pages/MoodPage.jsx'
 import CrisisPage from './pages/CrisisPage.jsx'
 import KnowledgePage from './pages/KnowledgePage.jsx'
+import GroundingPage from './pages/GroundingPage.jsx'
 import FriendPage from './pages/FriendPage.jsx'
 import AboutPage from './pages/AboutPage.jsx'
 import PrivacyPage from './pages/PrivacyPage.jsx'
@@ -35,6 +36,7 @@ export default function App() {
             <Route path="/mood" element={<MoodPage />} />
             <Route path="/crisis" element={<CrisisPage />} />
             <Route path="/knowledge" element={<KnowledgePage />} />
+            <Route path="/knowledge/grounding" element={<GroundingPage />} />
             <Route path="/friend" element={<FriendPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/sobriety" element={<SobrietyPage />} />
