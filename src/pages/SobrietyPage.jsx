@@ -24,9 +24,14 @@ export default function SobrietyPage() {
   const { config, loading: configLoading } = useAddictionConfig();
   const { startDate, loading, setSobrietyStart, resetSobriety, getElapsed } = useSobrietyTimer();
   const navigate = useNavigate();
-  const elapsed = getElapsed();
   const daysRef = useRef();
   const [seconds, setSeconds] = React.useState(0);
+  const elapsed = getElapsed();
+  // Kamienie milowe: dni czystości
+  const milestones = [1, 7, 30, 90, 180, 365, 730, 1000];
+  const achieved = elapsed ? milestones.filter(m => elapsed.days >= m) : [];
+  const nextMilestone = milestones.find(m => elapsed && elapsed.days < m);
+  const justReached = achieved.length > 0 && elapsed && milestones.includes(elapsed.days);
   React.useEffect(() => {
     if (!startDate) return;
     const interval = setInterval(() => {
@@ -64,134 +69,103 @@ export default function SobrietyPage() {
       boxShadow: '0 8px 32px rgba(109,94,252,0.18)',
       maxWidth: 540,
       padding: '32px 18px',
-    }}>
-      {/* ...existing code... */}
-      {!config || configLoading ? (
-        <>
-          <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 18 }}>Nie skonfigurowano nałogu lub trwa ładowanie.</div>
-          <div style={{ fontSize: 16, marginBottom: 24 }}>Przejdź do konfiguracji, aby uruchomić licznik czystości.</div>
-          <button className="sobriety-btn" onClick={() => navigate('/addiction-config')}>Konfiguruj nałóg</button>
-        </>
-      ) : (
-        <>
-          <div className="sobriety-emoji">🌱</div>
-          <div className="sobriety-motto">Każdy dzień to Twój sukces!</div>
-          <h1 style={{ fontSize: 26, fontWeight: 900, marginBottom: 8 }}>Czystość od uzależnienia</h1>
-          <p style={{ fontSize: 15, marginBottom: 18 }}>Ten ekran pozwala śledzić czas czystości od wybranego uzależnienia.</p>
-          {config && config.addiction && (
-            <div style={{ fontSize: 17, fontWeight: 700, marginBottom: 12 }}>
-              Zmagasz się z: <span style={{ color: '#ffe082' }}>{config.addiction}</span>
-            </div>
-          )}
-          {loading ? (
-            <div>Ładowanie...</div>
-          ) : startDate ? (
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 17, fontWeight: 700, marginBottom: 6 }}>
-                Czystość od: {new Date(startDate).toLocaleDateString()}
-              </div>
-              {elapsed && (
-                <div className="sobriety-days">
-                  <span ref={daysRef}></span> dni
-                  <span style={{ fontSize: 18, fontWeight: 500, marginLeft: 8 }}>
-                    {elapsed.hours} h, {elapsed.minutes} min, {elapsed.seconds} sek
-                  </span>
-                </div>
-              )}
-              <button className="sobriety-btn" onClick={resetSobriety}>Resetuj licznik</button>
-            </div>
-          ) : (
-            <div style={{ textAlign: 'center' }}>
-              <button className="sobriety-btn" onClick={() => setSobrietyStart(new Date().toISOString())}>Ustaw początek czystości</button>
-            </div>
-          )}
-        </>
-      )}
-    </div>
-  );
-
-  return (
-    <div style={{
-      minHeight: 'calc(100vh - 120px)',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      background: 'linear-gradient(135deg, #6d5efc 0%, #a79cff 100%)',
-      color: '#fff',
       animation: 'fadeIn 1s',
-      borderRadius: 32,
-      margin: '24px auto',
-      boxShadow: '0 8px 32px rgba(109,94,252,0.18)',
-      maxWidth: 540,
-      padding: '32px 18px',
     }}>
-      <style>{`
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .sobriety-btn { background: #fff; color: #6d5efc; border-radius: 16px; font-weight: 700; font-size: 16px; padding: 12px 28px; margin-top: 24px; box-shadow: 0 2px 12px #a79cff33; transition: transform 0.2s, box-shadow 0.2s; border: none; cursor: pointer; }
-        .sobriety-btn:hover { transform: scale(1.07); box-shadow: 0 6px 24px #a79cff66; }
-        .sobriety-emoji { font-size: 44px; margin-bottom: 12px; animation: bounce 1.2s infinite alternate; }
-        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-12px); } }
-        .sobriety-days { font-size: 38px; font-weight: 900; letter-spacing: 1px; margin: 12px 0; }
-        .sobriety-motto { font-size: 18px; font-weight: 700; margin-bottom: 18px; color: #fff; text-shadow: 0 2px 8px #6d5efc44; }
-      `}</style>
-      <div className="sobriety-emoji">🌱</div>
-      <div className="sobriety-motto">Każdy dzień to Twój sukces!</div>
-      <h1 style={{ fontSize: 26, fontWeight: 900, marginBottom: 8 }}>Czystość od uzależnienia</h1>
-      <p style={{ fontSize: 15, marginBottom: 18 }}>Ten ekran pozwala śledzić czas czystości od wybranego uzależnienia.</p>
-      {config && config.addictionName && (
-        <div style={{ fontSize: 17, fontWeight: 700, marginBottom: 12 }}>
-          Zmagasz się z: <span style={{ color: '#ffe082' }}>{config.addictionName}</span>
-        </div>
-      )}
-      {loading ? (
-        <div>Ładowanie...</div>
-      ) : startDate ? (
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: 17, fontWeight: 700, marginBottom: 6 }}>
-            Czystość od: {new Date(startDate).toLocaleDateString()}
-          </div>
-          {elapsed && (
-            <div className="sobriety-days">
-              <span ref={daysRef}></span> dni
-              <span style={{ fontSize: 18, fontWeight: 500, marginLeft: 8 }}>
-                {elapsed.hours} h, {elapsed.minutes} min, {elapsed.seconds} sek
-              </span>
-            </div>
-          )}
-          <button
-            onClick={resetSobriety}
-            style={{
-              background: 'linear-gradient(90deg,#6a5cff,#a685ff)',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '18px',
-              fontWeight: 700,
-              fontSize: '18px',
-              padding: '14px 36px',
-              marginTop: '24px',
-              boxShadow: '0 4px 16px #a79cff44',
-              cursor: 'pointer',
-              transition: 'transform .2s, box-shadow .2s',
-              letterSpacing: '0.5px',
-            }}
-            onMouseOver={e => {
-              e.currentTarget.style.transform = 'scale(1.06)';
-              e.currentTarget.style.boxShadow = '0 8px 32px #a79cff66';
-            }}
-            onMouseOut={e => {
-              e.currentTarget.style.transform = 'scale(1)';
-              e.currentTarget.style.boxShadow = '0 4px 16px #a79cff44';
-            }}
-          >
-            <span style={{ fontSize: 22, marginRight: 8 }}>🧼</span> Resetuj licznik
-          </button>
-        </div>
-      ) : (
-        <div style={{ textAlign: 'center' }}>
-          <button className="sobriety-btn" onClick={() => setSobrietyStart(new Date().toISOString())}>Ustaw początek czystości</button>
-        </div>
-      )}
-    </div>
-  );
-}
+        <style>{`
+          @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+          .sobriety-btn { background: #fff; color: #6d5efc; border-radius: 16px; font-weight: 700; font-size: 16px; padding: 12px 28px; margin-top: 24px; box-shadow: 0 2px 12px #a79cff33; transition: transform 0.2s, box-shadow 0.2s; border: none; cursor: pointer; }
+          .sobriety-btn:hover { transform: scale(1.07); box-shadow: 0 6px 24px #a79cff66; }
+          .sobriety-emoji { font-size: 44px; margin-bottom: 12px; animation: bounce 1.2s infinite alternate; }
+          @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-12px); } }
+          .sobriety-days { font-size: 38px; font-weight: 900; letter-spacing: 1px; margin: 12px 0; }
+          .sobriety-motto { font-size: 18px; font-weight: 700; margin-bottom: 18px; color: #fff; text-shadow: 0 2px 8px #6d5efc44; }
+        `}</style>
+        {!config || configLoading ? (
+          <>
+            <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 18 }}>Nie skonfigurowano nałogu lub trwa ładowanie.</div>
+            <div style={{ fontSize: 16, marginBottom: 24 }}>Przejdź do konfiguracji, aby uruchomić licznik czystości.</div>
+            <button className="sobriety-btn" onClick={() => navigate('/addiction-config')}>Konfiguruj nałóg</button>
+          </>
+        ) : (
+          <>
+            <div className="sobriety-emoji">🌱</div>
+            <div className="sobriety-motto">Każdy dzień to Twój sukces!</div>
+            <h1 style={{ fontSize: 26, fontWeight: 900, marginBottom: 8 }}>Czystość od uzależnienia</h1>
+            <p style={{ fontSize: 15, marginBottom: 18 }}>Ten ekran pozwala śledzić czas czystości od wybranego uzależnienia.</p>
+            {/* Kamienie milowe */}
+            {elapsed && (
+              <div style={{ margin: '24px 0', textAlign: 'center' }}>
+                <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 8 }}>Kamienie milowe:</div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 12 }}>
+                  {milestones.map(m => (
+                    <div key={m} style={{
+                      padding: '8px 18px',
+                      borderRadius: 16,
+                      background: achieved.includes(m) ? 'linear-gradient(90deg,#ffe082,#a685ff)' : '#eee',
+                      color: achieved.includes(m) ? '#6a5cff' : '#888',
+                      fontWeight: achieved.includes(m) ? 900 : 700,
+                      fontSize: 16,
+                      boxShadow: achieved.includes(m) ? '0 2px 12px #a79cff33' : 'none',
+                      border: achieved.includes(m) ? '2px solid #ffe082' : 'none',
+                      marginBottom: 4,
+                    }}>
+                      {m} dni {achieved.includes(m) && '🏆'}
+                    </div>
+                  ))}
+                </div>
+                {nextMilestone && (
+                  <div style={{ marginTop: 10, fontSize: 15, color: '#fff', fontWeight: 700 }}>
+                    Kolejny kamień milowy: <span style={{ color: '#ffe082' }}>{nextMilestone} dni</span>
+                  </div>
+                )}
+              </div>
+            )}
+            {/* Gratulacje */}
+            {justReached && (
+              <div style={{
+                background: 'linear-gradient(90deg,#ffe082,#a685ff)',
+                color: '#6a5cff',
+                borderRadius: 18,
+                fontWeight: 900,
+                fontSize: 20,
+                padding: '16px 24px',
+                margin: '18px 0',
+                boxShadow: '0 4px 16px #a79cff44',
+              }}>
+                Gratulacje! Osiągnąłeś kamień milowy: {elapsed.days} dni czystości 🏆
+              </div>
+            )}
+            {config && (config.addiction || config.addictionName) && (
+              <div style={{ fontSize: 17, fontWeight: 700, marginBottom: 12 }}>
+                Zmagasz się z: <span style={{ color: '#ffe082' }}>{config.addiction || config.addictionName}</span>
+              </div>
+            )}
+            {loading ? (
+              <div>Ładowanie...</div>
+            ) : startDate ? (
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 17, fontWeight: 700, marginBottom: 6 }}>
+                  Czystość od: {new Date(startDate).toLocaleDateString()}
+                </div>
+                {elapsed && (
+                  <div className="sobriety-days">
+                    <span ref={daysRef}></span> dni
+                    <span style={{ fontSize: 18, fontWeight: 500, marginLeft: 8 }}>
+                      {elapsed.hours} h, {elapsed.minutes} min, {elapsed.seconds} sek
+                    </span>
+                  </div>
+                )}
+                <button className="sobriety-btn" onClick={resetSobriety}>
+                  <span style={{ fontSize: 22, marginRight: 8 }}>🧼</span> Resetuj licznik
+                </button>
+              </div>
+            ) : (
+              <div style={{ textAlign: 'center' }}>
+                <button className="sobriety-btn" onClick={() => setSobrietyStart(new Date().toISOString())}>Ustaw początek czystości</button>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    );
+  }
