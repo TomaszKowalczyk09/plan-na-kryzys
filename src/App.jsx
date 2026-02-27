@@ -28,7 +28,7 @@ export default function App() {
       <Routes>
         <Route element={<Layout />}>
           {/* Trasy dostępne bez onboardingu */}
-          <Route path="/" element={<LandingPage />} />
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />
 
