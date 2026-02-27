@@ -1,4 +1,4 @@
-import LandingPage from './pages/LandingPage.jsx';
+// ...existing code...
 import { BrowserRouter, Navigate, Route, Routes, Outlet } from 'react-router-dom'
 import Layout from './components/Layout.jsx'
 import FirstRunGate from './components/FirstRunGate.jsx'
