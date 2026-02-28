@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAddictionConfig } from '../hooks/useIndexedDB';
 import { useNavigate } from 'react-router-dom';
+import KamienieMilowe from '../components/KamienieMilowe';
 
 const questions = [
   'Dlaczego chcesz wyjść z uzależnienia?',
@@ -68,6 +69,9 @@ export default function AddictionConfigPage() {
               Zapisz
             </button>
           </form>
+          <div style={{ marginTop: 32 }}>
+            <KamienieMilowe />
+          </div>
         </div>
       </div>
   );
