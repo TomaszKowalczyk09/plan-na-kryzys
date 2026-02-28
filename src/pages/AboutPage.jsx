@@ -163,13 +163,13 @@ export default function AboutPage() {
         <div className="stackSm mt10">
           <div className="cardInset">Inicjatywa: Radni Młodzieżowej Rady Miejskiej w Gryfinie.</div>
           <div className="cardInset">
-            Administrator i osoba odpowiedzialna: Tomasz Kowalczyk (tomasz.kowalczyk@gminagryfino.pl).
+            Administrator i osoba odpowiedzialna: <a href="mailto: tomasz.kowalczyk@gminagryfino.pl">Tomasz Kowalczyk (tomasz.kowalczyk@gminagryfino.pl)</a>
           </div>
           <div className="cardInset">
             Serwer Discord: <a href="https://discord.gg/kjHr5E35js" target="_blank" rel="noreferrer">dołącz</a>
           </div>
           <div className="cardInset">
-            Osoba odpowiedzialna za serwer Discord: Łukasz Majka (lukasz.majka@gminagryfino.pl).
+            Osoba odpowiedzialna za serwer Discord: <a href="mailto:lukasz.majka@gminagryfino.pl">Łukasz Majka (lukasz.majka@gminagryfino.pl)</a>.
           </div>
         </div>
       </div>
