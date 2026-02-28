@@ -161,7 +161,7 @@ export default function AboutPage() {
       <div className="card">
         <h1 className="h1">Credits</h1>
         <div className="stackSm mt10">
-          <div className="cardInset">Inicjatywa: Młodzieżowa Rada Miejska w Gryfinie.</div>
+          <div className="cardInset">Inicjatywa: Radni Młodzieżowej Rady Miejskiej w Gryfinie.</div>
           <div className="cardInset">
             Administrator i osoba odpowiedzialna: Tomasz Kowalczyk (tomasz.kowalczyk@gminagryfino.pl).
           </div>
