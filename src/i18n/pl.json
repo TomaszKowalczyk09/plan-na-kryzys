@@ -60,6 +60,105 @@
       "consent": "Rozumiem zasady: dane są lokalne, nie ma kont, a kontakt z pomocą inicjuję sam/a."
     }
   },
+  "knowledge": {
+    "title": "Szybka",
+    "accent": "wiedza",
+    "lead": "Krótkie treści. Jeśli czujesz, że robi Ci się gorzej — przejdź do „Kryzys”.",
+    "groundingGuide": "Uziemienie: przewodnik",
+    "tileSub": "Krótkie i na temat",
+    "cloudLabel": "Spokojna chmurka",
+    "modal": {
+      "title": "Uziemienie",
+      "ariaLabel": "Uziemienie krok po kroku",
+      "close": "Zamknij",
+      "closeAria": "Zamknij przewodnik",
+      "task": "Zadanie",
+      "back": "Wstecz",
+      "restart": "Od nowa",
+      "next": "Dalej",
+      "finish": "Zakończ",
+      "steps": [
+        {
+          "title": "Uziemienie: 5–4–3–2–1",
+          "text": [
+            "To krótka technika, która pomaga wrócić uwagą do „tu i teraz”.",
+            "Idź spokojnie. Jeśli któryś krok jest trudny, pomiń i przejdź dalej."
+          ],
+          "prompt": "Zacznij od rozejrzenia się po otoczeniu."
+        },
+        {
+          "title": "Krok 1/5: Wzrok (5 rzeczy)",
+          "text": ["Nazwij 5 rzeczy, które widzisz. Mogą być małe: kolor, kształt, cień, napis."],
+          "prompt": "Powiedz w myślach lub na głos: „Widzę…” i wymień 5 rzeczy."
+        },
+        {
+          "title": "Krok 2/5: Dotyk (4 rzeczy)",
+          "text": ["Nazwij 4 rzeczy, które czujesz dotykiem (np. tkaninę na skórze, oparcie krzesła, telefon w dłoni)."],
+          "prompt": "Dotknij 1–2 przedmiotów i zauważ fakturę oraz temperaturę."
+        },
+        {
+          "title": "Krok 3/5: Słuch (3 dźwięki)",
+          "text": ["Nazwij 3 dźwięki. Bliskie lub dalekie. Nawet bardzo ciche."],
+          "prompt": "Zatrzymaj się na 10 sekund i „poluj” na dźwięki."
+        },
+        {
+          "title": "Krok 4/5: Zapach (2 rzeczy)",
+          "text": ["Nazwij 2 zapachy. Jeśli trudno — nazwij 2 rzeczy, które „czujesz w powietrzu” (np. świeże, ciepłe)."],
+          "prompt": "Zrób 2 spokojne wdechy nosem."
+        },
+        {
+          "title": "Krok 5/5: Smak (1 rzecz)",
+          "text": ["Nazwij 1 smak. Może być „neutralnie”."],
+          "prompt": "Jeśli możesz, napij się łyka wody i zauważ smak."
+        },
+        {
+          "title": "Koniec",
+          "text": [
+            "Dobrze. To już wszystko.",
+            "Na koniec dociśnij stopy do podłogi na 10 sekund i puść. Powtórz 2 razy.",
+            "Jeśli chcesz: wdech 4 sekundy, wydech 6 sekund (6 razy)."
+          ],
+          "prompt": "Możesz zakończyć lub zacząć od początku."
+        }
+      ]
+    }
+  },
+  "addictionConfig": {
+    "title": "Konfiguracja śledzenia uzależnienia",
+    "addictionLabel": "Twoje uzależnienie:",
+    "addictionPlaceholder": "Np. alkohol, nikotyna, hazard",
+    "questions": [
+      "Dlaczego chcesz wyjść z uzależnienia?",
+      "Jakie korzyści przyniesie Ci zerwanie z nałogiem?",
+      "Co motywuje Cię do zmiany?",
+      "Jakie wsparcie możesz uzyskać?"
+    ],
+    "save": "Zapisz",
+    "saving": "Zapisywanie...",
+    "saved": "Konfiguracja uzależnienia zapisana!"
+  },
+  "sobriety": {
+    "notConfigured": "Nie skonfigurowano nałogu lub trwa ładowanie.",
+    "goToConfig": "Przejdź do konfiguracji, aby uruchomić licznik czystości.",
+    "configure": "Konfiguruj nałóg",
+    "motto": "Każdy dzień to Twój sukces!",
+    "title": "Czystość od uzależnienia",
+    "lead": "Ten ekran pozwala śledzić czas czystości od wybranego uzależnienia.",
+    "milestonesTitle": "Kamienie milowe:",
+    "milestones": "Kamienie milowe",
+    "nextMilestone": "Kolejny kamień milowy",
+    "congrats": "Gratulacje! Osiągnąłeś kamień milowy",
+    "daysOfSobriety": "dni czystości",
+    "strugglingWith": "Zmagasz się z",
+    "loading": "Ładowanie...",
+    "since": "Czystość od",
+    "reset": "Resetuj licznik",
+    "setStart": "Ustaw początek czystości",
+    "days": "dni",
+    "hours": "h",
+    "minutes": "min",
+    "seconds": "sek"
+  },
   "about": {
     "done": "Gotowe",
     "deleteData": "Usuń dane",

@@ -2,10 +2,12 @@ import React, { useRef, useEffect } from 'react';
 import { useSobrietyTimer, useAddictionConfig } from '../hooks/useIndexedDB';
 import { useNavigate } from 'react-router-dom';
 import KamienieMilowe from '../components/KamienieMilowe';
+import { useI18n } from '../i18n';
 
 // Usunięto animację liczby dni
 
 function SobrietyPage() {
+  const { t } = useI18n();
   const { config, loading: configLoading } = useAddictionConfig();
   const { startDate, loading, setSobrietyStart, resetSobriety, getElapsed } = useSobrietyTimer();
   const navigate = useNavigate();
@@ -89,34 +91,34 @@ function SobrietyPage() {
       {/* GŁÓWNY WIDOK */}
       {!config || configLoading ? (
         <>
-          <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 18 }}>Nie skonfigurowano nałogu lub trwa ładowanie.</div>
-          <div style={{ fontSize: 16, marginBottom: 24 }}>Przejdź do konfiguracji, aby uruchomić licznik czystości.</div>
-          <button className="sobriety-btn" onClick={() => navigate('/addiction-config')}>Konfiguruj nałóg</button>
+          <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 18 }}>{t('sobriety.notConfigured', 'Nie skonfigurowano nałogu lub trwa ładowanie.')}</div>
+          <div style={{ fontSize: 16, marginBottom: 24 }}>{t('sobriety.goToConfig', 'Przejdź do konfiguracji, aby uruchomić licznik czystości.')}</div>
+          <button className="sobriety-btn" onClick={() => navigate('/addiction-config')}>{t('sobriety.configure', 'Konfiguruj nałóg')}</button>
         </>
       ) : (
         <>
           <div className="sobriety-emoji">🌱</div>
-          <div className="sobriety-motto">Każdy dzień to Twój sukces!</div>
-          <h1 style={{ fontSize: 28, fontWeight: 900, marginBottom: 10, color: theme.accent }}>Czystość od uzależnienia</h1>
-          <p style={{ fontSize: 16, marginBottom: 20, color: theme.color }}>Ten ekran pozwala śledzić czas czystości od wybranego uzależnienia.</p>
+          <div className="sobriety-motto">{t('sobriety.motto', 'Każdy dzień to Twój sukces!')}</div>
+          <h1 style={{ fontSize: 28, fontWeight: 900, marginBottom: 10, color: theme.accent }}>{t('sobriety.title', 'Czystość od uzależnienia')}</h1>
+          <p style={{ fontSize: 16, marginBottom: 20, color: theme.color }}>{t('sobriety.lead', 'Ten ekran pozwala śledzić czas czystości od wybranego uzależnienia.')}</p>
           {/* Kamienie milowe */}
           {elapsed && (
             <div style={{ margin: '24px 0', textAlign: 'center' }}>
-              <div style={{ fontWeight: 800, fontSize: 20, marginBottom: 8, color: theme.accent }}>Kamienie milowe:</div>
+              <div style={{ fontWeight: 800, fontSize: 20, marginBottom: 8, color: theme.accent }}>{t('sobriety.milestonesTitle', 'Kamienie milowe:')}</div>
               <div className="milestone-grid">
                 {milestones.map(m => (
                   <div key={m} className={`milestone-card${achieved.includes(m) ? ' achieved' : ''}`}>
-                    {m} dni {achieved.includes(m) && '🏆'}
+                    {m} {t('sobriety.days', 'dni')} {achieved.includes(m) && '🏆'}
                   </div>
                 ))}
               </div>
               {nextMilestone && (
                 <div className="milestone-next">
-                  Kolejny kamień milowy: <span style={{ color: theme.accent2 }}>{nextMilestone} dni</span>
+                  {t('sobriety.nextMilestone', 'Kolejny kamień milowy')}: <span style={{ color: theme.accent2 }}>{nextMilestone} {t('sobriety.days', 'dni')}</span>
                 </div>
               )}
               <div className="milestone-section">
-                <h3>Kamienie milowe</h3>
+                <h3>{t('sobriety.milestones', 'Kamienie milowe')}</h3>
                 <KamienieMilowe />
               </div>
             </div>
@@ -133,36 +135,36 @@ function SobrietyPage() {
               margin: '18px 0',
               boxShadow: '0 4px 16px #a79cff44',
             }}>
-              Gratulacje! Osiągnąłeś kamień milowy: {elapsed.days} dni czystości 🏆
+              {t('sobriety.congrats', 'Gratulacje! Osiągnąłeś kamień milowy')}: {elapsed.days} {t('sobriety.daysOfSobriety', 'dni czystości')} 🏆
             </div>
           )}
           {config && (config.addiction || config.addictionName) && (
             <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 14, color: theme.color }}>
-              Zmagasz się z: <span style={{ color: theme.accent }}>{config.addiction || config.addictionName}</span>
+              {t('sobriety.strugglingWith', 'Zmagasz się z')}: <span style={{ color: theme.accent }}>{config.addiction || config.addictionName}</span>
             </div>
           )}
           {loading ? (
-            <div style={{ fontSize: 16, color: theme.accent, margin: '18px 0' }}>Ładowanie...</div>
+            <div style={{ fontSize: 16, color: theme.accent, margin: '18px 0' }}>{t('sobriety.loading', 'Ładowanie...')}</div>
           ) : startDate ? (
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 8, color: theme.color }}>
-                Czystość od: <span style={{ color: theme.accent }}>{new Date(startDate).toLocaleDateString()}</span>
+                {t('sobriety.since', 'Czystość od')}: <span style={{ color: theme.accent }}>{new Date(startDate).toLocaleDateString()}</span>
               </div>
               {elapsed && (
                 <div className="sobriety-days">
-                  {elapsed.days} dni
+                  {elapsed.days} {t('sobriety.days', 'dni')}
                   <span style={{ fontSize: 19, fontWeight: 500, marginLeft: 10, color: theme.color }}>
-                    {elapsed.hours} h, {elapsed.minutes} min, {elapsed.seconds} sek
+                    {elapsed.hours} {t('sobriety.hours', 'h')}, {elapsed.minutes} {t('sobriety.minutes', 'min')}, {elapsed.seconds} {t('sobriety.seconds', 'sek')}
                   </span>
                 </div>
               )}
               <button className="sobriety-btn" onClick={resetSobriety}>
-                <span style={{ fontSize: 22, marginRight: 8 }}>🧼</span> Resetuj licznik
+                <span style={{ fontSize: 22, marginRight: 8 }}>🧼</span> {t('sobriety.reset', 'Resetuj licznik')}
               </button>
             </div>
           ) : (
             <div style={{ textAlign: 'center' }}>
-              <button className="sobriety-btn" onClick={() => setSobrietyStart(new Date().toISOString())}>Ustaw początek czystości</button>
+              <button className="sobriety-btn" onClick={() => setSobrietyStart(new Date().toISOString())}>{t('sobriety.setStart', 'Ustaw początek czystości')}</button>
             </div>
           )}
         </>

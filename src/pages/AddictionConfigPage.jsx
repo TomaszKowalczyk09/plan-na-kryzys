@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useAddictionConfig } from '../hooks/useIndexedDB';
 import { useNavigate } from 'react-router-dom';
 import KamienieMilowe from '../components/KamienieMilowe';
+import { useI18n } from '../i18n';
 
-const questions = [
+const defaultQuestions = [
   'Dlaczego chcesz wyjść z uzależnienia?',
   'Jakie korzyści przyniesie Ci zerwanie z nałogiem?',
   'Co motywuje Cię do zmiany?',
@@ -11,17 +12,19 @@ const questions = [
 ];
 
 export default function AddictionConfigPage() {
+  const { t, get } = useI18n();
   const { config, saveConfig, loading } = useAddictionConfig();
   const navigate = useNavigate();
   const [addiction, setAddiction] = useState('');
-  const [answers, setAnswers] = useState(Array(questions.length).fill(''));
+  const questions = get('addictionConfig.questions', defaultQuestions);
+  const [answers, setAnswers] = useState(Array(defaultQuestions.length).fill(''));
 
   useEffect(() => {
     if (config) {
       setAddiction(config.addiction || '');
       setAnswers(config.answers || Array(questions.length).fill(''));
     }
-  }, [config]);
+  }, [config, questions.length]);
 
   const handleAnswerChange = (idx, value) => {
     setAnswers((prev) => {
@@ -34,22 +37,23 @@ export default function AddictionConfigPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await saveConfig({ addiction, answers });
-    alert('Konfiguracja uzależnienia zapisana!');
+    alert(t('addictionConfig.saved', 'Konfiguracja uzależnienia zapisana!'));
     navigate('/sobriety');
   };
 
   return (
       <div className="addiction-config-page" style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'var(--t-bg)' }}>
         <div style={{ background: 'var(--t-surface)', borderRadius: 24, boxShadow: 'var(--t-shadow)', border: '1px solid color-mix(in srgb, var(--t-ink) 10%, transparent)', padding: '32px 24px', maxWidth: 420, width: '100%', margin: '32px 0', color: 'var(--t-ink)' }}>
-          <h2 style={{ textAlign: 'center', marginBottom: 24, fontWeight: 700, fontSize: 24 }}>Konfiguracja śledzenia uzależnienia</h2>
+          <h2 style={{ textAlign: 'center', marginBottom: 24, fontWeight: 700, fontSize: 24 }}>{t('addictionConfig.title', 'Konfiguracja śledzenia uzależnienia')}</h2>
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              <label style={{ fontWeight: 600 }}>Twoje uzależnienie:</label>
+              <label style={{ fontWeight: 600 }}>{t('addictionConfig.addictionLabel', 'Twoje uzależnienie:')}</label>
               <input
                 type="text"
                 value={addiction}
                 onChange={(e) => setAddiction(e.target.value)}
                 required
+                placeholder={t('addictionConfig.addictionPlaceholder', 'Np. alkohol, nikotyna, hazard')}
                 style={{ padding: '8px', borderRadius: 8, border: '1px solid color-mix(in srgb, var(--t-ink) 14%, transparent)', background: 'var(--t-surface)', color: 'var(--t-ink)', fontSize: 16 }}
               />
             </div>
@@ -66,7 +70,7 @@ export default function AddictionConfigPage() {
               </div>
             ))}
             <button type="submit" style={{ marginTop: 12, padding: '12px 0', borderRadius: 12, background: 'linear-gradient(90deg,#6a5cff,#a685ff)', color: '#fff', fontWeight: 700, fontSize: 17, border: 'none', boxShadow: '0 2px 8px rgba(7,7,22,0.16)', cursor: 'pointer', transition: 'background .2s' }}>
-              Zapisz
+              {loading ? t('addictionConfig.saving', 'Zapisywanie...') : t('addictionConfig.save', 'Zapisz')}
             </button>
           </form>
           <div style={{ marginTop: 32 }}>

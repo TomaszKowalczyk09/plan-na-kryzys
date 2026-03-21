@@ -211,15 +211,98 @@
     "lead": "Kurze Inhalte. Wenn es dir schlechter geht, öffne „Krise“.",
     "groundingGuide": "Grounding: Anleitung",
     "tileSub": "Kurz und konkret",
+    "cloudLabel": "Ruhige Wolke",
     "modal": {
       "title": "Grounding",
+      "ariaLabel": "Grounding Schritt für Schritt",
       "close": "Schließen",
+      "closeAria": "Anleitung schließen",
       "task": "Aufgabe",
       "back": "Zurück",
       "restart": "Neu starten",
       "next": "Weiter",
-      "finish": "Beenden"
+      "finish": "Beenden",
+      "steps": [
+        {
+          "title": "Grounding: 5–4–3–2–1",
+          "text": [
+            "Diese kurze Technik hilft dir, mit der Aufmerksamkeit ins Hier und Jetzt zurückzukommen.",
+            "Gehe ruhig vor. Wenn ein Schritt schwer ist, überspringe ihn und mache weiter."
+          ],
+          "prompt": "Beginne damit, dich in deiner Umgebung umzusehen."
+        },
+        {
+          "title": "Schritt 1/5: Sehen (5 Dinge)",
+          "text": ["Nenne 5 Dinge, die du siehst. Auch kleine Details: Farbe, Form, Schatten, Schrift."],
+          "prompt": "Sag in Gedanken oder laut: „Ich sehe …“ und nenne 5 Dinge."
+        },
+        {
+          "title": "Schritt 2/5: Tasten (4 Dinge)",
+          "text": ["Nenne 4 Dinge, die du fühlst (z. B. Stoff auf der Haut, Stuhllehne, Handy in der Hand)."],
+          "prompt": "Berühre 1–2 Gegenstände und achte auf Struktur und Temperatur."
+        },
+        {
+          "title": "Schritt 3/5: Hören (3 Geräusche)",
+          "text": ["Nenne 3 Geräusche. Nahe oder weit weg. Auch sehr leise."],
+          "prompt": "Halte 10 Sekunden inne und lausche bewusst auf Geräusche."
+        },
+        {
+          "title": "Schritt 4/5: Riechen (2 Dinge)",
+          "text": ["Nenne 2 Gerüche. Falls es schwer ist: nenne 2 Eindrücke der Luft (z. B. frisch, warm)."],
+          "prompt": "Atme zweimal ruhig durch die Nase ein."
+        },
+        {
+          "title": "Schritt 5/5: Schmecken (1 Sache)",
+          "text": ["Nenne 1 Geschmack. Auch „neutral“ ist okay."],
+          "prompt": "Wenn möglich, trink einen Schluck Wasser und achte auf den Geschmack."
+        },
+        {
+          "title": "Ende",
+          "text": [
+            "Gut gemacht. Das war alles.",
+            "Zum Abschluss drücke 10 Sekunden lang die Füße in den Boden und lass wieder locker. Wiederhole das 2 Mal.",
+            "Wenn du möchtest: 4 Sekunden einatmen, 6 Sekunden ausatmen (6 Runden)."
+          ],
+          "prompt": "Du kannst jetzt beenden oder von vorne starten."
+        }
+      ]
     }
+  },
+  "addictionConfig": {
+    "title": "Abhängigkeits-Tracking konfigurieren",
+    "addictionLabel": "Deine Abhängigkeit:",
+    "addictionPlaceholder": "z. B. Alkohol, Nikotin, Glücksspiel",
+    "questions": [
+      "Warum möchtest du aus der Abhängigkeit herauskommen?",
+      "Welche Vorteile bringt es dir, mit der Sucht aufzuhören?",
+      "Was motiviert dich zur Veränderung?",
+      "Welche Unterstützung kannst du bekommen?"
+    ],
+    "save": "Speichern",
+    "saving": "Wird gespeichert...",
+    "saved": "Abhängigkeits-Konfiguration gespeichert!"
+  },
+  "sobriety": {
+    "notConfigured": "Keine Abhängigkeit konfiguriert oder es wird noch geladen.",
+    "goToConfig": "Gehe zur Konfiguration, um den Abstinenz-Zähler zu starten.",
+    "configure": "Abhängigkeit konfigurieren",
+    "motto": "Jeder Tag ist dein Erfolg!",
+    "title": "Abstinenz seit",
+    "lead": "Diese Ansicht verfolgt deine abstinente Zeit für die gewählte Abhängigkeit.",
+    "milestonesTitle": "Meilensteine:",
+    "milestones": "Meilensteine",
+    "nextMilestone": "Nächster Meilenstein",
+    "congrats": "Glückwunsch! Du hast einen Meilenstein erreicht",
+    "daysOfSobriety": "Tage Abstinenz",
+    "strugglingWith": "Du kämpfst mit",
+    "loading": "Laden...",
+    "since": "Abstinenz seit",
+    "reset": "Zähler zurücksetzen",
+    "setStart": "Abstinenzbeginn setzen",
+    "days": "Tage",
+    "hours": "Std",
+    "minutes": "Min",
+    "seconds": "Sek"
   },
   "about": {
     "done": "Fertig",
@@ -470,6 +553,35 @@
       "title": "Wie du einer Freundin oder einem Freund helfen kannst",
       "sections": []
     },
-    "knowledgeArticles": []
+    "knowledgeArticles": [
+      {
+        "id": "emotions",
+        "title": "Emotionen — wozu sind sie da?",
+        "body": [
+          "Emotionen sind Signale. Sie zeigen, dass etwas wichtig oder schwierig für dich ist.",
+          "Manche Emotionen fühlen sich angenehm an, andere schmerzhaft. Beide können sinnvoll sein.",
+          "Wenn Emotionen sehr stark sind und lange anhalten, ist Unterstützung wichtig."
+        ]
+      },
+      {
+        "id": "stress",
+        "title": "Wann wird Stress zum Problem?",
+        "body": [
+          "Stress ist normal. Problematisch wird es, wenn du kaum noch zur Ruhe kommst und er ständig da ist.",
+          "Anzeichen können körperlich sein (Anspannung, Bauchschmerzen) und gedanklich (ständiges Grübeln).",
+          "Kleine Schritte helfen: Schlaf, Essen, Bewegung, Gespräch, Gedanken notieren."
+        ]
+      },
+      {
+        "id": "crisis",
+        "title": "Was ist eine psychische Krise?",
+        "warning": "Wenn es dir beim Lesen schlechter geht, öffne den Bereich „Krise“.",
+        "body": [
+          "Eine Krise ist ein Moment, in dem es so schwer wird, dass bisherige Bewältigungsstrategien nicht mehr reichen.",
+          "In einer Krise zählen Sicherheit und schnelle Unterstützung durch eine andere Person.",
+          "Wenn du Gedanken hast, dir etwas anzutun, öffne sofort den Bereich „Krise“."
+        ]
+      }
+    ]
   }
 }

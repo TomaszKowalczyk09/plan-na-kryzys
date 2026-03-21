@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
 import { KNOWLEDGE_ARTICLES } from '../data/knowledge'
 import { CTAButton, CloudIcon, StoryCard, StoryScreen } from '../components/StoryUI'
+import { useI18n } from '../i18n'
 import { Link } from 'react-router-dom';
 
-function GroundingGuideModal({ open, onClose }) {
-  const steps = useMemo(
-    () => [
+const DEFAULT_STEPS = [
       {
         id: 'intro',
         title: 'Uziemienie: 5–4–3–2–1',
@@ -55,9 +54,21 @@ function GroundingGuideModal({ open, onClose }) {
         ],
         prompt: 'Możesz zakończyć lub zacząć od początku.',
       },
-    ],
-    []
-  )
+]
+
+function GroundingGuideModal({ open, onClose, text }) {
+  const steps = useMemo(() => {
+    const translatedSteps = text.modal?.steps
+    if (!Array.isArray(translatedSteps) || translatedSteps.length !== DEFAULT_STEPS.length) {
+      return DEFAULT_STEPS
+    }
+    return DEFAULT_STEPS.map((step, index) => ({
+      ...step,
+      title: translatedSteps[index]?.title ?? step.title,
+      text: translatedSteps[index]?.text ?? step.text,
+      prompt: translatedSteps[index]?.prompt ?? step.prompt,
+    }))
+  }, [text.modal?.steps])
 
   const [index, setIndex] = useState(0)
   const [animKey, setAnimKey] = useState(0)
@@ -96,16 +107,16 @@ function GroundingGuideModal({ open, onClose }) {
   const restart = () => setIndex(0)
 
   return (
-    <div className="onbOverlay" role="dialog" aria-modal="true" aria-label="Uziemienie krok po kroku">
+    <div className="onbOverlay" role="dialog" aria-modal="true" aria-label={text.modal?.ariaLabel ?? 'Uziemienie krok po kroku'}>
       <div className="onbModal">
         <div className="onbModalHeader">
           <div className="rowBetween" style={{ gap: 12 }}>
             <div style={{ display: 'grid', gap: 2 }}>
-              <div className="textStrong">Uziemienie</div>
+              <div className="textStrong">{text.modal?.title ?? 'Uziemienie'}</div>
               <div className="textSm textMuted">{index + 1}/{steps.length} • {step.title}</div>
             </div>
-            <button type="button" className="btn" onClick={onClose} aria-label="Zamknij przewodnik">
-              Zamknij
+            <button type="button" className="btn" onClick={onClose} aria-label={text.modal?.closeAria ?? 'Zamknij przewodnik'}>
+              {text.modal?.close ?? 'Zamknij'}
             </button>
           </div>
         </div>
@@ -120,7 +131,7 @@ function GroundingGuideModal({ open, onClose }) {
                 </div>
               ))}
               <div className="cardInset cardMuted" style={{ marginTop: 8 }}>
-                <div className="textStrong">Zadanie</div>
+                <div className="textStrong">{text.modal?.task ?? 'Zadanie'}</div>
                 <div className="textBody" style={{ marginTop: 4 }}>{step.prompt}</div>
               </div>
             </div>
@@ -130,15 +141,15 @@ function GroundingGuideModal({ open, onClose }) {
         <div className="onbModalFooter">
           <div className="row" style={{ justifyContent: 'space-between', width: '100%' }}>
             <button type="button" className="btn" onClick={goPrev} disabled={isFirst}>
-              Wstecz
+              {text.modal?.back ?? 'Wstecz'}
             </button>
 
             <div className="row" style={{ marginLeft: 'auto' }}>
               <button type="button" className="btn" onClick={restart}>
-                Od nowa
+                {text.modal?.restart ?? 'Od nowa'}
               </button>
               <button type="button" className="btn btnPrimary" onClick={isLast ? onClose : goNext}>
-                {isLast ? 'Zakończ' : 'Dalej'}
+                {isLast ? (text.modal?.finish ?? 'Zakończ') : (text.modal?.next ?? 'Dalej')}
               </button>
             </div>
           </div>
@@ -149,6 +160,9 @@ function GroundingGuideModal({ open, onClose }) {
 }
 
 export default function KnowledgePage() {
+  const { t, get } = useI18n()
+  const knowledgeText = get('knowledge', {})
+  const localizedArticles = get('data.knowledgeArticles', KNOWLEDGE_ARTICLES)
   const [guideOpen, setGuideOpen] = useState(false)
 
   return (
@@ -157,32 +171,32 @@ export default function KnowledgePage() {
         <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
           <div>
             <h1 className="storyTitle">
-              Szybka <span className="storyAccent">wiedza</span>
+              {t('knowledge.title', 'Szybka')} <span className="storyAccent">{t('knowledge.accent', 'wiedza')}</span>
             </h1>
             <p className="storyLead">
-              Krótkie treści. Jeśli czujesz, że robi Ci się gorzej — przejdź do „Kryzys”.
+              {t('knowledge.lead', 'Krótkie treści. Jeśli czujesz, że robi Ci się gorzej — przejdź do „Kryzys”.')}
             </p>
           </div>
-          <CloudIcon mood="calm" label="Spokojna chmurka" />
+          <CloudIcon mood="calm" label={t('knowledge.cloudLabel', 'Spokojna chmurka')} />
         </div>
 
         <div className="row mt12">
           <CTAButton as={Link} to="/knowledge/grounding" tone="primary">
-            Uziemienie: przewodnik
+            {t('knowledge.groundingGuide', 'Uziemienie: przewodnik')}
           </CTAButton>
         </div>
       </StoryCard>
 
-      <GroundingGuideModal open={guideOpen} onClose={() => setGuideOpen(false)} />
+      <GroundingGuideModal open={guideOpen} onClose={() => setGuideOpen(false)} text={knowledgeText} />
 
       <div className="tilesGrid">
-        {KNOWLEDGE_ARTICLES.map((a) => (
+        {localizedArticles.map((a) => (
           <details key={a.id} className="tileCard pageAnimItem">
             <summary className="tileSummary">
               <div className="tileIcon" aria-hidden="true">☁️</div>
               <div style={{ minWidth: 0 }}>
                 <div className="tileTitle">{a.title}</div>
-                <div className="tileSub">Krótkie i na temat</div>
+                <div className="tileSub">{t('knowledge.tileSub', 'Krótkie i na temat')}</div>
               </div>
               <span className="tileChevron" aria-hidden="true">▾</span>
             </summary>
