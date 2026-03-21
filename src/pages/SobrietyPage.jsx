@@ -17,14 +17,8 @@ function SobrietyPage() {
   const achieved = elapsed ? milestones.filter(m => elapsed.days >= m) : [];
   const nextMilestone = milestones.find(m => elapsed && elapsed.days < m);
   const justReached = achieved.length > 0 && elapsed && milestones.includes(elapsed.days);
-  // Motyw: jasny/ciemny
-  const [isDark, setIsDark] = React.useState(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
-  React.useEffect(() => {
-    const handler = (e) => setIsDark(e.matches);
-    const mq = window.matchMedia('(prefers-color-scheme: dark)');
-    mq.addEventListener('change', handler);
-    return () => mq.removeEventListener('change', handler);
-  }, []);
+  // Motyw: zgodny z ustawieniem aplikacji
+  const isDark = typeof document !== 'undefined' && document.documentElement.dataset.theme === 'dark';
   React.useEffect(() => {
     if (!startDate) return;
     const interval = setInterval(() => {

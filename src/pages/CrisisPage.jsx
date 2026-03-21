@@ -19,6 +19,7 @@ const LEGAL_BAR = 'To nie jest usługa ratunkowa. Jeśli jesteś w bezpośrednim
 export default function CrisisPage() {
   const { plan, loading, savePlan } = useSafetyPlan();
   const [saving, setSaving] = useState(false);
+  const isDarkTheme = typeof document !== 'undefined' && document.documentElement.dataset.theme === 'dark';
 
   const [form, setForm] = useState({
     warningSignals: '',
@@ -114,15 +115,15 @@ export default function CrisisPage() {
   };
 
   return (
-    <StoryScreen variant="dark" className="pageAnim">
-      <StoryCard tone="dark" className="pageAnimItem">
+    <StoryScreen variant={isDarkTheme ? 'dark' : 'light'} className="pageAnim">
+      <StoryCard tone={isDarkTheme ? 'dark' : 'surface'} className="pageAnimItem">
         <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
           <div>
             <div className="badgeDanger">Ważne</div>
-            <h1 className="storyTitle" style={{ marginTop: 10, color: '#fff' }}>
+            <h1 className="storyTitle" style={{ marginTop: 10, color: isDarkTheme ? '#fff' : 'var(--t-ink)' }}>
               Moduł <span className="storyAccent">Kryzys</span>
             </h1>
-            <p className="storyLead" style={{ color: 'rgba(255,255,255,0.72)' }}>{LEGAL_BAR}</p>
+            <p className="storyLead" style={{ color: isDarkTheme ? 'rgba(255,255,255,0.72)' : 'var(--t-ink-muted)' }}>{LEGAL_BAR}</p>
             <div className="row mt12" style={{ gap: 8, flexWrap: 'wrap' }}>
               <CTAButton as={Link} to="/crisis/cssrs" tone="primary">
                 Zrób test C-SSRS
@@ -133,11 +134,11 @@ export default function CrisisPage() {
         </div>
       </StoryCard>
 
-      <StoryCard tone="dark" className="pageAnimItem">
+      <StoryCard tone={isDarkTheme ? 'dark' : 'surface'} className="pageAnimItem">
         <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
           <div>
-            <div className="textStrong" style={{ color: '#fff' }}>Tu i teraz</div>
-            <p className="storyLead" style={{ marginTop: 8, color: 'rgba(255,255,255,0.72)' }}>
+            <div className="textStrong" style={{ color: isDarkTheme ? '#fff' : 'var(--t-ink)' }}>Tu i teraz</div>
+            <p className="storyLead" style={{ marginTop: 8, color: isDarkTheme ? 'rgba(255,255,255,0.72)' : 'var(--t-ink-muted)' }}>
               Zaznacz, co już zrobiłeś/aś. Skup się na jednym kroku.
             </p>
           </div>
@@ -145,7 +146,7 @@ export default function CrisisPage() {
         </div>
 
         <div className="rowBetween mt12" style={{ gap: 10, alignItems: 'center' }}>
-          <div className="textSm" style={{ color: 'rgba(255,255,255,0.72)' }}>
+          <div className="textSm" style={{ color: isDarkTheme ? 'rgba(255,255,255,0.72)' : 'var(--t-ink-muted)' }}>
             Checklist: {checkedCount}/{STEPS_NOW.length}
           </div>
           <div className="row" style={{ gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
@@ -167,9 +168,9 @@ export default function CrisisPage() {
                 display: 'flex',
                 gap: 10,
                 cursor: 'pointer',
-                background: 'rgba(255,255,255,0.06)',
-                borderColor: 'rgba(255,255,255,0.14)',
-                color: '#fff',
+                background: isDarkTheme ? 'rgba(255,255,255,0.06)' : 'var(--t-surface)',
+                borderColor: isDarkTheme ? 'rgba(255,255,255,0.14)' : 'color-mix(in srgb, var(--t-ink) 10%, transparent)',
+                color: isDarkTheme ? '#fff' : 'var(--t-ink)',
               }}
             >
               <input
@@ -326,8 +327,8 @@ export default function CrisisPage() {
         )}
       </StoryCard>
 
-      <StoryCard tone="dark" className="pageAnimItem">
-        <p className="storyLead" style={{ margin: 0, color: 'rgba(255,255,255,0.72)' }}>
+      <StoryCard tone={isDarkTheme ? 'dark' : 'surface'} className="pageAnimItem">
+        <p className="storyLead" style={{ margin: 0, color: isDarkTheme ? 'rgba(255,255,255,0.72)' : 'var(--t-ink-muted)' }}>
           Jeśli jesteś w bezpośrednim zagrożeniu — zadzwoń pod 112.
         </p>
       </StoryCard>

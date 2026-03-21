@@ -39,8 +39,8 @@ export default function AddictionConfigPage() {
   };
 
   return (
-      <div className="addiction-config-page" style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'none' }}>
-        <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: 24, boxShadow: '0 4px 32px #0002', padding: '32px 24px', maxWidth: 420, width: '100%', margin: '32px 0' }}>
+      <div className="addiction-config-page" style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'var(--t-bg)' }}>
+        <div style={{ background: 'var(--t-surface)', borderRadius: 24, boxShadow: 'var(--t-shadow)', border: '1px solid color-mix(in srgb, var(--t-ink) 10%, transparent)', padding: '32px 24px', maxWidth: 420, width: '100%', margin: '32px 0', color: 'var(--t-ink)' }}>
           <h2 style={{ textAlign: 'center', marginBottom: 24, fontWeight: 700, fontSize: 24 }}>Konfiguracja śledzenia uzależnienia</h2>
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -50,7 +50,7 @@ export default function AddictionConfigPage() {
                 value={addiction}
                 onChange={(e) => setAddiction(e.target.value)}
                 required
-                style={{ padding: '8px', borderRadius: 8, border: '1px solid #444', background: '#181828', color: '#fff', fontSize: 16 }}
+                style={{ padding: '8px', borderRadius: 8, border: '1px solid color-mix(in srgb, var(--t-ink) 14%, transparent)', background: 'var(--t-surface)', color: 'var(--t-ink)', fontSize: 16 }}
               />
             </div>
             {questions.map((q, idx) => (
@@ -61,11 +61,11 @@ export default function AddictionConfigPage() {
                   onChange={(e) => handleAnswerChange(idx, e.target.value)}
                   required
                   rows={2}
-                  style={{ padding: '8px', borderRadius: 8, border: '1px solid #444', background: '#181828', color: '#fff', fontSize: 15, resize: 'vertical' }}
+                  style={{ padding: '8px', borderRadius: 8, border: '1px solid color-mix(in srgb, var(--t-ink) 14%, transparent)', background: 'var(--t-surface)', color: 'var(--t-ink)', fontSize: 15, resize: 'vertical' }}
                 />
               </div>
             ))}
-            <button type="submit" style={{ marginTop: 12, padding: '12px 0', borderRadius: 12, background: 'linear-gradient(90deg,#6a5cff,#a685ff)', color: '#fff', fontWeight: 700, fontSize: 17, border: 'none', boxShadow: '0 2px 8px #0002', cursor: 'pointer', transition: 'background .2s' }}>
+            <button type="submit" style={{ marginTop: 12, padding: '12px 0', borderRadius: 12, background: 'linear-gradient(90deg,#6a5cff,#a685ff)', color: '#fff', fontWeight: 700, fontSize: 17, border: 'none', boxShadow: '0 2px 8px rgba(7,7,22,0.16)', cursor: 'pointer', transition: 'background .2s' }}>
               Zapisz
             </button>
           </form>

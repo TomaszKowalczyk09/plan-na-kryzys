@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react';
 
 function GroundingGuide() {
   const steps = useMemo(() => [
@@ -57,9 +57,21 @@ function GroundingGuide() {
   const step = steps[index];
   const isFirst = index === 0;
   const isLast = index === steps.length - 1;
+  const isDarkTheme = typeof document !== 'undefined' && document.documentElement.dataset.theme === 'dark';
 
   return (
-    <div style={{ maxWidth: 480, margin: '32px auto', background: '#fff', borderRadius: 24, boxShadow: '0 4px 32px #0002', padding: '32px 24px', color: '#222' }}>
+    <div
+      style={{
+        maxWidth: 480,
+        margin: '32px auto',
+        background: 'var(--t-surface)',
+        borderRadius: 24,
+        boxShadow: 'var(--t-shadow)',
+        border: '1px solid color-mix(in srgb, var(--t-ink) 10%, transparent)',
+        padding: '32px 24px',
+        color: 'var(--t-ink)',
+      }}
+    >
       <h2 style={{ textAlign: 'center', marginBottom: 24, fontWeight: 700, fontSize: 24 }}>{step.title}</h2>
       {step.text.map((t, i) => (
         <p key={i} style={{ fontSize: 16, marginBottom: 8 }}>{t}</p>
@@ -78,7 +90,16 @@ function GroundingGuide() {
             <button
               disabled={isFirst}
               onClick={() => setIndex(i => Math.max(0, i - 1))}
-              style={{ padding: '12px 24px', borderRadius: 12, background: '#eee', color: '#6a5cff', fontWeight: 700, fontSize: 16, border: 'none', cursor: isFirst ? 'default' : 'pointer' }}
+              style={{
+                padding: '12px 24px',
+                borderRadius: 12,
+                background: isDarkTheme ? 'rgba(255,255,255,0.10)' : 'rgba(7,7,22,0.06)',
+                color: 'var(--t-purple)',
+                fontWeight: 700,
+                fontSize: 16,
+                border: '1px solid color-mix(in srgb, var(--t-ink) 12%, transparent)',
+                cursor: isFirst ? 'default' : 'pointer'
+              }}
             >
               Wstecz
             </button>
