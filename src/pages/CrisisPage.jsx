@@ -1,9 +1,10 @@
 /* jshint esversion: 11, asi: true, module: true, jsx: true */
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { HOTLINES, HOTLINES_META } from '../data/hotlines';
+import { getHotlines, getHotlinesMeta } from '../data/hotlines';
 import { useSafetyPlan } from '../hooks/useIndexedDB';
 import { CTAButton, CloudIcon, StoryCard, StoryScreen } from '../components/StoryUI';
+import { useI18n } from '../i18n/index.jsx'
 
 const STEPS_NOW = [
   'Jeśli możesz, zostań w bezpiecznym miejscu.',
@@ -17,9 +18,15 @@ const STEPS_NOW_STORAGE_KEY = 'crisis_steps_now_checked_v1';
 const LEGAL_BAR = 'To nie jest usługa ratunkowa. Jeśli jesteś w bezpośrednim zagrożeniu — zadzwoń pod 112.';
 
 export default function CrisisPage() {
+  const { lang, t, get } = useI18n()
   const { plan, loading, savePlan } = useSafetyPlan();
   const [saving, setSaving] = useState(false);
   const isDarkTheme = typeof document !== 'undefined' && document.documentElement.dataset.theme === 'dark';
+  const HOTLINES = useMemo(() => getHotlines(lang), [lang])
+  const HOTLINES_META = useMemo(() => getHotlinesMeta(lang), [lang])
+
+  const stepsNow = get('crisis.stepsNow', STEPS_NOW)
+  const legalBar = t('crisis.legalBar', LEGAL_BAR)
 
   const [form, setForm] = useState({
     warningSignals: '',
@@ -33,9 +40,9 @@ export default function CrisisPage() {
     try {
       const raw = localStorage.getItem(STEPS_NOW_STORAGE_KEY);
       const parsed = raw ? JSON.parse(raw) : null;
-      return Array.isArray(parsed) ? parsed.map(Boolean) : STEPS_NOW.map(() => false);
+      return Array.isArray(parsed) ? parsed.map(Boolean) : stepsNow.map(() => false);
     } catch {
-      return STEPS_NOW.map(() => false);
+      return stepsNow.map(() => false);
     }
   });
 
@@ -87,8 +94,8 @@ export default function CrisisPage() {
     setStepsChecked((prev) => prev.map((v, i) => (i === idx ? checked : v)));
   };
 
-  const resetSteps = () => setStepsChecked(STEPS_NOW.map(() => false));
-  const markAllSteps = () => setStepsChecked(STEPS_NOW.map(() => true));
+  const resetSteps = () => setStepsChecked(stepsNow.map(() => false));
+  const markAllSteps = () => setStepsChecked(stepsNow.map(() => true));
 
   const normalizedSupportPeople = useMemo(() => {
     return (form.supportPeople ?? [])
@@ -119,14 +126,14 @@ export default function CrisisPage() {
       <StoryCard tone={isDarkTheme ? 'dark' : 'surface'} className="pageAnimItem">
         <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
           <div>
-            <div className="badgeDanger">Ważne</div>
+            <div className="badgeDanger">{t('crisis.important', 'Ważne')}</div>
             <h1 className="storyTitle" style={{ marginTop: 10, color: isDarkTheme ? '#fff' : 'var(--t-ink)' }}>
-              Moduł <span className="storyAccent">Kryzys</span>
+              {t('crisis.module', 'Moduł')} <span className="storyAccent">{t('crisis.moduleAccent', 'Kryzys')}</span>
             </h1>
-            <p className="storyLead" style={{ color: isDarkTheme ? 'rgba(255,255,255,0.72)' : 'var(--t-ink-muted)' }}>{LEGAL_BAR}</p>
+            <p className="storyLead" style={{ color: isDarkTheme ? 'rgba(255,255,255,0.72)' : 'var(--t-ink-muted)' }}>{legalBar}</p>
             <div className="row mt12" style={{ gap: 8, flexWrap: 'wrap' }}>
               <CTAButton as={Link} to="/crisis/cssrs" tone="primary">
-                Zrób test C-SSRS
+                {t('crisis.cssrsButton', 'Zrób test C-SSRS')}
               </CTAButton>
             </div>
           </div>
@@ -137,9 +144,9 @@ export default function CrisisPage() {
       <StoryCard tone={isDarkTheme ? 'dark' : 'surface'} className="pageAnimItem">
         <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
           <div>
-            <div className="textStrong" style={{ color: isDarkTheme ? '#fff' : 'var(--t-ink)' }}>Tu i teraz</div>
+            <div className="textStrong" style={{ color: isDarkTheme ? '#fff' : 'var(--t-ink)' }}>{t('crisis.hereNow', 'Tu i teraz')}</div>
             <p className="storyLead" style={{ marginTop: 8, color: isDarkTheme ? 'rgba(255,255,255,0.72)' : 'var(--t-ink-muted)' }}>
-              Zaznacz, co już zrobiłeś/aś. Skup się na jednym kroku.
+              {t('crisis.hereNowLead', 'Zaznacz, co już zrobiłeś/aś. Skup się na jednym kroku.')}
             </p>
           </div>
           <CloudIcon mood="sad" label="Smutna chmurka" />
@@ -147,20 +154,20 @@ export default function CrisisPage() {
 
         <div className="rowBetween mt12" style={{ gap: 10, alignItems: 'center' }}>
           <div className="textSm" style={{ color: isDarkTheme ? 'rgba(255,255,255,0.72)' : 'var(--t-ink-muted)' }}>
-            Checklist: {checkedCount}/{STEPS_NOW.length}
+            {t('crisis.checklist', 'Checklist')}: {checkedCount}/{stepsNow.length}
           </div>
           <div className="row" style={{ gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
             <CTAButton as="button" type="button" tone="ghost" onClick={resetSteps}>
-              Odznacz
+              {t('crisis.uncheck', 'Odznacz')}
             </CTAButton>
             <CTAButton as="button" type="button" tone="primary" onClick={markAllSteps}>
-              Odhaczyłem/am
+              {t('crisis.doneAll', 'Odhaczyłem/am')}
             </CTAButton>
           </div>
         </div>
 
         <div className="stackSm mt12">
-          {STEPS_NOW.map((s, idx) => (
+          {stepsNow.map((s, idx) => (
             <label
               key={s}
               className="cardInset"
@@ -190,9 +197,9 @@ export default function CrisisPage() {
         <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
           <div>
             <h2 className="sectionTitle" style={{ fontSize: 20 }}>Infolinie</h2>
-            <p className="p" style={{ marginTop: 6 }}>Aplikacja nie dzwoni sama — Ty wybierasz.</p>
+            <p className="p" style={{ marginTop: 6 }}>{t('crisis.hotlinesLead', 'Aplikacja nie dzwoni sama — Ty wybierasz.')}</p>
             <p className="textSm" style={{ marginTop: 6, color: 'var(--t-ink-muted)' }}>
-              Aktualizacja listy: {HOTLINES_META.lastUpdated}. {HOTLINES_META.note}
+              {t('crisis.hotlinesUpdate', 'Aktualizacja listy')}: {HOTLINES_META.lastUpdated}. {HOTLINES_META.note}
             </p>
           </div>
           <CloudIcon mood="support" label="Wspierająca chmurka" />
@@ -214,98 +221,98 @@ export default function CrisisPage() {
       <StoryCard tone="surface" className="pageAnimItem">
         <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
           <div>
-            <h2 className="sectionTitle" style={{ fontSize: 20 }}>Mój plan bezpieczeństwa</h2>
-            <p className="p" style={{ marginTop: 6 }}>To jest tylko na Twoim telefonie. Offline.</p>
+            <h2 className="sectionTitle" style={{ fontSize: 20 }}>{t('crisis.planTitle', 'Mój plan bezpieczeństwa')}</h2>
+            <p className="p" style={{ marginTop: 6 }}>{t('crisis.planLead', 'To jest tylko na Twoim telefonie. Offline.')}</p>
           </div>
           <CloudIcon mood="calm" label="Spokojna chmurka" />
         </div>
 
         {loading ? (
-          <p className="p">Wczytuję…</p>
+          <p className="p">{t('crisis.loading', 'Wczytuję…')}</p>
         ) : (
           <>
             {/* krok po kroku: sekcje jako story */}
             <div className="stackSm mt12">
               <div className="cardInset">
-                <div className="textStrong">1) Moje sygnały ostrzegawcze</div>
+                <div className="textStrong">{t('crisis.form.warningSignals', '1) Moje sygnały ostrzegawcze')}</div>
                 <textarea
                   id="warningSignals"
                   className="textarea"
                   value={form.warningSignals}
                   onChange={update('warningSignals')}
-                  placeholder="Co u mnie oznacza, że jest gorzej?"
+                  placeholder={t('crisis.form.warningSignalsPlaceholder', 'Co u mnie oznacza, że jest gorzej?')}
                 />
               </div>
 
               <div className="cardInset">
-                <div className="textStrong">2) Co pomaga mi, gdy jest bardzo trudno</div>
+                <div className="textStrong">{t('crisis.form.copingStrategies', '2) Co pomaga mi, gdy jest bardzo trudno')}</div>
                 <textarea
                   id="copingStrategies"
                   className="textarea"
                   value={form.copingStrategies}
                   onChange={update('copingStrategies')}
-                  placeholder="Co mogę zrobić sam/a, żeby przetrwać najbliższe minuty/godziny?"
+                  placeholder={t('crisis.form.copingStrategiesPlaceholder', 'Co mogę zrobić sam/a, żeby przetrwać najbliższe minuty/godziny?')}
                 />
               </div>
 
               <div className="cardInset">
-                <div className="textStrong">3) Miejsca, w których czuję się bezpiecznie</div>
+                <div className="textStrong">{t('crisis.form.safePlaces', '3) Miejsca, w których czuję się bezpiecznie')}</div>
                 <textarea
                   id="safePlaces"
                   className="textarea"
                   value={form.safePlaces}
                   onChange={update('safePlaces')}
-                  placeholder="Np. dom, pokój, biblioteka, park…"
+                  placeholder={t('crisis.form.safePlacesPlaceholder', 'Np. dom, pokój, biblioteka, park…')}
                 />
               </div>
 
               <div className="cardInset">
-                <div className="textStrong">4) Jak ograniczyć dostęp do rzeczy, którymi mógłbym/mogłabym zrobić sobie krzywdę</div>
+                <div className="textStrong">{t('crisis.form.limitAccess', '4) Jak ograniczyć dostęp do rzeczy, którymi mógłbym/mogłabym zrobić sobie krzywdę')}</div>
                 <textarea
                   id="limit"
                   className="textarea"
                   value={form.limitAccessToMeans}
                   onChange={update('limitAccessToMeans')}
-                  placeholder="Np. odsunąć poza zasięg, poprosić kogoś o schowanie…"
+                  placeholder={t('crisis.form.limitAccessPlaceholder', 'Np. odsunąć poza zasięg, poprosić kogoś o schowanie…')}
                 />
               </div>
 
               <div className="cardInset">
-                <div className="textStrong">5) Osoby, z którymi mogę porozmawiać</div>
+                <div className="textStrong">{t('crisis.form.supportPeople', '5) Osoby, z którymi mogę porozmawiać')}</div>
                 <div className="textSm" style={{ marginTop: 6, color: 'var(--muted)' }}>
-                  Imię + sposób kontaktu (np. telefon, messenger). To prywatne i lokalne.
+                  {t('crisis.form.supportPeopleLead', 'Imię + sposób kontaktu (np. telefon, messenger). To prywatne i lokalne.')}
                 </div>
 
                 <div className="stackSm mt12">
                   {(form.supportPeople ?? []).length === 0 ? (
-                    <div className="cardInset cardMuted">Brak dodanych osób. Dodaj przynajmniej jedną, jeśli możesz.</div>
+                    <div className="cardInset cardMuted">{t('crisis.form.noPeople', 'Brak dodanych osób. Dodaj przynajmniej jedną, jeśli możesz.')}</div>
                   ) : null}
 
                   {(form.supportPeople ?? []).map((sp, idx) => (
                     <div key={`${idx}`} className="cardInset cardMuted">
                       <div className="rowBetween" style={{ gap: 10, alignItems: 'flex-start' }}>
                         <div style={{ flex: 1, minWidth: 0 }}>
-                          <label className="label" htmlFor={`sp-name-${idx}`}>Imię</label>
+                          <label className="label" htmlFor={`sp-name-${idx}`}>{t('crisis.form.name', 'Imię')}</label>
                           <input
                             id={`sp-name-${idx}`}
                             className="input"
                             value={sp?.name ?? ''}
                             onChange={updateSupportPerson(idx, 'name')}
-                            placeholder="Np. mama, tata, Ola…"
+                            placeholder={t('crisis.form.namePlaceholder', 'Np. mama, tata, Ola…')}
                           />
 
-                          <label className="label" htmlFor={`sp-contact-${idx}`}>Kontakt</label>
+                          <label className="label" htmlFor={`sp-contact-${idx}`}>{t('crisis.form.contact', 'Kontakt')}</label>
                           <input
                             id={`sp-contact-${idx}`}
                             className="input"
                             value={sp?.contact ?? ''}
                             onChange={updateSupportPerson(idx, 'contact')}
-                            placeholder="Np. 123 456 789 / @nick / Messenger"
+                            placeholder={t('crisis.form.contactPlaceholder', 'Np. 123 456 789 / @nick / Messenger')}
                           />
                         </div>
 
                         <CTAButton as="button" type="button" tone="ghost" onClick={() => removeSupportPerson(idx)}>
-                          Usuń
+                          {t('crisis.form.remove', 'Usuń')}
                         </CTAButton>
                       </div>
                     </div>
@@ -314,13 +321,13 @@ export default function CrisisPage() {
 
                 <div className="row mt12">
                   <CTAButton as="button" type="button" tone="ghost" onClick={addSupportPerson}>
-                    Dodaj osobę
+                    {t('crisis.form.addPerson', 'Dodaj osobę')}
                   </CTAButton>
                 </div>
               </div>
 
               <CTAButton as="button" type="button" tone="primary" disabled={saving} onClick={onSave}>
-                {saving ? 'Zapisuję…' : 'Zapisz plan'}
+                {saving ? t('crisis.saving', 'Zapisuję…') : t('crisis.save', 'Zapisz plan')}
               </CTAButton>
             </div>
           </>
@@ -329,7 +336,7 @@ export default function CrisisPage() {
 
       <StoryCard tone={isDarkTheme ? 'dark' : 'surface'} className="pageAnimItem">
         <p className="storyLead" style={{ margin: 0, color: isDarkTheme ? 'rgba(255,255,255,0.72)' : 'var(--t-ink-muted)' }}>
-          Jeśli jesteś w bezpośrednim zagrożeniu — zadzwoń pod 112.
+          {t('crisis.footerWarning', 'Jeśli jesteś w bezpośrednim zagrożeniu — zadzwoń pod 112.')}
         </p>
       </StoryCard>
     </StoryScreen>

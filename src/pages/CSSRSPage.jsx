@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { HOTLINES } from '../data/hotlines'
+import { getHotlines } from '../data/hotlines'
 import { CTAButton, CloudIcon, StoryCard, StoryScreen } from '../components/StoryUI'
+import { useI18n } from '../i18n/index.jsx'
 
-const QUESTIONS = [
+const DEFAULT_QUESTIONS = [
   {
     id: 'wishToBeDead',
     label: '1) Czy zdarzało Ci się chcieć zasnąć i już się nie obudzić?',
@@ -35,19 +36,19 @@ const QUESTIONS = [
 ]
 
 function getInitialAnswers() {
-  return QUESTIONS.reduce((acc, question) => {
+  return DEFAULT_QUESTIONS.reduce((acc, question) => {
     acc[question.id] = null
     return acc
   }, {})
 }
 
-function evaluateCSSRS(answers) {
+function evaluateCSSRS(answers, text) {
   if (answers.behaviorRecent) {
     return {
-      level: 'Bardzo wysokie ryzyko',
+      level: text.results?.veryHigh?.level ?? 'Bardzo wysokie ryzyko',
       tone: 'danger',
-      summary: 'Wynik wskazuje na pilną potrzebę natychmiastowego wsparcia.',
-      feedback: [
+      summary: text.results?.veryHigh?.summary ?? 'Wynik wskazuje na pilną potrzebę natychmiastowego wsparcia.',
+      feedback: text.results?.veryHigh?.feedback ?? [
         'Nie zostawaj teraz sam/a, jeśli to możliwe.',
         'Skontaktuj się natychmiast z numerem 112 lub najbliższym SOR.',
         'Powiedz zaufanej osobie dorosłej, co się dzieje, jeszcze dziś.',
@@ -57,10 +58,10 @@ function evaluateCSSRS(answers) {
 
   if (answers.behaviorLifetime || answers.plan || answers.intent) {
     return {
-      level: 'Wysokie ryzyko',
+      level: text.results?.high?.level ?? 'Wysokie ryzyko',
       tone: 'danger',
-      summary: 'Wynik wskazuje na zwiększone ryzyko i potrzebę szybkiego kontaktu z pomocą.',
-      feedback: [
+      summary: text.results?.high?.summary ?? 'Wynik wskazuje na zwiększone ryzyko i potrzebę szybkiego kontaktu z pomocą.',
+      feedback: text.results?.high?.feedback ?? [
         'Skontaktuj się dziś z psychologiem, psychiatrą lub telefonem wsparcia.',
         'Zastosuj plan bezpieczeństwa i usuń z otoczenia rzeczy, które mogą być niebezpieczne.',
         'Umów, że ktoś bliski będzie z Tobą w kontakcie przez najbliższe godziny.',
@@ -70,10 +71,10 @@ function evaluateCSSRS(answers) {
 
   if (answers.method) {
     return {
-      level: 'Umiarkowane ryzyko',
+      level: text.results?.moderate?.level ?? 'Umiarkowane ryzyko',
       tone: 'warn',
-      summary: 'Wynik wskazuje na myśli wymagające uważności i wsparcia.',
-      feedback: [
+      summary: text.results?.moderate?.summary ?? 'Wynik wskazuje na myśli wymagające uważności i wsparcia.',
+      feedback: text.results?.moderate?.feedback ?? [
         'Porozmawiaj z zaufaną osobą dorosłą o tym, co przeżywasz.',
         'Skorzystaj z modułu kryzysowego i ćwiczeń uziemiających.',
         'Jeśli objawy się nasilą, zadzwoń na infolinię lub po pomoc medyczną.',
@@ -83,10 +84,10 @@ function evaluateCSSRS(answers) {
 
   if (answers.suicidalThoughts || answers.wishToBeDead) {
     return {
-      level: 'Niskie ryzyko (obecne sygnały ostrzegawcze)',
+      level: text.results?.low?.level ?? 'Niskie ryzyko (obecne sygnały ostrzegawcze)',
       tone: 'warn',
-      summary: 'Wynik sugeruje, że warto zadbać o wsparcie i monitorować samopoczucie.',
-      feedback: [
+      summary: text.results?.low?.summary ?? 'Wynik sugeruje, że warto zadbać o wsparcie i monitorować samopoczucie.',
+      feedback: text.results?.low?.feedback ?? [
         'Nie bagatelizuj tych sygnałów — porozmawiaj z kimś zaufanym.',
         'Zrób krótką przerwę regulacyjną: oddech, woda, kontakt z kimś bliskim.',
         'Wróć do testu, jeśli sytuacja się pogorszy.',
@@ -95,10 +96,10 @@ function evaluateCSSRS(answers) {
   }
 
   return {
-    level: 'Brak aktualnych sygnałów w teście',
+    level: text.results?.none?.level ?? 'Brak aktualnych sygnałów w teście',
     tone: 'ok',
-    summary: 'Wynik nie pokazuje aktualnych odpowiedzi dodatnich.',
-    feedback: [
+    summary: text.results?.none?.summary ?? 'Wynik nie pokazuje aktualnych odpowiedzi dodatnich.',
+    feedback: text.results?.none?.feedback ?? [
       'To nadal dobry moment, aby dbać o rutynę snu, jedzenia i odpoczynku.',
       'Jeśli Twoje samopoczucie się zmieni, możesz wrócić i ponownie wykonać test.',
     ],
@@ -145,6 +146,12 @@ function ResultBadge({ tone, children }) {
 }
 
 export default function CSSRSPage() {
+  const { lang, t, get } = useI18n()
+  const cssrsText = get('cssrs', {})
+  const QUESTIONS = useMemo(
+    () => DEFAULT_QUESTIONS.map((q, idx) => ({ ...q, label: cssrsText.questions?.[idx] ?? q.label })),
+    [cssrsText.questions],
+  )
   const [answers, setAnswers] = useState(() => getInitialAnswers())
   const [currentIndex, setCurrentIndex] = useState(0)
   const [submitted, setSubmitted] = useState(false)
@@ -156,8 +163,8 @@ export default function CSSRSPage() {
 
   const result = useMemo(() => {
     if (!submitted || !allAnswered) return null
-    return evaluateCSSRS(answers)
-  }, [allAnswered, answers, submitted])
+    return evaluateCSSRS(answers, cssrsText)
+  }, [allAnswered, answers, submitted, cssrsText])
 
   const currentQuestion = QUESTIONS[currentIndex]
   const currentAnswer = answers[currentQuestion.id]
@@ -167,6 +174,7 @@ export default function CSSRSPage() {
   )
   const progress = Math.round((answeredCount / QUESTIONS.length) * 100)
   const isDarkTheme = typeof document !== 'undefined' && document.documentElement.dataset.theme === 'dark'
+  const HOTLINES = useMemo(() => getHotlines(lang), [lang])
 
   const setAnswer = (id, value) => {
     setAnswers((prev) => ({ ...prev, [id]: value }))
@@ -210,15 +218,15 @@ export default function CSSRSPage() {
       <StoryCard tone={isDarkTheme ? 'dark' : 'surface'} className="pageAnimItem">
         <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
           <div>
-            <div className="badgeDanger">Ocena bezpieczeństwa</div>
+            <div className="badgeDanger">{t('cssrs.badge', 'Ocena bezpieczeństwa')}</div>
             <h1 className="storyTitle" style={{ marginTop: 10, color: isDarkTheme ? '#fff' : 'var(--t-ink)' }}>
-              Test <span className="storyAccent">C-SSRS</span>
+              {t('cssrs.title', 'Test')} <span className="storyAccent">{t('cssrs.accent', 'C-SSRS')}</span>
             </h1>
             <p className="storyLead" style={{ color: isDarkTheme ? 'rgba(255,255,255,0.72)' : 'var(--t-ink-muted)' }}>
-              Odpowiedz szczerze na pytania tak/nie. Na końcu zobaczysz wynik i wskazówki.
+              {t('cssrs.lead', 'Odpowiedz szczerze na pytania tak/nie. Na końcu zobaczysz wynik i wskazówki.')}
             </p>
             <p className="textSm" style={{ color: isDarkTheme ? 'rgba(255,255,255,0.64)' : 'var(--t-ink-muted)' }}>
-              To narzędzie przesiewowe, nie diagnoza medyczna.
+              {t('cssrs.note', 'To narzędzie przesiewowe, nie diagnoza medyczna.')}
             </p>
           </div>
           <CloudIcon mood="support" label="Wspierająca chmurka" />
@@ -228,10 +236,10 @@ export default function CSSRSPage() {
       <StoryCard tone="surface" className="pageAnimItem">
         <div className="rowBetween" style={{ alignItems: 'center', gap: 10 }}>
           <div className="textStrong">
-            Pytanie {currentIndex + 1}/{QUESTIONS.length}
+            {t('cssrs.question', 'Pytanie')} {currentIndex + 1}/{QUESTIONS.length}
           </div>
           <div className="textSm" style={{ color: 'var(--t-ink-muted)' }}>
-            Ukończono: {progress}%
+            {t('cssrs.completed', 'Ukończono')}: {progress}%
           </div>
         </div>
 
@@ -267,7 +275,7 @@ export default function CSSRSPage() {
               onClick={() => setAnswer(currentQuestion.id, true)}
               style={{ minWidth: 96 }}
             >
-              Tak
+              {t('cssrs.yes', 'Tak')}
             </CTAButton>
             <CTAButton
               as="button"
@@ -276,14 +284,14 @@ export default function CSSRSPage() {
               onClick={() => setAnswer(currentQuestion.id, false)}
               style={{ minWidth: 96 }}
             >
-              Nie
+              {t('cssrs.no', 'Nie')}
             </CTAButton>
           </div>
         </div>
 
         <div className="row mt12" style={{ gap: 10, flexWrap: 'wrap' }}>
           <CTAButton as="button" type="button" tone="ghost" onClick={onBack} disabled={currentIndex === 0}>
-            Wstecz
+            {t('cssrs.back', 'Wstecz')}
           </CTAButton>
           <CTAButton
             as="button"
@@ -292,19 +300,19 @@ export default function CSSRSPage() {
             onClick={onNext}
             disabled={typeof currentAnswer !== 'boolean' || (currentIndex === QUESTIONS.length - 1 && !allAnswered)}
           >
-            {currentIndex === QUESTIONS.length - 1 ? 'Pokaż wynik' : 'Dalej'}
+            {currentIndex === QUESTIONS.length - 1 ? t('cssrs.showResult', 'Pokaż wynik') : t('cssrs.next', 'Dalej')}
           </CTAButton>
           <CTAButton as="button" type="button" tone="ghost" onClick={onReset}>
-            Wyczyść
+            {t('cssrs.clear', 'Wyczyść')}
           </CTAButton>
           <CTAButton as={Link} to="/crisis" tone="ghost">
-            Wróć do kryzysu
+            {t('cssrs.backToCrisis', 'Wróć do kryzysu')}
           </CTAButton>
         </div>
 
         {!allAnswered ? (
           <p className="textSm mt12" style={{ color: 'var(--t-ink-muted)' }}>
-            Wybierz odpowiedź Tak/Nie i przejdź dalej. Wynik pokaże się po ostatnim pytaniu.
+            {t('cssrs.tip', 'Wybierz odpowiedź Tak/Nie i przejdź dalej. Wynik pokaże się po ostatnim pytaniu.')}
           </p>
         ) : null}
       </StoryCard>
@@ -336,7 +344,7 @@ export default function CSSRSPage() {
       ) : null}
 
       <StoryCard tone="surface" className="pageAnimItem">
-        <div className="textStrong">Szybki kontakt</div>
+        <div className="textStrong">{t('cssrs.quickContact', 'Szybki kontakt')}</div>
         <div className="stackSm mt12">
           {HOTLINES.slice(0, 3).map((item) => (
             <a key={item.id} className="cardInset cardMuted" href={`tel:${item.phone}`}>
@@ -348,7 +356,7 @@ export default function CSSRSPage() {
           ))}
         </div>
         <p className="textSm mt12" style={{ color: 'var(--t-ink-muted)' }}>
-          Jeśli jesteś w bezpośrednim zagrożeniu życia — zadzwoń pod 112.
+          {t('cssrs.emergency', 'Jeśli jesteś w bezpośrednim zagrożeniu życia — zadzwoń pod 112.')}
         </p>
       </StoryCard>
     </StoryScreen>

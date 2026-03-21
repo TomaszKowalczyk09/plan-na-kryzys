@@ -1,34 +1,14 @@
 import { useMemo, useState } from 'react'
-import { EMOTIONS } from '../data/emotions'
+import { getEmotions } from '../data/emotions'
 import { useMoodEntries } from '../hooks/useIndexedDB'
 import { CloudIcon, CTAButton, StoryCard, StoryScreen } from '../components/StoryUI'
+import { useI18n } from '../i18n/index.jsx'
 
 const EMOTION_GROUPS = {
-  positive: new Set(['spokojny', 'zadowolony', 'wdzięczny']),
-  neutral: new Set(['zmęczony', 'zestresowany', 'zaniepokojony']),
-  negative: new Set(['przytłoczony', 'smutny', 'zły', 'samotny']),
+  positive: new Set(['spokojny', 'zadowolony', 'wdzięczny', 'ruhig', 'zufrieden', 'dankbar']),
+  neutral: new Set(['zmęczony', 'zestresowany', 'zaniepokojony', 'müde', 'gestresst', 'besorgt']),
+  negative: new Set(['przytłoczony', 'smutny', 'zły', 'samotny', 'überfordert', 'traurig', 'wütend', 'einsam']),
 }
-
-const EMOTION_SECTIONS = [
-  {
-    key: 'positive',
-    label: 'Pozytywne',
-    description: 'Lekkość, spokój, wdzięczność',
-    items: EMOTIONS.filter((e) => EMOTION_GROUPS.positive.has(e)),
-  },
-  {
-    key: 'neutral',
-    label: 'Neutralne',
-    description: 'Stany przejściowe i napięcie',
-    items: EMOTIONS.filter((e) => EMOTION_GROUPS.neutral.has(e)),
-  },
-  {
-    key: 'negative',
-    label: 'Trudne',
-    description: 'Ból, przeciążenie, smutek',
-    items: EMOTIONS.filter((e) => EMOTION_GROUPS.negative.has(e)),
-  },
-]
 
 const getCategoryForEntry = (entry) => {
   const emotions = Array.isArray(entry.emotions) ? entry.emotions : []
@@ -47,6 +27,31 @@ const getCategoryForEntry = (entry) => {
 }
 
 export default function MoodPage() {
+  const { lang } = useI18n()
+  const EMOTIONS = useMemo(() => getEmotions(lang), [lang])
+  const EMOTION_SECTIONS = useMemo(
+    () => [
+      {
+        key: 'positive',
+        label: 'Pozytywne',
+        description: 'Lekkość, spokój, wdzięczność',
+        items: EMOTIONS.filter((e) => EMOTION_GROUPS.positive.has(e)),
+      },
+      {
+        key: 'neutral',
+        label: 'Neutralne',
+        description: 'Stany przejściowe i napięcie',
+        items: EMOTIONS.filter((e) => EMOTION_GROUPS.neutral.has(e)),
+      },
+      {
+        key: 'negative',
+        label: 'Trudne',
+        description: 'Ból, przeciążenie, smutek',
+        items: EMOTIONS.filter((e) => EMOTION_GROUPS.negative.has(e)),
+      },
+    ],
+    [EMOTIONS],
+  )
   const { addEntry, getEntriesFromDays, loading } = useMoodEntries()
   const [selected, setSelected] = useState([])
   const [notes, setNotes] = useState('')

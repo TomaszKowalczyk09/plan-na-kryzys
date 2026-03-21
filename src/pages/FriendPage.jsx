@@ -1,8 +1,15 @@
-import { FRIEND_GUIDE } from '../data/friendGuide'
+import { useMemo } from 'react'
+import { getFriendGuide } from '../data/friendGuide'
 import { CloudIcon, StoryCard, StoryScreen } from '../components/StoryUI'
+import { useI18n } from '../i18n/index.jsx'
 
 export default function FriendPage() {
-  const tellAdult = FRIEND_GUIDE.sections.find((s) => s.title.toLowerCase().includes('kiedy powiedzieć dorosłemu'))
+  const { lang } = useI18n()
+  const FRIEND_GUIDE = useMemo(() => getFriendGuide(lang), [lang])
+  const tellAdult = FRIEND_GUIDE.sections.find((s) => {
+    const title = String(s.title ?? '').toLowerCase()
+    return title.includes('kiedy powiedzieć dorosłemu') || title.includes('erwachsen')
+  })
   const otherSections = FRIEND_GUIDE.sections.filter((s) => s !== tellAdult)
 
   return (

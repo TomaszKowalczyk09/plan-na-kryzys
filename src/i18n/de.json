@@ -1,0 +1,475 @@
+{
+  "app": {
+    "name": "Krisenplan",
+    "headerDescription": "Offline. Keine Konten. Daten nur auf dem Gerät.",
+    "footer": "Entwickelt von Tomasz Kowalczyk und Łukasz Majka",
+    "info": "Info",
+    "urgent": "Dringend",
+    "themeToLight": "Zum hellen Design wechseln",
+    "themeToDark": "Zum dunklen Design wechseln"
+  },
+  "nav": {
+    "menu": "Menü",
+    "close": "Menü schließen",
+    "tabs": [
+      { "path": "/", "label": "Start" },
+      { "path": "/mood", "label": "Stimmung" },
+      { "path": "/crisis", "label": "Krise" },
+      { "path": "/knowledge", "label": "Wissen" },
+      { "path": "/sobriety", "label": "Abhängigkeit" },
+      { "path": "/friend", "label": "Für Freunde" },
+      { "path": "/about", "label": "Über die App" }
+    ]
+  },
+  "routeTitles": {
+    "default": "Krisenplan",
+    "mood": "Meine Stimmung",
+    "crisis": "Krise",
+    "knowledge": "Wissen",
+    "friend": "Für Freunde",
+    "about": "Über die App",
+    "privacy": "Datenschutzerklärung",
+    "terms": "Nutzungsbedingungen",
+    "cssrs": "C-SSRS-Test",
+    "sobriety": "Abstinenz",
+    "addictionConfig": "Abhängigkeits-Konfiguration"
+  },
+  "firstRun": {
+    "next": "Weiter",
+    "back": "Zurück",
+    "continue": "Weiter",
+    "swipe": "↓ Weiter wischen",
+    "finish": "App öffnen",
+    "saving": "Speichern…",
+    "terms": "Nutzungsbedingungen",
+    "privacy": "Datenschutz",
+    "slide1": {
+      "title": "Achte auf deine",
+      "accent": "Stimmung",
+      "lead": "Einfache Einträge, übersichtliche Zusammenfassung und Werkzeuge, die immer dabei sein können."
+    },
+    "slide2": {
+      "title": "Hilfe in",
+      "accent": "Krisen",
+      "lead": "Konkrete Schritte für das Hier und Jetzt, Hilfsnummern und ein Sicherheitsplan."
+    },
+    "slide3": {
+      "title": "Du bist damit",
+      "accent": "nicht allein",
+      "lead": "Dies ist kein Notrufdienst. Bei unmittelbarer Gefahr wähle 112.",
+      "consent": "Ich verstehe: Daten sind lokal gespeichert, es gibt keine Konten und ich starte Hilfe-Kontakte selbst."
+    }
+  },
+  "dashboard": {
+    "titlePrefix": "Dein",
+    "titleAccent": "Zentrum",
+    "lead": "Schnellzugriffe auf die wichtigsten Module und eine kurze Übersicht.",
+    "entries14": "Einträge (14 Tage)",
+    "lastEntry": "Letzter Eintrag",
+    "lastEmotions": "Letzte Emotionen",
+    "none": "—",
+    "mood": "Meine Stimmung",
+    "quickEntry": "Schneller Eintrag",
+    "add": "Hinzufügen",
+    "crisis": "Krise",
+    "hereNow": "Hier und jetzt",
+    "open": "Öffnen",
+    "sobriety": "Abstinenz",
+    "counter": "Dein Zähler",
+    "go": "Öffnen",
+    "knowledge": "Wissen",
+    "quickTopics": "Schnelle Themen",
+    "friend": "Für Freunde",
+    "howToHelp": "Wie helfen",
+    "discord": "Discord",
+    "discordLead": "Tritt dem Server bei — Infos und Community-Kontakt.",
+    "join": "Beitreten"
+  },
+  "crisis": {
+    "important": "Wichtig",
+    "module": "Modul",
+    "moduleAccent": "Krise",
+    "legalBar": "Dies ist kein Notrufdienst. Bei unmittelbarer Gefahr wähle 112.",
+    "cssrsButton": "C-SSRS-Test starten",
+    "hereNow": "Hier und jetzt",
+    "hereNowLead": "Markiere, was du bereits geschafft hast. Konzentriere dich auf einen Schritt.",
+    "checklist": "Checkliste",
+    "uncheck": "Abwählen",
+    "doneAll": "Alles erledigt",
+    "hotlines": "Hilfetelefone",
+    "hotlinesLead": "Die App ruft nicht selbst an — du entscheidest.",
+    "hotlinesUpdate": "Liste aktualisiert",
+    "planTitle": "Mein Sicherheitsplan",
+    "planLead": "Nur auf deinem Gerät gespeichert. Offline.",
+    "loading": "Lade…",
+    "save": "Plan speichern",
+    "saving": "Speichern…",
+    "footerWarning": "Bei unmittelbarer Gefahr rufe 112.",
+    "stepsNow": [
+      "Wenn möglich, bleib an einem sicheren Ort.",
+      "Wenn du allein bist, schreibe oder rufe jetzt eine Person an.",
+      "Wenn du Dinge bei dir hast, mit denen du dich verletzen könntest — bring sie außer Reichweite.",
+      "Konzentriere dich auf den nächsten kleinen Schritt. Du musst nicht alles auf einmal lösen."
+    ],
+    "form": {
+      "warningSignals": "1) Meine Warnsignale",
+      "warningSignalsPlaceholder": "Woran merke ich, dass es schlechter wird?",
+      "copingStrategies": "2) Was mir hilft, wenn es sehr schwer ist",
+      "copingStrategiesPlaceholder": "Was kann ich selbst tun, um die nächsten Minuten/Stunden zu überstehen?",
+      "safePlaces": "3) Orte, an denen ich mich sicher fühle",
+      "safePlacesPlaceholder": "z. B. Zuhause, Zimmer, Bibliothek, Park…",
+      "limitAccess": "4) Wie ich den Zugang zu gefährlichen Dingen begrenze",
+      "limitAccessPlaceholder": "z. B. außer Reichweite legen, jemand bitten es wegzuschließen…",
+      "supportPeople": "5) Personen, mit denen ich sprechen kann",
+      "supportPeopleLead": "Name + Kontakt (z. B. Telefon, Messenger). Privat und lokal.",
+      "noPeople": "Noch keine Personen hinzugefügt. Füge wenn möglich mindestens eine hinzu.",
+      "name": "Name",
+      "contact": "Kontakt",
+      "namePlaceholder": "z. B. Mama, Papa, Alex…",
+      "contactPlaceholder": "z. B. 123 456 789 / @name / Messenger",
+      "remove": "Entfernen",
+      "addPerson": "Person hinzufügen"
+    }
+  },
+  "cssrs": {
+    "badge": "Sicherheitscheck",
+    "title": "Test",
+    "accent": "C-SSRS",
+    "lead": "Beantworte die Fragen ehrlich mit Ja/Nein. Am Ende siehst du Ergebnis und Hinweise.",
+    "note": "Dies ist ein Screening-Tool, keine medizinische Diagnose.",
+    "question": "Frage",
+    "completed": "Abgeschlossen",
+    "yes": "Ja",
+    "no": "Nein",
+    "back": "Zurück",
+    "next": "Weiter",
+    "showResult": "Ergebnis anzeigen",
+    "clear": "Zurücksetzen",
+    "backToCrisis": "Zur Krise zurück",
+    "tip": "Wähle Ja/Nein und gehe weiter. Das Ergebnis erscheint nach der letzten Frage.",
+    "quickContact": "Schneller Kontakt",
+    "emergency": "Bei unmittelbarer Lebensgefahr: 112.",
+    "questions": [
+      "1) Hattest du den Wunsch einzuschlafen und nicht mehr aufzuwachen?",
+      "2) Hattest du Gedanken, dir das Leben zu nehmen?",
+      "3) Hast du darüber nachgedacht, wie du es tun würdest?",
+      "4) Hattest du die Absicht, es zu tun?",
+      "5) Hattest du einen konkreten Plan, dir das Leben zu nehmen?",
+      "6) Hast du jemals einen Suizidversuch unternommen?",
+      "7) Gab es in den letzten 3 Monaten einen solchen Versuch?"
+    ],
+    "results": {
+      "veryHigh": {
+        "level": "Sehr hohes Risiko",
+        "summary": "Das Ergebnis zeigt einen dringenden Bedarf an sofortiger Unterstützung.",
+        "feedback": [
+          "Bleib nach Möglichkeit jetzt nicht allein.",
+          "Nimm sofort Kontakt mit 112 oder der nächsten Notaufnahme auf.",
+          "Informiere noch heute eine vertraute erwachsene Person."
+        ]
+      },
+      "high": {
+        "level": "Hohes Risiko",
+        "summary": "Das Ergebnis weist auf erhöhtes Risiko und schnellen Kontakt zu Hilfe hin.",
+        "feedback": [
+          "Kontaktiere heute psychologische/psychiatrische Hilfe oder eine Hotline.",
+          "Nutze den Sicherheitsplan und entferne potenziell gefährliche Gegenstände.",
+          "Vereinbare mit einer nahen Person engmaschigen Kontakt für die nächsten Stunden."
+        ]
+      },
+      "moderate": {
+        "level": "Mittleres Risiko",
+        "summary": "Das Ergebnis zeigt Gedanken, die Aufmerksamkeit und Unterstützung brauchen.",
+        "feedback": [
+          "Sprich mit einer vertrauten erwachsenen Person über deine Belastung.",
+          "Nutze das Krisenmodul und Grounding-Übungen.",
+          "Wenn es schlimmer wird, rufe eine Hotline oder medizinische Hilfe an."
+        ]
+      },
+      "low": {
+        "level": "Niedriges Risiko (Warnsignale vorhanden)",
+        "summary": "Das Ergebnis zeigt Warnsignale; Unterstützung und Beobachtung sind sinnvoll.",
+        "feedback": [
+          "Nimm diese Signale ernst und sprich mit einer vertrauten Person.",
+          "Mache eine kurze Regulation: Atmung, Wasser, Kontakt zu jemandem Nahen.",
+          "Wiederhole den Test, wenn sich die Lage verschlechtert."
+        ]
+      },
+      "none": {
+        "level": "Keine aktuellen Signale im Test",
+        "summary": "Der Test zeigt derzeit keine positiven Antworten.",
+        "feedback": [
+          "Weiterhin gut für Schlaf, Essen und Erholung sorgen.",
+          "Wenn sich dein Befinden ändert, kannst du den Test erneut machen."
+        ]
+      }
+    }
+  },
+  "knowledge": {
+    "title": "Schnelles",
+    "accent": "Wissen",
+    "lead": "Kurze Inhalte. Wenn es dir schlechter geht, öffne „Krise“.",
+    "groundingGuide": "Grounding: Anleitung",
+    "tileSub": "Kurz und konkret",
+    "modal": {
+      "title": "Grounding",
+      "close": "Schließen",
+      "task": "Aufgabe",
+      "back": "Zurück",
+      "restart": "Neu starten",
+      "next": "Weiter",
+      "finish": "Beenden"
+    }
+  },
+  "about": {
+    "done": "Fertig",
+    "deleteData": "Daten löschen",
+    "deleting": "Löschen…",
+    "exportJson": "JSON exportieren",
+    "exportMoodCsv": "Stimmungseinträge exportieren (CSV)",
+    "exportPlanTxt": "Sicherheitsplan exportieren (TXT)",
+    "sections": {
+      "about": {
+        "title": "Über die App",
+        "body": ["Krisenplan ist eine PWA zur Unterstützung bei schwierigen Emotionen. Sie ersetzt keine professionelle Hilfe."]
+      },
+      "documents": {
+        "title": "Dokumente",
+        "terms": "Nutzungsbedingungen",
+        "privacy": "Datenschutzerklärung"
+      },
+      "disclaimers": {
+        "title": "Wichtige Hinweise",
+        "items": [
+          "Dies ist kein Notrufdienst. Die App ruft nicht automatisch 112 an und alarmiert keine Dienste.",
+          "Bei unmittelbarer Gefahr rufe 112.",
+          "Inhalte sind allgemein und informativ. Wenn dich die Situation überfordert, wende dich an eine vertraute erwachsene Person oder Fachstelle."
+        ]
+      },
+      "privacyShort": {
+        "title": "Datenschutz (kurz)",
+        "body": [
+          "Die App arbeitet offline-first. Deine Stimmungseinträge und dein Sicherheitsplan werden lokal auf deinem Gerät gespeichert (IndexedDB). Wir senden diese Daten nicht an einen Server.",
+          "Wenn du dasselbe Gerät mit anderen teilst, können diese ggf. auf lokal gespeicherte Daten im Browser zugreifen."
+        ]
+      },
+      "delete": {
+        "title": "Meine Daten löschen",
+        "body": "Löscht lokal: Stimmungseinträge, Sicherheitsplan und App-Einstellungen in diesem Browser."
+      },
+      "export": {
+        "title": "Meine Daten exportieren",
+        "body": "Exportiert lokal: Stimmungseinträge, Sicherheitsplan und App-Einstellungen in diesem Browser."
+      },
+      "reports": {
+        "title": "Meldungen",
+        "body": "Fehler, Vorschläge oder veraltete Hilfsnummern: tomasz.kowalczyk@gminagryfino.pl"
+      },
+      "credits": {
+        "title": "Credits",
+        "initiative": "Initiative: Mitglieder des Jugendstadtrats in Gryfino.",
+        "adminLabel": "Verantwortlich:",
+        "adminName": "Tomasz Kowalczyk",
+        "adminEmail": "tomasz.kowalczyk@gminagryfino.pl",
+        "discordLabel": "Discord-Server:",
+        "discordAction": "beitreten",
+        "discordUrl": "https://discord.gg/kjHr5E35js",
+        "discordOwnerLabel": "Discord-Verantwortlicher:",
+        "discordOwnerName": "Łukasz Majka",
+        "discordOwnerEmail": "lukasz.majka@gminagryfino.pl"
+      },
+      "version": {
+        "title": "Version",
+        "body": "MVP 1.0 (lokale Daten, offline-first)"
+      }
+    }
+  },
+  "privacy": {
+    "title": "Datenschutzerklärung",
+    "updated": "Letzte Aktualisierung: 21. März 2026",
+    "sections": [
+      {
+        "title": "1. Verantwortliche Stelle",
+        "body": [
+          "Verantwortlich für diese App ist Tomasz Kowalczyk (tomasz.kowalczyk@gminagryfino.pl).",
+          "Die App wurde im Rahmen einer Jugendratsinitiative entwickelt."
+        ]
+      },
+      {
+        "title": "2. Welche Daten werden verarbeitet?",
+        "body": ["Die App speichert lokal auf deinem Gerät Daten, die du selbst eingibst, z. B.:"],
+        "bullets": [
+          "Stimmungseinträge (Datum/Uhrzeit, gewählte Emotionen, optionale Notiz)",
+          "Sicherheitsplan (Formularinhalte)",
+          "Einstellungen (z. B. Bestätigung rechtlicher Hinweise)"
+        ]
+      },
+      {
+        "title": "3. Wo werden Daten gespeichert?",
+        "body": [
+          "Daten werden lokal im Browser auf deinem Gerät gespeichert (IndexedDB). Es erfolgt keine Übertragung an einen Server.",
+          "Bei gemeinsam genutzten Geräten können andere Personen mit Zugriff auf denselben Browser auch lokale Daten sehen."
+        ]
+      },
+      {
+        "title": "4. Cookies/Analyse",
+        "body": ["In dieser MVP-Version nutzen wir keine externe Analytik und keine Tracker. Für Offline-Funktion und Datenspeicherung nutzt die App Browser-Speichermechanismen."]
+      },
+      {
+        "title": "5. Wie können Daten gelöscht werden?",
+        "body": ["Du kannst Daten in der App unter „Über die App“ → „Daten löschen“ entfernen oder Browser-Seitendaten manuell löschen."]
+      },
+      {
+        "title": "6. Kontakt",
+        "body": ["Kontakt: tomasz.kowalczyk@gminagryfino.pl"]
+      },
+      {
+        "title": "7. Rechtsgrundlage (DSGVO)",
+        "body": [
+          "Einträge und Sicherheitsplan werden lokal auf deinem Gerät gespeichert, damit die App funktioniert. Es gibt keine Benutzerkonten und keine Server-Übertragung der Inhalte.",
+          "Falls künftig Server-Funktionen oder Analytik ergänzt werden, wird diese Erklärung aktualisiert."
+        ]
+      },
+      {
+        "title": "8. Empfänger der Daten",
+        "body": [
+          "Es erfolgt keine Weitergabe deiner Eintragsinhalte an Dritte, da diese nicht auf einen Server übertragen werden.",
+          "Beim Hosting können technische Verbindungsdaten (z. B. IP-Adresse in Server-Logs) anfallen."
+        ]
+      },
+      {
+        "title": "9. Speicherdauer",
+        "body": ["Lokal gespeicherte Daten bleiben vorhanden, bis du sie in der App löschst oder Browserdaten entfernst."]
+      },
+      {
+        "title": "10. Deine Rechte",
+        "body": ["Du hast das Recht auf Information und Löschung lokal gespeicherter Daten. Da Inhalte nicht an einen Server übertragen werden, haben wir keinen Zugriff auf deine Einträge."]
+      },
+      {
+        "title": "11. Beschwerderecht",
+        "body": ["Du kannst dich bei einer zuständigen deutschen Datenschutzaufsichtsbehörde beschweren (z. B. Landesdatenschutzbehörde oder BfDI)."]
+      },
+      {
+        "title": "12. Sensible Daten und Sicherheit",
+        "body": [
+          "Einträge können psychische Gesundheit betreffen und damit sensible Informationen enthalten. Daher werden diese nicht an einen Server gesendet.",
+          "Bei gemeinsam genutzten Geräten können andere Personen mit Zugriff auf denselben Browser lokale Daten sehen."
+        ]
+      }
+    ]
+  },
+  "terms": {
+    "title": "Nutzungsbedingungen",
+    "updated": "Letzte Aktualisierung: 21. März 2026",
+    "sections": [
+      {
+        "title": "1. Allgemeine Informationen",
+        "body": [
+          "Die App „Krisenplan“ ist ein Informations- und Unterstützungswerkzeug. Sie läuft als PWA und kann offline genutzt werden.",
+          "Die App entstand im Rahmen einer Jugendratsinitiative.",
+          "Verantwortlich: Tomasz Kowalczyk • Kontakt: tomasz.kowalczyk@gminagryfino.pl"
+        ]
+      },
+      {
+        "title": "2. Charakter des Dienstes",
+        "bullets": [
+          "Die App ist kein Notrufdienst. Sie ruft nicht automatisch 112 an.",
+          "Die App ist keine Diagnose und keine Therapie und ersetzt keine fachliche Hilfe.",
+          "Bei unmittelbarer Gefahr für Leben oder Gesundheit: sofort 112 wählen."
+        ]
+      },
+      {
+        "title": "3. Funktionsumfang",
+        "body": [
+          "Die App bietet u. a. ein Stimmungstagebuch, einen Sicherheitsplan, Hilfsnummern und Wissensinhalte.",
+          "Sie bietet kein dauerhaftes Monitoring oder automatische Intervention. Kontakte mit Hilfsstellen initiiert die nutzende Person selbst."
+        ]
+      },
+      {
+        "title": "4. Nutzung",
+        "body": [
+          "Die Nutzung erfolgt freiwillig und auf eigene Verantwortung.",
+          "Bei Missbrauch oder technischen Arbeiten kann der Zugang vorübergehend eingeschränkt werden."
+        ]
+      },
+      {
+        "title": "5. Daten und Datenschutz",
+        "body": ["Eingegebene Daten werden lokal gespeichert. Details stehen in der Datenschutzerklärung."]
+      },
+      {
+        "title": "6. Haftung",
+        "body": [
+          "Inhalte sind allgemein und vorsichtig formuliert, ersetzen jedoch keine professionelle Einschätzung.",
+          "Für Entscheidungen auf Basis der App-Inhalte wird keine Haftung übernommen."
+        ]
+      },
+      {
+        "title": "7. Urheberrecht",
+        "body": ["Inhalte und Struktur der App sind urheberrechtlich geschützt. Vervielfältigung und Verbreitung nur im gesetzlichen Rahmen oder mit Zustimmung."]
+      },
+      {
+        "title": "8. Änderungen",
+        "body": ["Die Nutzungsbedingungen können aktualisiert werden. Bei wesentlichen Änderungen kann eine erneute Bestätigung erforderlich sein."]
+      },
+      {
+        "title": "9. Kontakt",
+        "body": ["Kontakt: tomasz.kowalczyk@gminagryfino.pl"]
+      },
+      {
+        "title": "10. Technische Voraussetzungen",
+        "body": ["Zur Nutzung ist ein Gerät mit modernem Browser erforderlich. Einige Funktionen (z. B. Installation/Aktualisierung) benötigen Internetzugang."]
+      },
+      {
+        "title": "11. Meldungen",
+        "body": ["Fehler, veraltete Telefonnummern oder Korrekturen: tomasz.kowalczyk@gminagryfino.pl"]
+      },
+      {
+        "title": "12. Dokumente",
+        "body": ["Datenschutzregeln sind in der Datenschutzerklärung beschrieben. Dokumente findest du im Bereich „Über die App“."]
+      }
+    ]
+  },
+  "data": {
+    "emotions": [
+      "ruhig",
+      "zufrieden",
+      "dankbar",
+      "müde",
+      "gestresst",
+      "überfordert",
+      "traurig",
+      "wütend",
+      "einsam",
+      "besorgt"
+    ],
+    "hotlinesMeta": {
+      "lastUpdated": "2026-03-21",
+      "note": "Nummern und Zeiten können sich ändern. Bei akuter Lebensgefahr: 112."
+    },
+    "hotlines": [
+      {
+        "id": "nummergegenkummer-kids",
+        "name": "Nummer gegen Kummer (Kinder- und Jugendtelefon)",
+        "phone": "116111",
+        "note": "Kostenfrei aus Deutschland. Beratungszeiten je nach Angebot."
+      },
+      {
+        "id": "telefonseelsorge",
+        "name": "TelefonSeelsorge",
+        "phone": "08001110111",
+        "note": "24/7 erreichbar. Alternativ: 0800 1110222 oder 116123."
+      },
+      {
+        "id": "emergency-112",
+        "name": "Notruf",
+        "phone": "112",
+        "note": "Bei akuter Gefahr für Leben oder Gesundheit sofort anrufen."
+      }
+    ],
+    "friendGuide": {
+      "title": "Wie du einer Freundin oder einem Freund helfen kannst",
+      "sections": []
+    },
+    "knowledgeArticles": []
+  }
+}
