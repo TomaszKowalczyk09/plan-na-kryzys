@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { getHotlines } from '../data/hotlines'
 import { CTAButton, CloudIcon, StoryCard, StoryScreen } from '../components/StoryUI'
@@ -207,6 +207,20 @@ export default function CSSRSPage() {
     }
   }
 
+  // Auto-advance after answer selection
+  useEffect(() => {
+    if (!submitted && typeof currentAnswer === 'boolean') {
+      const timer = setTimeout(() => {
+        if (currentIndex < QUESTIONS.length - 1) {
+          setCurrentIndex((prev) => prev + 1)
+        } else if (allAnswered) {
+          setSubmitted(true)
+        }
+      }, 500) // Brief delay for user feedback
+      return () => clearTimeout(timer)
+    }
+  }, [currentAnswer, currentIndex, submitted, allAnswered, QUESTIONS.length])
+
   const onReset = () => {
     setAnswers(getInitialAnswers())
     setCurrentIndex(0)
@@ -267,13 +281,20 @@ export default function CSSRSPage() {
           <div className="textStrong" style={{ fontSize: 20, lineHeight: 1.35 }}>
             {currentQuestion.label}
           </div>
-          <div className="row mt12" style={{ gap: 10, flexWrap: 'wrap' }}>
+          <div
+            className="mt12"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: 12,
+            }}
+          >
             <CTAButton
               as="button"
               type="button"
               tone={currentAnswer === true ? 'primary' : 'ghost'}
               onClick={() => setAnswer(currentQuestion.id, true)}
-              style={{ minWidth: 96 }}
+              style={{ fontWeight: 700, fontSize: 17, padding: '16px 12px' }}
             >
               {t('cssrs.yes', 'Tak')}
             </CTAButton>
@@ -282,37 +303,31 @@ export default function CSSRSPage() {
               type="button"
               tone={currentAnswer === false ? 'dark' : 'ghost'}
               onClick={() => setAnswer(currentQuestion.id, false)}
-              style={{ minWidth: 96 }}
+              style={{ fontWeight: 700, fontSize: 17, padding: '16px 12px' }}
             >
               {t('cssrs.no', 'Nie')}
             </CTAButton>
           </div>
         </div>
 
-        <div className="row mt12" style={{ gap: 10, flexWrap: 'wrap' }}>
-          <CTAButton as="button" type="button" tone="ghost" onClick={onBack} disabled={currentIndex === 0}>
-            {t('cssrs.back', 'Wstecz')}
-          </CTAButton>
-          <CTAButton
-            as="button"
-            type="button"
-            tone="primary"
-            onClick={onNext}
-            disabled={typeof currentAnswer !== 'boolean' || (currentIndex === QUESTIONS.length - 1 && !allAnswered)}
-          >
-            {currentIndex === QUESTIONS.length - 1 ? t('cssrs.showResult', 'Pokaż wynik') : t('cssrs.next', 'Dalej')}
-          </CTAButton>
-          <CTAButton as="button" type="button" tone="ghost" onClick={onReset}>
-            {t('cssrs.clear', 'Wyczyść')}
-          </CTAButton>
-          <CTAButton as={Link} to="/crisis" tone="ghost">
+        {/* Navigation buttons - separated visually */}
+        <div className="mt12" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <div className="row" style={{ gap: 10 }}>
+            <CTAButton as="button" type="button" tone="ghost" onClick={onBack} disabled={currentIndex === 0} style={{ flex: 1, fontSize: 14 }}>
+              {t('cssrs.back', 'Wstecz')}
+            </CTAButton>
+            <CTAButton as="button" type="button" tone="ghost" onClick={onReset} style={{ flex: 1, fontSize: 14 }}>
+              {t('cssrs.clear', 'Wyczyść')}
+            </CTAButton>
+          </div>
+          <CTAButton as={Link} to="/crisis" tone="ghost" style={{ fontSize: 14 }}>
             {t('cssrs.backToCrisis', 'Wróć do kryzysu')}
           </CTAButton>
         </div>
 
-        {!allAnswered ? (
+        {!submitted && currentIndex === 0 ? (
           <p className="textSm mt12" style={{ color: 'var(--t-ink-muted)' }}>
-            {t('cssrs.tip', 'Wybierz odpowiedź Tak/Nie i przejdź dalej. Wynik pokaże się po ostatnim pytaniu.')}
+            {t('cssrs.tip', 'Wybierz Tak lub Nie. Wynik pojawi się po ostatnim pytaniu.')}
           </p>
         ) : null}
       </StoryCard>
