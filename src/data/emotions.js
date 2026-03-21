@@ -1,12 +1,3 @@
-export const EMOTIONS = [
-  'spokojny',
-  'zadowolony',
-  'wdzięczny',
-  'zmęczony',
-  'zestresowany',
-  'przytłoczony',
-  'smutny',
-  'zły',
-  'samotny',
-  'zaniepokojony',
-]
+import pl from '../i18n/pl.json'
+
+export const EMOTIONS = pl.data.emotions

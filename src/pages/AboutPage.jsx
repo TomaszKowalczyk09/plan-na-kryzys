@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { clearAllLocalData, exportAllLocalDataJSON, exportMoodEntriesCSV, exportSafetyPlanText } from '../hooks/useIndexedDB'
+import { useI18n } from '../i18n/index.jsx'
 
 export default function AboutPage() {
+  const { t, get } = useI18n()
   const [clearing, setClearing] = useState(false)
   const [done, setDone] = useState(false)
 
@@ -37,71 +39,60 @@ export default function AboutPage() {
 
       // cleanup
       setTimeout(() => URL.revokeObjectURL(url), 0)
-      setExportDone('Gotowe')
+      setExportDone(t('about.done'))
     } finally {
       setExporting(false)
     }
   }
 
+  const sections = get('about.sections', {})
+  const credits = sections.credits ?? {}
+
   return (
     <div className="screen">
       <div className="card">
-        <h1 className="h1">O aplikacji</h1>
-        <p className="p">
-          Plan na kryzys to aplikacja PWA wspierająca w trudnych emocjach. Nie zastępuje profesjonalnej pomocy.
-        </p>
+        <h1 className="h1">{sections.about?.title}</h1>
+        {(sections.about?.body ?? []).map((line) => <p key={line} className="p">{line}</p>)}
       </div>
 
       <div className="card">
-        <h1 className="h1">Dokumenty</h1>
+        <h1 className="h1">{sections.documents?.title}</h1>
         <div className="row mt12">
-          <Link className="btn" to="/terms">Regulamin</Link>
-          <Link className="btn" to="/privacy">Polityka prywatności</Link>
+          <Link className="btn" to="/terms">{sections.documents?.terms}</Link>
+          <Link className="btn" to="/privacy">{sections.documents?.privacy}</Link>
         </div>
       </div>
 
       <div className="card">
-        <h1 className="h1">Ważne zastrzeżenia</h1>
+        <h1 className="h1">{sections.disclaimers?.title}</h1>
         <div className="stackSm mt10">
-          <div className="cardInset">
-            To nie jest usługa ratunkowa. Aplikacja nie dzwoni automatycznie na 112 i nie wzywa służb.
-          </div>
-          <div className="cardInset">
-            Jeśli jesteś w bezpośrednim zagrożeniu — zadzwoń pod 112.
-          </div>
-          <div className="cardInset">
-            Treści są ogólne i informacyjne. Jeśli czujesz, że sytuacja Cię przerasta, poproś o pomoc zaufaną osobę dorosłą lub specjalistę.
-          </div>
+          {(sections.disclaimers?.items ?? []).map((item) => (
+            <div key={item} className="cardInset">{item}</div>
+          ))}
         </div>
       </div>
 
       <div className="card">
-        <h1 className="h1">Prywatność (w skrócie)</h1>
-        <p className="p">
-          Aplikacja działa offline-first. Twoje wpisy nastroju i plan bezpieczeństwa są zapisywane lokalnie na Twoim urządzeniu (IndexedDB).
-          Nie wysyłamy tych danych na serwer.
-        </p>
-        <p className="p">
-          Jeśli korzystasz z tego samego telefonu z innymi osobami, pamiętaj że one mogą mieć dostęp do danych w tej przeglądarce.
-        </p>
+        <h1 className="h1">{sections.privacyShort?.title}</h1>
+        {(sections.privacyShort?.body ?? []).map((line) => <p key={line} className="p">{line}</p>)}
       </div>
 
       <div className="card">
-        <h1 className="h1">Usuń moje dane</h1>
-        <p className="p">Usuwa lokalnie: wpisy nastroju, plan bezpieczeństwa i ustawienia tej aplikacji w tej przeglądarce.</p>
+        <h1 className="h1">{sections.delete?.title}</h1>
+        <p className="p">{sections.delete?.body}</p>
         <div className="row mt12">
           <button type="button" className="btn btnDanger" onClick={onClear} disabled={clearing}>
-            {clearing ? 'Usuwam…' : 'Usuń dane'}
+            {clearing ? t('about.deleting') : t('about.deleteData')}
           </button>
           {done ? (
-            <span className="textMuted textSm alignCenter">Gotowe</span>
+            <span className="textMuted textSm alignCenter">{t('about.done')}</span>
           ) : null}
         </div>
       </div>
 
       <div className="card">
-        <h1 className="h1">Eksportuj moje dane</h1>
-        <p className="p">Eksportuje lokalnie: wpisy nastroju, plan bezpieczeństwa i ustawienia tej aplikacji w tej przeglądarce.</p>
+        <h1 className="h1">{sections.export?.title}</h1>
+        <p className="p">{sections.export?.body}</p>
         <div className="row mt12">
           <button
             type="button"
@@ -115,7 +106,7 @@ export default function AboutPage() {
             }
             disabled={exporting}
           >
-            Eksportuj JSON
+            {t('about.exportJson')}
           </button>
           <button
             type="button"
@@ -129,7 +120,7 @@ export default function AboutPage() {
             }
             disabled={exporting}
           >
-            Eksportuj wpisy nastroju (CSV)
+            {t('about.exportMoodCsv')}
           </button>
           <button
             type="button"
@@ -143,7 +134,7 @@ export default function AboutPage() {
             }
             disabled={exporting}
           >
-            Eksportuj plan bezpieczeństwa (TXT)
+            {t('about.exportPlanTxt')}
           </button>
           {exportDone ? (
             <span className="textMuted textSm alignCenter">{exportDone}</span>
@@ -152,31 +143,29 @@ export default function AboutPage() {
       </div>
 
       <div className="card">
-        <h1 className="h1">Zgłoszenia</h1>
-        <p className="p">
-          Błędy, sugestie oraz nieaktualne numery telefonów możesz zgłaszać na: tomasz.kowalczyk@gminagryfino.pl.
-        </p>
+        <h1 className="h1">{sections.reports?.title}</h1>
+        <p className="p">{sections.reports?.body}</p>
       </div>
 
       <div className="card">
-        <h1 className="h1">Credits</h1>
+        <h1 className="h1">{credits.title}</h1>
         <div className="stackSm mt10">
-          <div className="cardInset">Inicjatywa: Radni Młodzieżowej Rady Miejskiej w Gryfinie.</div>
+          <div className="cardInset">{credits.initiative}</div>
           <div className="cardInset">
-            Administrator i osoba odpowiedzialna: <a href="mailto: tomasz.kowalczyk@gminagryfino.pl">Tomasz Kowalczyk (tomasz.kowalczyk@gminagryfino.pl)</a>
+            {credits.adminLabel} <a href={`mailto:${credits.adminEmail}`}>{credits.adminName} ({credits.adminEmail})</a>
           </div>
           <div className="cardInset">
-            Serwer Discord: <a href="https://discord.gg/kjHr5E35js" target="_blank" rel="noreferrer">dołącz</a>
+            {credits.discordLabel} <a href={credits.discordUrl} target="_blank" rel="noreferrer">{credits.discordAction}</a>
           </div>
           <div className="cardInset">
-            Osoba odpowiedzialna za serwer Discord: <a href="mailto:lukasz.majka@gminagryfino.pl">Łukasz Majka (lukasz.majka@gminagryfino.pl)</a>.
+            {credits.discordOwnerLabel} <a href={`mailto:${credits.discordOwnerEmail}`}>{credits.discordOwnerName} ({credits.discordOwnerEmail})</a>.
           </div>
         </div>
       </div>
 
       <div className="card">
-        <h1 className="h1">Wersja</h1>
-        <p className="p">MVP 1.0 (lokalne dane, offline-first)</p>
+        <h1 className="h1">{sections.version?.title}</h1>
+        <p className="p">{sections.version?.body}</p>
       </div>
     </div>
   )

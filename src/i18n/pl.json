@@ -1,0 +1,422 @@
+{
+  "app": {
+    "name": "Plan na kryzys",
+    "headerDescription": "Offline. Bez kont. Dane tylko na urządzeniu.",
+    "footer": "Developed by Tomasz Kowalczyk and Łukasz Majka",
+    "info": "Informacje",
+    "urgent": "Pilne",
+    "themeToLight": "Przełącz na jasny motyw",
+    "themeToDark": "Przełącz na ciemny motyw"
+  },
+  "nav": {
+    "menu": "Menu",
+    "close": "Zamknij menu",
+    "tabs": [
+      { "path": "/", "label": "Start" },
+      { "path": "/mood", "label": "Nastrój" },
+      { "path": "/crisis", "label": "Kryzys" },
+      { "path": "/knowledge", "label": "Wiedza" },
+      { "path": "/sobriety", "label": "Uzależnienie" },
+      { "path": "/friend", "label": "Dla przyjaciela" },
+      { "path": "/about", "label": "O aplikacji" }
+    ]
+  },
+  "routeTitles": {
+    "default": "Plan na kryzys",
+    "mood": "Mój nastrój",
+    "crisis": "Kryzys",
+    "knowledge": "Wiedza",
+    "friend": "Dla przyjaciela",
+    "about": "O aplikacji",
+    "privacy": "Polityka prywatności",
+    "terms": "Regulamin",
+    "cssrs": "Test C-SSRS",
+    "sobriety": "Czystość",
+    "addictionConfig": "Konfiguracja uzależnienia"
+  },
+  "firstRun": {
+    "next": "Dalej",
+    "back": "Wstecz",
+    "continue": "Przejdź dalej",
+    "swipe": "↓ Przesuń dalej",
+    "finish": "Wejdź do aplikacji",
+    "saving": "Zapisuję…",
+    "terms": "Regulamin",
+    "privacy": "Prywatność",
+    "slide1": {
+      "title": "Zadbaj o swój",
+      "accent": "nastrój",
+      "lead": "Proste wpisy, czytelne podsumowanie i narzędzia, które możesz mieć zawsze przy sobie."
+    },
+    "slide2": {
+      "title": "Pomoc w",
+      "accent": "kryzysie",
+      "lead": "Konkretne kroki „tu i teraz”, numery pomocy i plan bezpieczeństwa."
+    },
+    "slide3": {
+      "title": "Nie jesteś z tym",
+      "accent": "sam_a",
+      "lead": "To nie jest usługa ratunkowa. Jeśli jesteś w bezpośrednim zagrożeniu — zadzwoń pod 112.",
+      "consent": "Rozumiem zasady: dane są lokalne, nie ma kont, a kontakt z pomocą inicjuję sam/a."
+    }
+  },
+  "about": {
+    "done": "Gotowe",
+    "deleteData": "Usuń dane",
+    "deleting": "Usuwam…",
+    "exportJson": "Eksportuj JSON",
+    "exportMoodCsv": "Eksportuj wpisy nastroju (CSV)",
+    "exportPlanTxt": "Eksportuj plan bezpieczeństwa (TXT)",
+    "sections": {
+      "about": {
+        "title": "O aplikacji",
+        "body": ["Plan na kryzys to aplikacja PWA wspierająca w trudnych emocjach. Nie zastępuje profesjonalnej pomocy."]
+      },
+      "documents": {
+        "title": "Dokumenty",
+        "terms": "Regulamin",
+        "privacy": "Polityka prywatności"
+      },
+      "disclaimers": {
+        "title": "Ważne zastrzeżenia",
+        "items": [
+          "To nie jest usługa ratunkowa. Aplikacja nie dzwoni automatycznie na 112 i nie wzywa służb.",
+          "Jeśli jesteś w bezpośrednim zagrożeniu — zadzwoń pod 112.",
+          "Treści są ogólne i informacyjne. Jeśli czujesz, że sytuacja Cię przerasta, poproś o pomoc zaufaną osobę dorosłą lub specjalistę."
+        ]
+      },
+      "privacyShort": {
+        "title": "Prywatność (w skrócie)",
+        "body": [
+          "Aplikacja działa offline-first. Twoje wpisy nastroju i plan bezpieczeństwa są zapisywane lokalnie na Twoim urządzeniu (IndexedDB). Nie wysyłamy tych danych na serwer.",
+          "Jeśli korzystasz z tego samego telefonu z innymi osobami, pamiętaj że one mogą mieć dostęp do danych w tej przeglądarce."
+        ]
+      },
+      "delete": {
+        "title": "Usuń moje dane",
+        "body": "Usuwa lokalnie: wpisy nastroju, plan bezpieczeństwa i ustawienia tej aplikacji w tej przeglądarce."
+      },
+      "export": {
+        "title": "Eksportuj moje dane",
+        "body": "Eksportuje lokalnie: wpisy nastroju, plan bezpieczeństwa i ustawienia tej aplikacji w tej przeglądarce."
+      },
+      "reports": {
+        "title": "Zgłoszenia",
+        "body": "Błędy, sugestie oraz nieaktualne numery telefonów możesz zgłaszać na: tomasz.kowalczyk@gminagryfino.pl."
+      },
+      "credits": {
+        "title": "Credits",
+        "initiative": "Inicjatywa: Radni Młodzieżowej Rady Miejskiej w Gryfinie.",
+        "adminLabel": "Administrator i osoba odpowiedzialna:",
+        "adminName": "Tomasz Kowalczyk",
+        "adminEmail": "tomasz.kowalczyk@gminagryfino.pl",
+        "discordLabel": "Serwer Discord:",
+        "discordAction": "dołącz",
+        "discordUrl": "https://discord.gg/kjHr5E35js",
+        "discordOwnerLabel": "Osoba odpowiedzialna za serwer Discord:",
+        "discordOwnerName": "Łukasz Majka",
+        "discordOwnerEmail": "lukasz.majka@gminagryfino.pl"
+      },
+      "version": {
+        "title": "Wersja",
+        "body": "MVP 1.0 (lokalne dane, offline-first)"
+      }
+    }
+  },
+  "privacy": {
+    "title": "Polityka prywatności",
+    "updated": "Ostatnia aktualizacja: 4 lutego 2026",
+    "sections": [
+      {
+        "title": "1. Administrator danych",
+        "body": [
+          "Administratorem danych i osobą odpowiedzialną jest Tomasz Kowalczyk (tomasz.kowalczyk@gminagryfino.pl).",
+          "Aplikacja jest wynikiem działań Radnych Młodzieżowej Rady Miejskiej w Gryfinie."
+        ]
+      },
+      {
+        "title": "2. Jakie dane przetwarzamy?",
+        "body": ["Aplikacja może zapisywać lokalnie na Twoim urządzeniu dane, które sam/a wpiszesz, np.:"],
+        "bullets": [
+          "wpisy nastroju (data/godzina, wybrane emocje, opcjonalna notatka)",
+          "plan bezpieczeństwa (treści pól formularza)",
+          "ustawienia (np. potwierdzenie zapoznania się z informacjami prawnymi)"
+        ]
+      },
+      {
+        "title": "3. Gdzie są przechowywane dane?",
+        "body": [
+          "Dane są przechowywane lokalnie w Twojej przeglądarce (IndexedDB) na Twoim urządzeniu. Nie wysyłamy tych danych na serwer i nie udostępniamy ich osobom trzecim.",
+          "Jeśli korzystasz z tego samego urządzenia i tej samej przeglądarki z innymi osobami, mogą one potencjalnie uzyskać dostęp do danych zapisanych lokalnie."
+        ]
+      },
+      {
+        "title": "4. Cookies/analityka",
+        "body": ["W tej wersji MVP nie używamy analityki zewnętrznej ani narzędzi śledzących. Aplikacja może korzystać z mechanizmów pamięci przeglądarki potrzebnych do działania offline (cache zasobów PWA) oraz do zapisu danych, które wprowadzasz."]
+      },
+      {
+        "title": "5. Jak usunąć dane?",
+        "body": ["Możesz usunąć dane z poziomu aplikacji w ekranie „O aplikacji” → „Usuń dane”. Możesz też wyczyścić dane strony w ustawieniach przeglądarki."]
+      },
+      {
+        "title": "6. Kontakt",
+        "body": ["Kontakt: tomasz.kowalczyk@gminagryfino.pl"]
+      },
+      {
+        "title": "7. Podstawa prawna (RODO)",
+        "body": [
+          "Wpisy i plan bezpieczeństwa są zapisywane lokalnie na Twoim urządzeniu na Twoje żądanie, aby Aplikacja mogła działać. Aplikacja nie posiada kont użytkowników i nie przesyła treści wpisów na serwer.",
+          "Jeśli w przyszłości zostaną dodane funkcje wymagające przetwarzania danych na serwerze lub analityka, ta polityka zostanie zaktualizowana."
+        ]
+      },
+      {
+        "title": "8. Odbiorcy danych",
+        "body": [
+          "Nie udostępniamy treści wpisów użytkownika osobom trzecim, ponieważ nie są one przesyłane na serwer.",
+          "Dostawca hostingu (serwowania plików aplikacji) może przetwarzać standardowe dane techniczne połączenia, takie jak adres IP w logach serwera."
+        ]
+      },
+      {
+        "title": "9. Okres przechowywania",
+        "body": ["Dane zapisane w Aplikacji są przechowywane lokalnie do czasu ich usunięcia przez użytkownika (funkcja „Usuń dane”) albo wyczyszczenia danych strony w przeglądarce."]
+      },
+      {
+        "title": "10. Twoje prawa",
+        "body": ["Masz prawo do informacji o zasadach prywatności oraz do usunięcia danych przechowywanych lokalnie w Aplikacji. W tej wersji Aplikacji nie mamy dostępu do treści Twoich wpisów (nie są one wysyłane na serwer)."]
+      },
+      {
+        "title": "11. Skarga do organu nadzorczego",
+        "body": ["Jeśli uważasz, że przetwarzanie danych narusza przepisy, możesz złożyć skargę do Prezesa Urzędu Ochrony Danych Osobowych (UODO)."]
+      },
+      {
+        "title": "12. Dane wrażliwe i bezpieczeństwo",
+        "body": [
+          "Treści wpisów mogą dotyczyć zdrowia psychicznego, co może stanowić dane wrażliwe. Z tego powodu Aplikacja nie przesyła tych treści na serwer.",
+          "Pamiętaj, że jeśli urządzenie jest współdzielone, inne osoby korzystające z tej samej przeglądarki mogą uzyskać dostęp do danych zapisanych lokalnie."
+        ]
+      }
+    ]
+  },
+  "terms": {
+    "title": "Regulamin",
+    "updated": "Ostatnia aktualizacja: 4 lutego 2026",
+    "sections": [
+      {
+        "title": "1. Informacje ogólne",
+        "body": [
+          "Aplikacja „Plan na kryzys” (dalej: „Aplikacja”) to narzędzie informacyjne i wspierające. Działa jako PWA (aplikacja webowa) i może funkcjonować offline.",
+          "Aplikacja jest wynikiem działań Młodzieżowej Rady Miejskiej w Gryfinie.",
+          "Administrator i osoba odpowiedzialna: Tomasz Kowalczyk • Kontakt: tomasz.kowalczyk@gminagryfino.pl"
+        ]
+      },
+      {
+        "title": "2. Charakter usługi",
+        "bullets": [
+          "Aplikacja nie jest usługą ratunkową. Nie dzwoni automatycznie na 112 i nie wzywa służb.",
+          "Aplikacja nie stanowi diagnozy ani terapii i nie zastępuje kontaktu ze specjalistą.",
+          "W bezpośrednim zagrożeniu życia lub zdrowia należy niezwłocznie zadzwonić na 112."
+        ]
+      },
+      {
+        "title": "3. Zakres działania Aplikacji",
+        "body": [
+          "Aplikacja udostępnia m.in. dziennik nastroju, plan bezpieczeństwa, listę numerów wsparcia oraz treści edukacyjne. Dane wpisywane przez użytkownika są przechowywane lokalnie na urządzeniu użytkownika.",
+          "Aplikacja nie zapewnia stałego monitoringu, interwencji ani kontaktu z instytucjami. Decyzję o kontakcie z numerami wsparcia podejmuje użytkownik."
+        ]
+      },
+      {
+        "title": "4. Zasady korzystania",
+        "body": [
+          "Korzystasz z Aplikacji dobrowolnie i na własną odpowiedzialność. Zobowiązujesz się do korzystania z niej w sposób zgodny z prawem i niniejszym regulaminem.",
+          "Administrator może czasowo ograniczyć dostęp do Aplikacji w razie nadużyć lub prac technicznych."
+        ]
+      },
+      {
+        "title": "5. Dane i prywatność",
+        "body": ["Dane wpisane w Aplikacji są przechowywane lokalnie na urządzeniu użytkownika. Szczegóły znajdują się w Polityce prywatności."]
+      },
+      {
+        "title": "6. Odpowiedzialność",
+        "body": [
+          "Dokładamy starań, aby treści były zrozumiałe i ostrożne, jednak mają one charakter ogólny. Aplikacja nie zapewnia stałego monitoringu, interwencji ani kontaktu z instytucjami.",
+          "Administrator nie ponosi odpowiedzialności za skutki decyzji podjętych na podstawie treści dostępnych w Aplikacji."
+        ]
+      },
+      {
+        "title": "7. Prawa autorskie",
+        "body": ["Treści i układ Aplikacji są chronione prawem autorskim. Zabronione jest ich kopiowanie i rozpowszechnianie bez zgody Administratora, chyba że przepisy prawa stanowią inaczej."]
+      },
+      {
+        "title": "8. Zmiany regulaminu",
+        "body": ["Regulamin może być aktualizowany. Przy istotnych zmianach Aplikacja może poprosić o ponowne potwierdzenie."]
+      },
+      {
+        "title": "9. Kontakt",
+        "body": ["Kontakt: tomasz.kowalczyk@gminagryfino.pl"]
+      },
+      {
+        "title": "10. Wymagania techniczne",
+        "body": ["Do korzystania z Aplikacji potrzebujesz urządzenia z nowoczesną przeglądarką internetową. Aplikacja może być instalowana jako PWA. Niektóre funkcje (np. instalacja lub aktualizacja) mogą wymagać połączenia z Internetem."]
+      },
+      {
+        "title": "11. Zgłoszenia i kontakt",
+        "body": ["Jeśli zauważysz błąd, nieaktualny numer telefonu lub treść wymagającą korekty, możesz napisać na: tomasz.kowalczyk@gminagryfino.pl."]
+      },
+      {
+        "title": "12. Dokumenty",
+        "body": ["Zasady prywatności opisuje Polityka prywatności. Dokumenty są dostępne w Aplikacji w sekcji „O aplikacji”."]
+      }
+    ]
+  },
+  "data": {
+    "emotions": [
+      "spokojny",
+      "zadowolony",
+      "wdzięczny",
+      "zmęczony",
+      "zestresowany",
+      "przytłoczony",
+      "smutny",
+      "zły",
+      "samotny",
+      "zaniepokojony"
+    ],
+    "hotlinesMeta": {
+      "lastUpdated": "2026-02-04",
+      "note": "Numery i godziny działania mogą się zmieniać. W nagłym zagrożeniu życia: 112."
+    },
+    "hotlines": [
+      {
+        "id": "116111",
+        "name": "Telefon Zaufania dla Dzieci i Młodzieży",
+        "phone": "116111",
+        "note": "Bezpłatnie. Wsparcie dla dzieci i młodzieży."
+      },
+      {
+        "id": "800121212",
+        "name": "Dziecięcy Telefon Zaufania RPD",
+        "phone": "800121212",
+        "note": "Bezpłatnie. Dla dzieci i młodzieży."
+      },
+      {
+        "id": "112",
+        "name": "Numer alarmowy",
+        "phone": "112",
+        "note": "W nagłym zagrożeniu życia — zadzwoń."
+      }
+    ],
+    "friendGuide": {
+      "title": "Jak wesprzeć przyjaciela, gdy jest mu trudno",
+      "sections": [
+        {
+          "title": "Sygnały, że ktoś może potrzebować pomocy",
+          "bullets": [
+            "Nagle się wycofuje, przestaje odpisywać, unika ludzi.",
+            "Mówi, że „nie ma sensu”, „ma dość”, „chce zniknąć”.",
+            "Wygląda na bardzo przytłoczonego/przytłoczoną lub długo utrzymuje się smutek/lęk.",
+            "Ma duże zmiany w śnie, jedzeniu, energii albo w szkole."
+          ]
+        },
+        {
+          "title": "Jak zacząć rozmowę (krótkie zdania)",
+          "bullets": [
+            "„Martwię się o Ciebie. Co się dzieje?”",
+            "„Jestem obok. Możemy pogadać teraz albo później.”",
+            "„Nie musisz tego ogarniać sam/a.”",
+            "„Chcesz, żebym tylko posłuchał/a, czy szukamy rozwiązania?”"
+          ]
+        },
+        {
+          "title": "Co pomaga w rozmowie",
+          "bullets": [
+            "Słuchaj i dopytuj spokojnie: „Powiesz mi więcej?”",
+            "Nazwij, co widzisz bez oceniania: „Widzę, że to dla Ciebie ciężkie.”",
+            "Zapytaj o bezpieczeństwo: „Czy masz myśli, żeby zrobić sobie krzywdę?”",
+            "Jeśli odpowiedź niepokoi — nie zostawiaj z tym osoby samej."
+          ]
+        },
+        {
+          "title": "Czego lepiej nie mówić",
+          "bullets": [
+            "„Inni mają gorzej”.",
+            "„Weź się w garść”.",
+            "„Przesadzasz / dramatyzujesz”.",
+            "„To na pewno przejdzie” (jeśli bagatelizuje cierpienie)."
+          ]
+        },
+        {
+          "title": "Kiedy powiedzieć dorosłemu (nawet jeśli ktoś nie chce)",
+          "bullets": [
+            "Gdy ktoś mówi o zrobieniu sobie krzywdy lub brzmi, jakby tracił kontrolę.",
+            "Gdy boisz się o życie lub zdrowie tej osoby.",
+            "Gdy sytuacja się nasila i nie wiesz, co robić.",
+            "Powiedz wprost: „To jest dla mnie za poważne, potrzebujemy dorosłego.”"
+          ]
+        },
+        {
+          "title": "Co możesz zrobić teraz",
+          "bullets": [
+            "Zaproponuj wspólne poszukanie pomocy: szkolny psycholog/pedagog, rodzic/opiekun, zaufany dorosły.",
+            "Jeśli trzeba — wejdźcie razem do zakładki „Kryzys” i wybierzcie numer do kontaktu.",
+            "Zadbaj też o siebie. Jeśli to Cię przerasta, poproś o wsparcie dla siebie."
+          ]
+        }
+      ]
+    },
+    "knowledgeArticles": [
+      {
+        "id": "emotions",
+        "title": "Emocje — po co są?",
+        "body": [
+          "Emocje to sygnały. Informują, że coś jest dla Ciebie ważne lub trudne.",
+          "Niektóre emocje są przyjemne, inne bolesne. Obie grupy mogą być potrzebne.",
+          "Jeśli emocje są bardzo silne i długo trwają, warto poszukać wsparcia."
+        ]
+      },
+      {
+        "id": "stress",
+        "title": "Kiedy stres staje się problemem?",
+        "body": [
+          "Stres jest normalny. Problemem bywa, gdy nie możesz odpocząć i wraca cały czas.",
+          "Objawy mogą być w ciele (napięcie, ból brzucha) i w myślach (ciągłe zamartwianie).",
+          "Małe kroki pomagają: sen, jedzenie, ruch, rozmowa, zapisanie myśli."
+        ]
+      },
+      {
+        "id": "crisis",
+        "title": "Czym jest kryzys psychiczny?",
+        "warning": "Jeśli czujesz się gorzej po czytaniu, przejdź do zakładki „Kryzys”.",
+        "body": [
+          "Kryzys to moment, gdy jest Ci tak trudno, że dotychczasowe sposoby przestają działać.",
+          "W kryzysie liczy się bezpieczeństwo i szybkie wsparcie od drugiej osoby.",
+          "Jeśli masz myśli o zrobieniu sobie krzywdy — przejdź do zakładki „Kryzys”."
+        ]
+      }
+    ]
+  },
+  "dashboard": {
+    "titlePrefix": "Twoje",
+    "titleAccent": "centrum",
+    "lead": "Skróty do najważniejszych modułów i szybkie podsumowanie.",
+    "entries14": "Wpisy (14 dni)",
+    "lastEntry": "Ostatni wpis",
+    "lastEmotions": "Ostatnie emocje",
+    "none": "—",
+    "mood": "Mój nastrój",
+    "quickEntry": "Szybki wpis",
+    "add": "Dodaj",
+    "crisis": "Kryzys",
+    "hereNow": "Tu i teraz",
+    "open": "Otwórz",
+    "sobriety": "Czystość",
+    "counter": "Twój licznik",
+    "go": "Przejdź",
+    "knowledge": "Wiedza",
+    "quickTopics": "Szybkie tematy",
+    "friend": "Dla przyjaciela",
+    "howToHelp": "Jak pomóc",
+    "discord": "Discord",
+    "discordLead": "Dołącz do serwera — informacje i kontakt ze społecznością.",
+    "join": "Dołącz"
+  }
+}

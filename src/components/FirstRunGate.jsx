@@ -3,8 +3,10 @@ import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useSettings } from '../hooks/useIndexedDB'
 import { CTAButton, CloudIcon, StoryCard, StoryScreen } from './StoryUI'
+import { useI18n } from '../i18n/index.jsx'
 
 function FirstRunGateInner({ children }) {
+  const { t } = useI18n()
   const { value: accepted, set: setAccepted, loading } = useSettings('legal_ack_v1_2026-02-04', false)
   const [step, setStep] = useState(0)
   const [checked, setChecked] = useState(false)
@@ -34,17 +36,17 @@ function FirstRunGateInner({ children }) {
           <StoryCard tone="surface">
             <CloudIcon mood="smile" label="Uśmiechnięta chmurka" />
             <h1 className="storyTitle" style={{ marginTop: 14 }}>
-              Zadbaj o swój <span className="storyAccent">nastrój</span>
+              {t('firstRun.slide1.title')} <span className="storyAccent">{t('firstRun.slide1.accent')}</span>
             </h1>
             <p className="storyLead">
-              Proste wpisy, czytelne podsumowanie i narzędzia, które możesz mieć zawsze przy sobie.
+              {t('firstRun.slide1.lead')}
             </p>
           </StoryCard>
           <CTAButton tone="primary" onClick={() => setStep(1)}>
-            Przejdź dalej
+            {t('firstRun.continue')}
           </CTAButton>
           <div className="textSm" style={{ textAlign: 'center', color: 'var(--t-ink-muted)' }}>
-            ↓ Przesuń dalej
+            {t('firstRun.swipe')}
           </div>
         </StoryScreen>
       ) : null}
@@ -54,22 +56,22 @@ function FirstRunGateInner({ children }) {
           <StoryCard tone="surface">
             <CloudIcon mood="portal" label="Smutna chmurka w portalu" />
             <h1 className="storyTitle" style={{ marginTop: 14 }}>
-              Pomoc w <span className="storyAccent">kryzysie</span> jest blisko
+              {t('firstRun.slide2.title')} <span className="storyAccent">{t('firstRun.slide2.accent')}</span> jest blisko
             </h1>
             <p className="storyLead">
-              Konkretne kroki „tu i teraz”, numery pomocy i plan bezpieczeństwa.
+              {t('firstRun.slide2.lead')}
             </p>
           </StoryCard>
           <div className="row" style={{ gap: 10 }}>
             <CTAButton tone="ghost" onClick={() => setStep(0)}>
-              Wstecz
+              {t('firstRun.back')}
             </CTAButton>
             <CTAButton tone="primary" onClick={() => setStep(2)}>
-              Dalej
+              {t('firstRun.next')}
             </CTAButton>
           </div>
           <div className="textSm" style={{ textAlign: 'center', color: 'var(--t-ink-muted)' }}>
-            ↓ Przesuń dalej
+            {t('firstRun.swipe')}
           </div>
         </StoryScreen>
       ) : null}
@@ -79,10 +81,10 @@ function FirstRunGateInner({ children }) {
           <StoryCard tone="dark">
             <CloudIcon mood="duo" label="Dwie chmurki obok siebie" />
             <h1 className="storyTitle" style={{ marginTop: 14, color: '#fff' }}>
-              Nie jesteś z tym <span className="storyAccent">sam_a</span>
+              {t('firstRun.slide3.title')} <span className="storyAccent">{t('firstRun.slide3.accent')}</span>
             </h1>
             <p className="storyLead" style={{ color: 'rgba(255,255,255,0.72)' }}>
-              To nie jest usługa ratunkowa. Jeśli jesteś w bezpośrednim zagrożeniu — zadzwoń pod 112.
+              {t('firstRun.slide3.lead')}
             </p>
 
             <div className="cardInset" style={{ marginTop: 12, background: 'rgba(255,255,255,0.06)', borderColor: 'rgba(255,255,255,0.14)' }}>
@@ -93,16 +95,16 @@ function FirstRunGateInner({ children }) {
                   onChange={(e) => setChecked(e.target.checked)}
                 />
                 <span>
-                  Rozumiem zasady: dane są lokalne, nie ma kont, a kontakt z pomocą inicjuję sam/a.
+                  {t('firstRun.slide3.consent')}
                 </span>
               </label>
 
               <div className="row mt12" style={{ justifyContent: 'space-between' }}>
                 <Link className="onbLinkBtn" to="/terms">
-                  Regulamin
+                  {t('firstRun.terms')}
                 </Link>
                 <Link className="onbLinkBtn" to="/privacy">
-                  Prywatność
+                  {t('firstRun.privacy')}
                 </Link>
               </div>
             </div>
@@ -110,10 +112,10 @@ function FirstRunGateInner({ children }) {
 
           <div className="row" style={{ gap: 10 }}>
             <CTAButton tone="ghost" onClick={() => setStep(1)}>
-              Wstecz
+              {t('firstRun.back')}
             </CTAButton>
             <CTAButton tone="primary" onClick={onContinue} disabled={!checked || saving}>
-              {saving ? 'Zapisuję…' : 'Wejdź do aplikacji'}
+              {saving ? t('firstRun.saving') : t('firstRun.finish')}
             </CTAButton>
           </div>
         </StoryScreen>

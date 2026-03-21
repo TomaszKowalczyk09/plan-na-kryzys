@@ -1,18 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-
-const tabs = [
-  { path: '/', label: 'Start' },
-  { path: '/mood', label: 'Nastrój' },
-  { path: '/crisis', label: 'Kryzys' },
-  { path: '/knowledge', label: 'Wiedza' },
-  { path: '/sobriety', label: 'Uzależnienie' },
-  { path: '/friend', label: 'Dla przyjaciela' },
-  { path: '/about', label: 'O aplikacji' },
-];
+import { useI18n } from '../i18n/index.jsx'
 
 
 export default function TabNavigation() {
+  const { get, t } = useI18n()
+  const tabs = get('nav.tabs', [])
   const [open, setOpen] = useState(false);
   const [animating, setAnimating] = useState(false);
   const menuRef = useRef(null);
@@ -54,7 +47,7 @@ export default function TabNavigation() {
         alignItems: 'center',
       }}>
         <button
-          aria-label="Menu"
+          aria-label={t('nav.menu')}
           onClick={handleMenuClick}
           style={{
             background: 'none',
@@ -93,7 +86,7 @@ export default function TabNavigation() {
         >
           <button
             onClick={handleClose}
-            aria-label="Zamknij menu"
+            aria-label={t('nav.close')}
             style={{
               position: 'absolute',
               top: 32,

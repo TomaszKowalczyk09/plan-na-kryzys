@@ -4,8 +4,10 @@ import TabNavigation from './TabNavigation.jsx';
 import clsx from 'clsx'
 import { useCheckInNotifications } from '../hooks/useCheckInNotifications'
 import { useSettings, useSobrietyTimer } from '../hooks/useIndexedDB'
+import { useI18n } from '../i18n/index.jsx'
 
 export default function Layout() {
+  const { t, lang, setLang } = useI18n()
   useCheckInNotifications()
   const { pathname } = useLocation()
   // Licznik czystości
@@ -45,20 +47,26 @@ export default function Layout() {
 
   const title =
     pathname === '/mood'
-      ? 'Mój nastrój'
+      ? t('routeTitles.mood')
       : pathname === '/crisis'
-        ? 'Kryzys'
+        ? t('routeTitles.crisis')
         : pathname === '/knowledge'
-          ? 'Wiedza'
+          ? t('routeTitles.knowledge')
           : pathname === '/friend'
-            ? 'Dla przyjaciela'
+            ? t('routeTitles.friend')
             : pathname === '/about'
-              ? 'O aplikacji'
+              ? t('routeTitles.about')
               : pathname === '/privacy'
-                ? 'Polityka prywatności'
+                ? t('routeTitles.privacy')
                 : pathname === '/terms'
-                  ? 'Regulamin'
-                  : 'Plan na kryzys'
+                  ? t('routeTitles.terms')
+                  : pathname === '/crisis/cssrs'
+                    ? t('routeTitles.cssrs')
+                    : pathname === '/sobriety'
+                      ? t('routeTitles.sobriety')
+                      : pathname === '/addiction-config'
+                        ? t('routeTitles.addictionConfig')
+                        : t('routeTitles.default')
 
   const navActiveIndex =
     pathname === '/mood' ? 1 : pathname === '/crisis' ? 2 : pathname === '/knowledge' ? 3 : 0
@@ -73,9 +81,9 @@ export default function Layout() {
               <img className="brandLogo brandLogoRedesigned" src="/logo.svg" alt="Plan na kryzys" />
             </div>
             <div className="headerCenter">
-              <div className="brand brandRedesigned">Plan na kryzys</div>
+              <div className="brand brandRedesigned">{t('app.name')}</div>
               <div className="headerTitle">{title}</div>
-              {pathname === '/crisis' ? <span className="badgeDanger badgeDangerRedesigned">Pilne</span> : null}
+              {pathname === '/crisis' ? <span className="badgeDanger badgeDangerRedesigned">{t('app.urgent')}</span> : null}
               {/* ...existing code... */}
             </div>
             <div className="headerRight">
@@ -84,8 +92,8 @@ export default function Layout() {
                 className="btn btnIcon btnIconRedesigned"
                 aria-pressed={theme === 'dark'}
                 onClick={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
-                aria-label={theme === 'dark' ? 'Przełącz na jasny motyw' : 'Przełącz na ciemny motyw'}
-                title={theme === 'dark' ? 'Przełącz na jasny motyw' : 'Przełącz na ciemny motyw'}
+                aria-label={theme === 'dark' ? t('app.themeToLight') : t('app.themeToDark')}
+                title={theme === 'dark' ? t('app.themeToLight') : t('app.themeToDark')}
               >
                 {theme === 'dark' ? (
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -105,12 +113,21 @@ export default function Layout() {
                   </svg>
                 )}
               </button>
+              <select
+                className="btn btnRedesigned"
+                value={lang}
+                onChange={(e) => setLang(e.target.value)}
+                aria-label="Language"
+                style={{ padding: '8px 10px', fontWeight: 600 }}
+              >
+                <option value="pl">PL</option>
+              </select>
               <Link to="/about" className="btn btnRedesigned" style={{ padding: '8px 16px', fontWeight: 600 }}>
-                Informacje
+                {t('app.info')}
               </Link>
             </div>
           </div>
-          <div className="headerDescription headerDescriptionRedesigned">Offline. Bez kont. Dane tylko na urządzeniu.</div>
+          <div className="headerDescription headerDescriptionRedesigned">{t('app.headerDescription')}</div>
         </header>
       ) : null}
 
@@ -133,7 +150,7 @@ export default function Layout() {
           opacity: 0.75,
         }}
       >
-        Developed by Tomasz Kowalczyk and Łukasz Majka
+        {t('app.footer')}
       </footer>
     </div>
   )
