@@ -32,10 +32,10 @@
   -moz-osx-font-smoothing: grayscale;
 
   /* New therapy palette */
-  --t-bg: #f6f4ff;
+  --t-bg: #fcfcff;
   --t-surface: #ffffff;
-  --t-ink: #0b0b16;
-  --t-ink-muted: rgba(11, 11, 22, 0.62);
+  --t-ink: #090914;
+  --t-ink-muted: rgba(9, 9, 20, 0.66);
   --t-purple: #6d5efc;
   --t-purple-2: #a79cff;
   --t-navy: #070716;
@@ -58,13 +58,13 @@
 
   color-scheme: dark;
 
-  --t-bg: #0c0b16;
-  --t-surface: #141227;
+  --t-bg: #05050a;
+  --t-surface: #11111a;
   --t-ink: #ffffff;
-  --t-ink-muted: rgba(255, 255, 255, 0.68);
-  --t-purple: #8d82ff;
-  --t-purple-2: #b6afff;
-  --t-navy: #05040c;
+  --t-ink-muted: rgba(255, 255, 255, 0.72);
+  --t-purple: #8b7eff;
+  --t-purple-2: #b7adff;
+  --t-navy: #03030a;
 }
 
 * {
@@ -227,6 +227,34 @@ textarea:focus-visible {
   font-size: 13px;
   padding-bottom: 12px;
   text-align: center;
+}
+
+:root[data-theme='dark'] .headerRedesigned {
+  background: linear-gradient(90deg, #151329 0%, #241e44 100%);
+  color: #fff;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.52);
+  border-bottom-color: rgba(255, 255, 255, 0.10);
+}
+
+:root[data-theme='dark'] .brandLogoRedesigned {
+  background: rgba(255, 255, 255, 0.10);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.48);
+}
+
+:root[data-theme='dark'] .btnRedesigned {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.30);
+}
+
+:root[data-theme='dark'] .btnRedesigned:hover {
+  background: rgba(255, 255, 255, 0.24);
+  color: #fff;
+}
+
+:root[data-theme='dark'] .headerDescriptionRedesigned,
+:root[data-theme='dark'] .headerTitle {
+  color: rgba(255, 255, 255, 0.86);
 }
 
 .header::after {
@@ -1873,8 +1901,8 @@ input[type='checkbox'] {
   color: var(--t-ink);
 }
 .storyScreen--dark {
-  background: radial-gradient(1000px 500px at 20% 10%, rgba(141, 130, 255, 0.30), transparent 60%),
-              linear-gradient(180deg, var(--t-navy), #09081a);
+  background: radial-gradient(1000px 500px at 20% 10%, rgba(141, 130, 255, 0.24), transparent 60%),
+              linear-gradient(180deg, var(--t-navy), #070712);
   color: #fff;
 }
 

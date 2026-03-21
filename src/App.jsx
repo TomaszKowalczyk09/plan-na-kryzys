@@ -13,6 +13,7 @@ import PrivacyPage from './pages/PrivacyPage.jsx'
 import AddictionConfigPage from './pages/AddictionConfigPage.jsx';
 import SobrietyPage from './pages/SobrietyPage.jsx';
 import TermsPage from './pages/TermsPage.jsx'
+import CSSRSPage from './pages/CSSRSPage.jsx'
 
 function FirstRunLayout() {
   return (
@@ -37,6 +38,7 @@ export default function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/mood" element={<MoodPage />} />
             <Route path="/crisis" element={<CrisisPage />} />
+            <Route path="/crisis/cssrs" element={<CSSRSPage />} />
             <Route path="/knowledge" element={<KnowledgePage />} />
             <Route path="/knowledge/grounding" element={<GroundingPage />} />
             <Route path="/friend" element={<FriendPage />} />

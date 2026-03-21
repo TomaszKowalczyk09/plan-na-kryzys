@@ -1,5 +1,6 @@
 /* jshint esversion: 11, asi: true, module: true, jsx: true */
 import { useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { HOTLINES, HOTLINES_META } from '../data/hotlines';
 import { useSafetyPlan } from '../hooks/useIndexedDB';
 import { CTAButton, CloudIcon, StoryCard, StoryScreen } from '../components/StoryUI';
@@ -122,6 +123,11 @@ export default function CrisisPage() {
               Moduł <span className="storyAccent">Kryzys</span>
             </h1>
             <p className="storyLead" style={{ color: 'rgba(255,255,255,0.72)' }}>{LEGAL_BAR}</p>
+            <div className="row mt12" style={{ gap: 8, flexWrap: 'wrap' }}>
+              <CTAButton as={Link} to="/crisis/cssrs" tone="primary">
+                Zrób test C-SSRS
+              </CTAButton>
+            </div>
           </div>
           <CloudIcon mood="support" label="Wspierająca chmurka" />
         </div>
