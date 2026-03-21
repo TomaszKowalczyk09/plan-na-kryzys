@@ -12,7 +12,7 @@ export default function PrivacyPage() {
           Administratorem danych i osobą odpowiedzialną jest Tomasz Kowalczyk (tomasz.kowalczyk@gminagryfino.pl).
         </p>
         <p className="p">
-          Aplikacja jest wynikiem działań Młodzieżowej Rady Miejskiej w Gryfinie.
+          Aplikacja jest wynikiem działań Radnych Młodzieżowej Rady Miejskiej w Gryfinie.
         </p>
       </div>
 
