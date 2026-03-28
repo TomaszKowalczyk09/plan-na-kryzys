@@ -80,7 +80,7 @@ export default function Layout() {
                       ? t('routeTitles.sobriety')
                       : pathname === '/addiction-config'
                         ? t('routeTitles.addictionConfig')
-                        : t('Wsparcie w trudnych chwilach')
+                        : t('routeTitles.default')
 
   const navActiveIndex =
     pathname === '/mood' ? 1 : pathname === '/crisis' ? 2 : pathname === '/knowledge' ? 3 : 0
@@ -95,7 +95,7 @@ export default function Layout() {
               <img className="brandLogo brandLogoRedesigned" src="/unnamed-removebg-preview.png" alt="Plan na kryzys" />
             </div>
             <div className="headerCenter">
-              <div className="brand brandRedesigned">{t('Plan na kryzys')}</div>
+              <div className="brand brandRedesigned">{t('app.name')}</div>
               <div className="headerTitle">{title}</div>
               {pathname === '/crisis' ? <span className="badgeDanger badgeDangerRedesigned">{t('app.urgent')}</span> : null}
               {/* ...existing code... */}

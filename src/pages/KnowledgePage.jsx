@@ -43,6 +43,7 @@ function articleReadTime(article) {
 export default function KnowledgePage() {
   const { t, get } = useI18n()
   const localizedArticles = get('data.knowledgeArticles', KNOWLEDGE_ARTICLES)
+  const quickTips = get('knowledge.quickTipsCards', QUICK_TIPS)
   const [query, setQuery] = useState('')
 
   const visibleArticles = useMemo(() => {
@@ -491,7 +492,7 @@ export default function KnowledgePage() {
             <article className="knowledgeVioletFeatured">
               <div className="knowledgeVioletFeaturedMedia" />
               <div className="knowledgeVioletFeaturedBody">
-                <p className="knowledgeVioletMeta">{articleReadTime(featured)} min czytania</p>
+                <p className="knowledgeVioletMeta">{t('knowledge.readingTime', '{{count}} min read', { count: articleReadTime(featured) })}</p>
                 <h3>{featured.title}</h3>
                 <p>{featured.body[0]}</p>
                 <Link to="/knowledge/grounding" className="knowledgeVioletReadLink">
@@ -504,7 +505,7 @@ export default function KnowledgePage() {
           <div className="knowledgeVioletCompactGrid">
             {rightCards.map((article) => (
               <article key={article.id} className="knowledgeVioletCompact">
-                <p className="knowledgeVioletMeta">{articleReadTime(article)} min czytania</p>
+                <p className="knowledgeVioletMeta">{t('knowledge.readingTime', '{{count}} min read', { count: articleReadTime(article) })}</p>
                 <h4>{article.title}</h4>
                 <p>{article.body[0]}</p>
                 <span className="knowledgeVioletReadLink">{t('knowledge.saveForLater', 'Zapisz na później')}</span>
@@ -516,7 +517,7 @@ export default function KnowledgePage() {
             <article className="knowledgeVioletBottomFeatured">
               <div>
                 <p className="knowledgeVioletMeta" style={{ color: 'rgba(235, 220, 255, 0.95)' }}>
-                  {articleReadTime(bottomFeatured)} min czytania
+                  {t('knowledge.readingTime', '{{count}} min read', { count: articleReadTime(bottomFeatured) })}
                 </p>
                 <h4>{bottomFeatured.title}</h4>
                 <p>{bottomFeatured.body[0]}</p>
@@ -531,7 +532,7 @@ export default function KnowledgePage() {
           <h2>{t('knowledge.quickTips', 'Quick Tips')}</h2>
         </div>
         <div className="knowledgeVioletTips" style={{ marginTop: 12 }}>
-          {QUICK_TIPS.map((tip) => (
+          {quickTips.map((tip) => (
             <article key={tip.id} className="knowledgeVioletTip">
               <div className="knowledgeVioletTipTop" aria-hidden="true">{tip.icon}</div>
               <h5>{tip.title}</h5>

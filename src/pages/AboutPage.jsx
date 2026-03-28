@@ -47,6 +47,7 @@ export default function AboutPage() {
 
   const sections = get('about.sections', {})
   const credits = sections.credits ?? {}
+  const ui = get('about.ui', {})
   const versionText = sections.version?.body ?? 'MVP 1.0 (lokalne dane, offline-first)'
 
   return (
@@ -55,40 +56,40 @@ export default function AboutPage() {
         <div className="creditsLogoWrap" aria-hidden="true">
           <img src="/unnamed-removebg-preview.png" alt="Logo" className="creditsLogo" />
         </div>
-        <h1 className="creditsTitle">O aplikacji</h1>
-        <p className="creditsVersion">Wersja aplikacji · {versionText}</p>
+        <h1 className="creditsTitle">{ui.title}</h1>
+        <p className="creditsVersion">{ui.versionPrefix} · {versionText}</p>
       </section>
 
       <section className="pageAnimItem">
-        <h2 className="creditsSectionLabel"><span aria-hidden="true">👥</span> Twórcy aplikacji</h2>
+        <h2 className="creditsSectionLabel"><span aria-hidden="true">👥</span> {ui.creatorsSection}</h2>
         <div className="creditsGrid">
           <article className="card creditsInfoCard">
             <div className="creditsIcon" aria-hidden="true">✏️</div>
-            <h3>Projekt</h3>
+            <h3>{ui.projectLabel}</h3>
             <p>Tomasz Kowalczyk</p>
           </article>
 
           <article className="card creditsInfoCard">
             <div className="creditsIcon" aria-hidden="true">⌘</div>
-            <h3>Rozwój</h3>
-            <p>Tomasz Kowalczyk i Łukasz Majka</p>
+            <h3>{ui.developmentLabel}</h3>
+            <p>{ui.developmentValue}</p>
           </article>
         </div>
 
         <article className="creditsThanksCard">
-          <h3>Specjalne podziękowania</h3>
+          <h3>{ui.specialThanksTitle}</h3>
           <p>{credits.initiative ?? 'Dziękujemy społeczności i osobom, które współtworzą tę aplikację.'}</p>
         </article>
       </section>
 
       <section className="pageAnimItem">
-        <h2 className="creditsSectionLabel"><span aria-hidden="true">⚖️</span> Informacje prawne</h2>
+        <h2 className="creditsSectionLabel"><span aria-hidden="true">⚖️</span> {ui.legalSection}</h2>
         <div className="creditsLegalList">
           <Link to="/privacy" className="creditsLegalItem">
             <span className="creditsLegalIcon" aria-hidden="true">🛡️</span>
             <span>
               <strong>{sections.documents?.privacy ?? 'Polityka prywatności'}</strong>
-              <small>Jak przetwarzamy i chronimy Twoje dane</small>
+              <small>{ui.privacyDescription}</small>
             </span>
             <span className="creditsChevron" aria-hidden="true">›</span>
           </Link>
@@ -97,25 +98,24 @@ export default function AboutPage() {
             <span className="creditsLegalIcon" aria-hidden="true">⚖️</span>
             <span>
               <strong>{sections.documents?.terms ?? 'Regulamin'}</strong>
-              <small>Zasady i warunki korzystania z aplikacji</small>
+              <small>{ui.termsDescription}</small>
             </span>
             <span className="creditsChevron" aria-hidden="true">›</span>
           </Link>
         </div>
 
         <article className="card creditsSecurityCard">
-          <h3>Bezpieczeństwo danych i szyfrowanie</h3>
+          <h3>{ui.securityTitle}</h3>
           <p>
-            Aplikacja działa offline-first, a dane są przechowywane lokalnie na urządzeniu
-            (IndexedDB). Nie wysyłamy wpisów nastroju ani planu bezpieczeństwa na serwer.
+            {ui.securityBody}
           </p>
         </article>
       </section>
 
       <section className="pageAnimItem">
-        <h2 className="creditsSectionLabel"><span aria-hidden="true">📄</span> Licencje zewnętrzne</h2>
+        <h2 className="creditsSectionLabel"><span aria-hidden="true">📄</span> {ui.licensesSection}</h2>
         <article className="card creditsLicensesCard">
-          <h3>Biblioteki open source</h3>
+          <h3>{ui.openSourceLibrariesTitle}</h3>
           <div className="creditsPills">
             <span>React</span>
             <span>Vite</span>
@@ -126,7 +126,7 @@ export default function AboutPage() {
       </section>
 
       <section className="pageAnimItem">
-        <h2 className="creditsSectionLabel"><span aria-hidden="true">🧰</span> Narzędzia danych</h2>
+        <h2 className="creditsSectionLabel"><span aria-hidden="true">🧰</span> {ui.dataToolsSection}</h2>
         <article className="card creditsToolsCard">
           <p className="p">{sections.export?.body}</p>
           <div className="creditsToolsBtns">
@@ -187,7 +187,7 @@ export default function AboutPage() {
         </article>
       </section>
 
-      <p className="creditsFooter">© 2026 Plan na kryzys. Wszelkie prawa zastrzeżone.</p>
+      <p className="creditsFooter">{ui.footerCopyright}</p>
     </div>
   )
 }

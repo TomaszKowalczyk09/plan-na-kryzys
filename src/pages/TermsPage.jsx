@@ -2,37 +2,24 @@ import { Link } from 'react-router-dom'
 import { useI18n } from '../i18n/index.jsx'
 
 export default function TermsPage() {
-  const { t, get, lang } = useI18n()
+  const { t, get } = useI18n()
   const sections = get('terms.sections', [])
+  const ui = get('terms.ui', {})
   const title = t('terms.title')
   const lastWordIndex = title.lastIndexOf(' ')
   const titleStart = lastWordIndex > 0 ? title.slice(0, lastWordIndex) : title
   const titleAccent = lastWordIndex > 0 ? title.slice(lastWordIndex + 1) : ''
   const iconCycle = ['📘', '🚨', '🧭', '✅', '🔐', '⚠️', '©️', '🔁', '📮', '💻', '🛠️', '📄']
-  const cta =
-    lang === 'de'
-      ? {
-          label: 'Verknuepfte Dokumente',
-          title: 'Datenschutzerklaerung',
-          body: 'Pruefe, wie deine Daten in der App gespeichert und geschuetzt werden.',
-          action: 'Zum Dokument',
-        }
-      : {
-          label: 'Powiazane dokumenty',
-          title: 'Polityka prywatnosci',
-          body: 'Sprawdz, jak dane sa przechowywane i chronione w aplikacji.',
-          action: 'Przejdz do dokumentu',
-        }
 
   return (
     <div className="screen legalDocScreen pageAnim">
       <header className="legalTopBar pageAnimItem">
-        <Link to="/about" className="legalBackBtn" aria-label={lang === 'de' ? 'Zurueck' : 'Wroc'}>
+        <Link to="/about" className="legalBackBtn" aria-label={ui.backAria ?? 'Back'}>
           <span aria-hidden="true">←</span>
         </Link>
         <div className="legalTopMeta">
-          <p className="legalTopKicker">{lang === 'de' ? 'Recht und Datenschutz' : 'Prawo i prywatnosc'}</p>
-          <strong className="legalTopTitle">{lang === 'de' ? 'Legal Center' : 'Centrum prawne'}</strong>
+          <p className="legalTopKicker">{ui.topKicker}</p>
+          <strong className="legalTopTitle">{ui.topTitle}</strong>
         </div>
       </header>
 
@@ -66,11 +53,11 @@ export default function TermsPage() {
       ))}
 
       <section className="legalDocFooter pageAnimItem">
-        <p className="legalDocFooterLabel">{cta.label}</p>
+        <p className="legalDocFooterLabel">{ui.linkedDocsLabel}</p>
         <article className="legalDocFooterCard">
-          <h3>{cta.title}</h3>
-          <p>{cta.body}</p>
-          <Link to="/privacy" className="btn btnPrimary legalDocFooterBtn">{cta.action}</Link>
+          <h3>{ui.ctaTitle}</h3>
+          <p>{ui.ctaBody}</p>
+          <Link to="/privacy" className="btn btnPrimary legalDocFooterBtn">{ui.ctaAction}</Link>
         </article>
       </section>
     </div>

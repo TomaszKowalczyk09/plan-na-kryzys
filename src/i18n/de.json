@@ -88,6 +88,7 @@
     "overwhelmedDesc": "Sofortige Unterstützung ist rund um die Uhr verfügbar, wenn du jetzt mit jemandem sprechen möchtest.",
     "helpNow": "Jetzt Hilfe",
     "todayCheckIn": "Heutiger Check-in",
+    "dailyCheckIn": "Täglicher Check-in",
     "dailyMood": "Tagesstimmung",
     "howFeelingNow": "Wie fühlst du dich im Moment?",
     "calm": "Ruhig",
@@ -303,6 +304,43 @@
     "groundingGuide": "Grounding: Anleitung",
     "tileSub": "Kurz und konkret",
     "cloudLabel": "Ruhige Wolke",
+    "hubTitleA": "Knowledge",
+    "hubTitleB": "Hub",
+    "hubLead": "Eine Bibliothek mit kurzen Inhalten, die helfen, wieder in Balance zu kommen. Wenn die Anspannung steigt, wechsle in den Bereich Krise.",
+    "searchPlaceholder": "Kurze Inhalte suchen...",
+    "searchAria": "In der Wissensbasis suchen",
+    "toCrisis": "Zur Krise",
+    "categories": "Kategorien",
+    "categoryFallback": "Wissen",
+    "viewAll": "Alle anzeigen",
+    "shortPieces": "Kurze Artikel",
+    "readingTime": "{{count}} Min. Lesezeit",
+    "readArticle": "Lesen",
+    "saveForLater": "Für später speichern",
+    "quickTips": "Kurze Tipps",
+    "quickTipsCards": [
+      {
+        "id": "478",
+        "icon": "💧",
+        "title": "4-7-8-Regel",
+        "body": "4 Sekunden einatmen, 7 halten, 8 ausatmen. Beruhigt das Nervensystem schnell.",
+        "tag": "Schnelle Entlastung"
+      },
+      {
+        "id": "sun",
+        "icon": "☀️",
+        "title": "Morgenlicht",
+        "body": "10 Minuten Tageslicht am Morgen helfen, Stimmung und Schlaf zu stabilisieren.",
+        "tag": "Tagesroutine"
+      },
+      {
+        "id": "dump",
+        "icon": "📝",
+        "title": "Gedanken-Notiz",
+        "body": "Schreibe vor dem Schlafen belastende Gedanken auf. So kann das Gehirn leichter loslassen.",
+        "tag": "Besser schlafen"
+      }
+    ],
     "modal": {
       "title": "Grounding",
       "ariaLabel": "Grounding Schritt für Schritt",
@@ -421,6 +459,24 @@
     "exportJson": "JSON exportieren",
     "exportMoodCsv": "Stimmungseinträge exportieren (CSV)",
     "exportPlanTxt": "Sicherheitsplan exportieren (TXT)",
+    "ui": {
+      "title": "Über die App",
+      "versionPrefix": "App-Version",
+      "creatorsSection": "App-Team",
+      "projectLabel": "Projekt",
+      "developmentLabel": "Entwicklung",
+      "developmentValue": "Tomasz Kowalczyk und Łukasz Majka",
+      "specialThanksTitle": "Besonderer Dank",
+      "legalSection": "Rechtliche Hinweise",
+      "privacyDescription": "Wie wir deine Daten verarbeiten und schützen",
+      "termsDescription": "Regeln und Bedingungen zur Nutzung der App",
+      "securityTitle": "Datensicherheit und Verschlüsselung",
+      "securityBody": "Die App arbeitet offline-first und speichert Daten lokal auf dem Gerät (IndexedDB). Stimmungseinträge und Sicherheitsplan werden nicht an einen Server übertragen.",
+      "licensesSection": "Externe Lizenzen",
+      "openSourceLibrariesTitle": "Open-Source-Bibliotheken",
+      "dataToolsSection": "Datenwerkzeuge",
+      "footerCopyright": "© 2026 Krisenplan. Alle Rechte vorbehalten."
+    },
     "sections": {
       "about": {
         "title": "Über die App",
@@ -480,6 +536,15 @@
   "privacy": {
     "title": "Datenschutzerklärung",
     "updated": "Letzte Aktualisierung: 21. März 2026",
+    "ui": {
+      "backAria": "Zurück",
+      "topKicker": "Recht und Datenschutz",
+      "topTitle": "Legal Center",
+      "linkedDocsLabel": "Verknüpfte Dokumente",
+      "ctaTitle": "Nutzungsbedingungen",
+      "ctaBody": "Lies die Regeln zur Nutzung der App und deine wichtigsten Rechte.",
+      "ctaAction": "Zum Dokument"
+    },
     "sections": [
       {
         "title": "1. Verantwortliche Stelle",
@@ -554,6 +619,15 @@
   "terms": {
     "title": "Nutzungsbedingungen",
     "updated": "Letzte Aktualisierung: 21. März 2026",
+    "ui": {
+      "backAria": "Zurück",
+      "topKicker": "Recht und Datenschutz",
+      "topTitle": "Legal Center",
+      "linkedDocsLabel": "Verknüpfte Dokumente",
+      "ctaTitle": "Datenschutzerklärung",
+      "ctaBody": "Prüfe, wie deine Daten in der App gespeichert und geschützt werden.",
+      "ctaAction": "Zum Dokument"
+    },
     "sections": [
       {
         "title": "1. Allgemeine Informationen",

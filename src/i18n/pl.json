@@ -67,6 +67,43 @@
     "groundingGuide": "Uziemienie: przewodnik",
     "tileSub": "Krótkie i na temat",
     "cloudLabel": "Spokojna chmurka",
+    "hubTitleA": "Baza",
+    "hubTitleB": "wiedzy",
+    "hubLead": "Baza krótkich treści, które pomagają wrócić do równowagi. Gdy czujesz, że narasta napięcie, przejdź do zakładki Kryzys.",
+    "searchPlaceholder": "Szukaj krótkich treści...",
+    "searchAria": "Szukaj w bazie wiedzy",
+    "toCrisis": "Przejdź do kryzysu",
+    "categories": "Kategorie",
+    "categoryFallback": "Wiedza",
+    "viewAll": "Pokaż wszystko",
+    "shortPieces": "Krótkie artykuły",
+    "readingTime": "{{count}} min czytania",
+    "readArticle": "Czytaj",
+    "saveForLater": "Zapisz na później",
+    "quickTips": "Szybkie wskazówki",
+    "quickTipsCards": [
+      {
+        "id": "478",
+        "icon": "💧",
+        "title": "Reguła 4-7-8",
+        "body": "Wdech 4, zatrzymanie 7, wydech 8. Szybko wycisza układ nerwowy.",
+        "tag": "Szybka ulga"
+      },
+      {
+        "id": "sun",
+        "icon": "☀️",
+        "title": "Poranne światło",
+        "body": "10 minut dziennego światła rano pomaga ustabilizować nastrój i sen.",
+        "tag": "Nawyk dnia"
+      },
+      {
+        "id": "dump",
+        "icon": "📝",
+        "title": "Zrzut myśli",
+        "body": "Przed snem zapisz wszystkie natrętne myśli. Mózg łatwiej odpuści napięcie.",
+        "tag": "Lepszy sen"
+      }
+    ],
     "modal": {
       "title": "Uziemienie",
       "ariaLabel": "Uziemienie krok po kroku",
@@ -185,6 +222,24 @@
     "exportJson": "Eksportuj JSON",
     "exportMoodCsv": "Eksportuj wpisy nastroju (CSV)",
     "exportPlanTxt": "Eksportuj plan bezpieczeństwa (TXT)",
+    "ui": {
+      "title": "O aplikacji",
+      "versionPrefix": "Wersja aplikacji",
+      "creatorsSection": "Twórcy aplikacji",
+      "projectLabel": "Projekt",
+      "developmentLabel": "Rozwój",
+      "developmentValue": "Tomasz Kowalczyk i Łukasz Majka",
+      "specialThanksTitle": "Specjalne podziękowania",
+      "legalSection": "Informacje prawne",
+      "privacyDescription": "Jak przetwarzamy i chronimy Twoje dane",
+      "termsDescription": "Zasady i warunki korzystania z aplikacji",
+      "securityTitle": "Bezpieczeństwo danych i szyfrowanie",
+      "securityBody": "Aplikacja działa offline-first, a dane są przechowywane lokalnie na urządzeniu (IndexedDB). Nie wysyłamy wpisów nastroju ani planu bezpieczeństwa na serwer.",
+      "licensesSection": "Licencje zewnętrzne",
+      "openSourceLibrariesTitle": "Biblioteki open source",
+      "dataToolsSection": "Narzędzia danych",
+      "footerCopyright": "© 2026 Plan na kryzys. Wszelkie prawa zastrzeżone."
+    },
     "sections": {
       "about": {
         "title": "O aplikacji",
@@ -244,6 +299,15 @@
   "privacy": {
     "title": "Polityka prywatności",
     "updated": "Ostatnia aktualizacja: 4 lutego 2026",
+    "ui": {
+      "backAria": "Wróć",
+      "topKicker": "Prawo i prywatność",
+      "topTitle": "Centrum prawne",
+      "linkedDocsLabel": "Powiązane dokumenty",
+      "ctaTitle": "Regulamin",
+      "ctaBody": "Sprawdź zasady korzystania z aplikacji i najważniejsze prawa użytkownika.",
+      "ctaAction": "Przejdź do dokumentu"
+    },
     "sections": [
       {
         "title": "1. Administrator danych",
@@ -318,6 +382,15 @@
   "terms": {
     "title": "Regulamin",
     "updated": "Ostatnia aktualizacja: 4 lutego 2026",
+    "ui": {
+      "backAria": "Wróć",
+      "topKicker": "Prawo i prywatność",
+      "topTitle": "Centrum prawne",
+      "linkedDocsLabel": "Powiązane dokumenty",
+      "ctaTitle": "Polityka prywatności",
+      "ctaBody": "Sprawdź, jak dane są przechowywane i chronione w aplikacji.",
+      "ctaAction": "Przejdź do dokumentu"
+    },
     "sections": [
       {
         "title": "1. Informacje ogólne",
