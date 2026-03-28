@@ -1,176 +1,569 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useSobrietyTimer, useAddictionConfig } from '../hooks/useIndexedDB';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import KamienieMilowe from '../components/KamienieMilowe';
 import { useI18n } from '../i18n';
-
-// Usunięto animację liczby dni
 
 function SobrietyPage() {
   const { t } = useI18n();
   const { config, loading: configLoading } = useAddictionConfig();
   const { startDate, loading, setSobrietyStart, resetSobriety, getElapsed } = useSobrietyTimer();
   const navigate = useNavigate();
-  const daysRef = useRef();
-  const [seconds, setSeconds] = React.useState(0);
   const elapsed = getElapsed();
+  const [seconds, setSeconds] = useState(0);
+  
   // Kamienie milowe: dni czystości
   const milestones = [1, 7, 30, 90, 180, 365, 730, 1000];
   const achieved = elapsed ? milestones.filter(m => elapsed.days >= m) : [];
   const nextMilestone = milestones.find(m => elapsed && elapsed.days < m);
-  const justReached = achieved.length > 0 && elapsed && milestones.includes(elapsed.days);
-  // Motyw: zgodny z ustawieniem aplikacji
-  const isDark = typeof document !== 'undefined' && document.documentElement.dataset.theme === 'dark';
+  const nextMilestonePercentage = nextMilestone && elapsed 
+    ? Math.round((elapsed.days / nextMilestone) * 100) 
+    : 0;
+  
   React.useEffect(() => {
     if (!startDate) return;
     const interval = setInterval(() => {
-      setSeconds(Date.now()); // trigger update
+      setSeconds(Date.now());
     }, 1000);
     return () => clearInterval(interval);
   }, [startDate]);
+  
   useEffect(() => {
     if (!configLoading && (!config || !config.addiction)) {
       navigate('/addiction-config');
     }
   }, [config, configLoading, navigate]);
-  // Usunięto animację liczby dni
-  // Jeśli trwa ładowanie konfiguracji, pokaż loader
-  // Zawsze wyświetlaj debug-info i komunikat
-  const theme = isDark
-    ? {
-        background: 'linear-gradient(135deg, #181828 0%, #23234a 50%, #2e2e4d 100%)',
-        color: '#f7f7ff',
-        cardBg: '#23234a',
-        accent: '#ffe082',
-        accent2: '#6a5cff',
-        shadow: '0 8px 32px #0006',
-      }
-    : {
-        background: 'linear-gradient(135deg, #7f7fd5 0%, #86a8e7 50%, #91eac9 100%)',
-        color: '#222',
-        cardBg: '#fff',
-        accent: '#6a5cff',
-        accent2: '#a685ff',
-        shadow: '0 8px 32px rgba(109,94,252,0.12)',
-      };
 
   return (
-    <div style={{
-      minHeight: 'calc(100vh - 120px)',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      background: theme.background,
-      color: theme.color,
-      borderRadius: 36,
-      margin: '24px auto',
-      boxShadow: theme.shadow,
-      maxWidth: 480,
-      padding: '38px 22px',
-      animation: 'fadeIn 1s',
-    }}>
+    <main className="min-h-[calc(100vh-120px)] pb-32">
       <style>{`
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .sobriety-btn { background: linear-gradient(90deg,${theme.accent},${theme.accent2}); color: #fff; border-radius: 18px; font-weight: 700; font-size: 17px; padding: 13px 32px; margin-top: 28px; box-shadow: 0 2px 16px #a79cff33; transition: transform 0.2s, box-shadow 0.2s; border: none; cursor: pointer; letter-spacing: 0.5px; }
-        .sobriety-btn:hover { transform: scale(1.07); box-shadow: 0 6px 24px #a79cff66; background: linear-gradient(90deg,${theme.accent2},${theme.accent}); }
-        .sobriety-emoji { font-size: 54px; margin-bottom: 16px; animation: bounce 1.2s infinite alternate; }
-        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
-        .sobriety-days { font-size: 44px; font-weight: 900; letter-spacing: 1px; margin: 16px 0; color: ${theme.accent}; text-shadow: 0 2px 8px #a79cff44; }
-        .sobriety-motto { font-size: 20px; font-weight: 700; margin-bottom: 22px; color: ${theme.color}; text-shadow: 0 2px 8px #6d5efc22; }
-        .milestone-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 14px; margin-top: 10px; }
-        .milestone-card { padding: 10px 0; border-radius: 16px; background: ${theme.cardBg}; color: ${theme.accent}; font-weight: 900; font-size: 17px; box-shadow: 0 2px 12px #a79cff22; border: 2px solid #eee; text-align: center; transition: background 0.2s, color 0.2s; }
-        .milestone-card.achieved { background: linear-gradient(90deg,${theme.accent},${theme.accent2}); color: ${isDark ? '#23234a' : '#222'}; border: 2px solid ${theme.accent}; animation: pop 0.5s; }
-        @keyframes pop { 0% { transform: scale(1); } 60% { transform: scale(1.15); } 100% { transform: scale(1); } }
-        .milestone-next { margin-top: 10px; font-size: 16px; color: ${theme.accent}; font-weight: 700; }
-        .milestone-section { background: ${isDark ? '#23234a' : '#f7f7ff'}; border-radius: 24px; box-shadow: 0 2px 12px #a79cff22; padding: 18px 12px; margin-top: 18px; width: 100%; }
-        .milestone-section h3 { font-size: 19px; font-weight: 800; margin-bottom: 10px; color: ${theme.accent}; }
-        .milestone-list { list-style: disc inside; margin: 0 0 10px 0; padding: 0; color: ${theme.color}; }
-        .milestone-list li { font-size: 16px; margin-bottom: 4px; }
+        .sobrietyVioletContainer {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 2rem 1.5rem;
+        }
+        .sobrietyVioletHero {
+          display: flex;
+          flex-direction: column;
+          gap: 2rem;
+          margin-bottom: 3rem;
+        }
+        @media (min-width: 768px) {
+          .sobrietyVioletHero {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 2rem;
+          }
+        }
+        .sobrietyVioletCounter {
+          flex: 1;
+        }
+        .sobrietyVioletCounterLabel {
+          font-size: 0.625rem;
+          font-weight: 700;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: var(--on-surface-variant);
+          margin-bottom: 0.5rem;
+          display: block;
+        }
+        .sobrietyVioletDays {
+          display: flex;
+          align-items: baseline;
+          gap: 0.5rem;
+        }
+        .sobrietyVioletDaysNumber {
+          font-family: 'Manrope', sans-serif;
+          font-size: 7rem;
+          line-height: 1;
+          font-weight: 900;
+          color: var(--primary);
+          letter-spacing: -0.02em;
+        }
+        .sobrietyVioletDaysText {
+          font-family: 'Manrope', sans-serif;
+          font-size: 2rem;
+          font-weight: 600;
+          color: var(--secondary);
+        }
+        .sobrietyVioletTimeDetails {
+          font-size: 0.875rem;
+          color: var(--on-surface-variant);
+          margin-top: 0.5rem;
+          font-weight: 500;
+        }
+        .sobrietyVioletTimeDetails span {
+          margin-right: 1.5rem;
+        }
+        .sobrietyVioletTimeDetails strong {
+          color: var(--primary);
+          font-weight: 700;
+        }
+        .sobrietyVioletActionButtons {
+          display: flex;
+          gap: 1rem;
+          margin-top: 1.5rem;
+          flex-wrap: wrap;
+        }
+        .sobrietyVioletResetButton {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: linear-gradient(to right, var(--secondary), #8E66D1);
+          color: white;
+          padding: 0.875rem 1.5rem;
+          border-radius: 99rem;
+          font-family: 'Manrope', sans-serif;
+          font-weight: 700;
+          font-size: 1rem;
+          border: none;
+          cursor: pointer;
+          transition: transform 0.2s, box-shadow 0.2s;
+          box-shadow: 0 15px 30px -10px rgba(96, 91, 113, 0.15);
+        }
+        .sobrietyVioletResetButton:hover {
+          transform: scale(1.05);
+          box-shadow: 0 20px 40px -10px rgba(96, 91, 113, 0.25);
+        }
+        .sobrietyVioletPanicButton {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: linear-gradient(to right, var(--error), #d32f2f);
+          color: white;
+          padding: 0.875rem 1.5rem;
+          border-radius: 99rem;
+          font-family: 'Manrope', sans-serif;
+          font-weight: 700;
+          font-size: 1rem;
+          border: none;
+          cursor: pointer;
+          transition: transform 0.2s, box-shadow 0.2s;
+          box-shadow: 0 15px 30px -10px rgba(186, 26, 26, 0.2);
+        }
+        .sobrietyVioletPanicButton:hover {
+          transform: scale(1.05);
+          box-shadow: 0 20px 40px -10px rgba(186, 26, 26, 0.3);
+        }
+        .sobrietyVioletQuote {
+          max-width: 28rem;
+        }
+        .sobrietyVioletQuoteText {
+          font-style: italic;
+          font-size: 1.125rem;
+          border-left: 4px solid var(--primary-container);
+          padding: 1rem;
+          color: var(--on-surface-variant);
+          font-family: 'Manrope', sans-serif;
+        }
+        .sobrietyVioletCTA {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: linear-gradient(to right, var(--primary), #8E66D1);
+          color: var(--on-primary);
+          padding: 1rem 2rem;
+          border-radius: 99rem;
+          font-family: 'Manrope', sans-serif;
+          font-weight: 700;
+          font-size: 1.125rem;
+          border: none;
+          cursor: pointer;
+          transition: transform 0.2s, box-shadow 0.2s;
+          box-shadow: 0px 40px 60px -20px rgba(108, 67, 185, 0.08);
+          margin-top: 2rem;
+        }
+        .sobrietyVioletCTA:hover {
+          transform: scale(1.05);
+          box-shadow: 0px 60px 80px -20px rgba(108, 67, 185, 0.15);
+        }
+        .sobrietyVioletMilestone {
+          background: var(--surface-container-low);
+          border-radius: 1rem;
+          padding: 2rem;
+          margin-bottom: 3rem;
+          border: 1px solid var(--surface-variant);
+          box-shadow: 0px 40px 60px -20px rgba(108, 67, 185, 0.08);
+        }
+        .sobrietyVioletMilestoneHeader {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-end;
+          margin-bottom: 1rem;
+        }
+        .sobrietyVioletMilestoneTitle {
+          font-family: 'Manrope', sans-serif;
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: var(--on-surface);
+        }
+        .sobrietyVioletMilestonePercent {
+          font-family: 'Manrope', sans-serif;
+          font-size: 1.25rem;
+          font-weight: 700;
+          color: var(--primary);
+        }
+        .sobrietyVioletProgress {
+          width: 100%;
+          height: 1rem;
+          background: var(--secondary-container);
+          border-radius: 99rem;
+          overflow: hidden;
+        }
+        .sobrietyVioletProgressBar {
+          height: 100%;
+          background: var(--primary);
+          border-radius: 99rem;
+          transition: width 0.3s ease;
+          box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1);
+        }
+        .sobrietyVioletAchievements {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 1.5rem;
+          margin-top: 1.5rem;
+        }
+        .sobrietyVioletAchievementCard {
+          background: white;
+          border-radius: 1rem;
+          padding: 1.5rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          min-height: 12rem;
+          border: 1px solid var(--surface-variant);
+          box-shadow: 0px 40px 60px -20px rgba(108, 67, 185, 0.08);
+        }
+        .sobrietyVioletAchievementIcon {
+          width: 3rem;
+          height: 3rem;
+          border-radius: 50%;
+          background: var(--primary-container);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.5rem;
+          color: var(--primary);
+        }
+        .sobrietyVioletAchievementMeta {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          margin-bottom: 1rem;
+        }
+        .sobrietyVioletAchievementLabel {
+          font-family: 'Manrope', sans-serif;
+          font-size: 0.625rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.09em;
+          color: var(--outline);
+        }
+        .sobrietyVioletAchievementCardTitle {
+          font-family: 'Manrope', sans-serif;
+          font-weight: 700;
+          font-size: 1.125rem;
+          color: var(--on-surface);
+          margin-bottom: 0.25rem;
+        }
+        .sobrietyVioletAchievementCardText {
+          font-size: 0.875rem;
+          color: var(--on-surface-variant);
+        }
+        .sobrietyVioletImageCard {
+          position: relative;
+          overflow: hidden;
+          border-radius: 1rem;
+          min-height: 12rem;
+          group: 'image';
+        }
+        .sobrietyVioletImageCard img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 1s;
+        }
+        .sobrietyVioletImageCard:hover img {
+          transform: scale(1.1);
+        }
+        .sobrietyVioletImageOverlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to top, rgba(108, 67, 185, 0.8), transparent);
+          display: flex;
+          align-items: flex-end;
+          padding: 1.5rem;
+        }
+        .sobrietyVioletImageText {
+          color: white;
+          font-family: 'Manrope', sans-serif;
+          font-weight: 600;
+        }
+        .sobrietyVioletBreathingSection {
+          background: linear-gradient(135deg, var(--primary-container) 0%, rgba(233, 221, 255, 0.5) 100%);
+          border-radius: 1rem;
+          padding: 3rem;
+          text-align: center;
+          position: relative;
+          overflow: hidden;
+          border: 1px solid var(--primary-container);
+          margin-bottom: 3rem;
+        }
+        .sobrietyVioletBreathingSection::before {
+          content: '';
+          position: absolute;
+          top: -3rem;
+          right: -3rem;
+          width: 12rem;
+          height: 12rem;
+          background: var(--primary-container);
+          border-radius: 50%;
+          filter: blur(60px);
+          opacity: 0.3;
+        }
+        .sobrietyVioletBreathingSection::after {
+          content: '';
+          position: absolute;
+          bottom: -3rem;
+          left: -2rem;
+          width: 8rem;
+          height: 8rem;
+          background: #8E66D1;
+          border-radius: 50%;
+          filter: blur(50px);
+          opacity: 0.2;
+        }
+        .sobrietyVioletBreathingContent {
+          position: relative;
+          z-index: 10;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .sobrietyVioletBreathingIcon {
+          width: 3rem;
+          height: 3rem;
+          font-size: 3rem;
+          margin-bottom: 1.5rem;
+          animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.6; }
+        }
+        .sobrietyVioletBreathingTitle {
+          font-family: 'Manrope', sans-serif;
+          font-size: 1.875rem;
+          font-weight: 900;
+          margin-bottom: 1rem;
+          color: var(--on-surface);
+        }
+        .sobrietyVioletBreathingText {
+          max-width: 28rem;
+          margin-bottom: 2rem;
+          color: var(--on-surface-variant);
+          font-weight: 500;
+        }
+        .sobrietyVioletBreathingBtn {
+          background: white;
+          color: var(--primary);
+          padding: 0.75rem 2rem;
+          border-radius: 99rem;
+          font-weight: 700;
+          border: none;
+          cursor: pointer;
+          transition: background 0.3s, color 0.3s;
+          box-shadow: 0px 40px 60px -20px rgba(108, 67, 185, 0.08);
+        }
+        .sobrietyVioletBreathingBtn:hover {
+          background: var(--primary);
+          color: white;
+        }
+        .sobrietyVioletAchievementsSection h3 {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          margin-bottom: 1.5rem;
+          font-family: 'Manrope', sans-serif;
+          font-size: 1.25rem;
+          font-weight: 700;
+        }
+        .sobrietyVioletAchievementsSection img {
+          width: 1.25rem;
+          height: 1.25rem;
+          opacity: 0.4;
+        }
       `}</style>
-      {/* GŁÓWNY WIDOK */}
-      {!config || configLoading ? (
-        <>
-          <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 18 }}>{t('sobriety.notConfigured', 'Nie skonfigurowano nałogu lub trwa ładowanie.')}</div>
-          <div style={{ fontSize: 16, marginBottom: 24 }}>{t('sobriety.goToConfig', 'Przejdź do konfiguracji, aby uruchomić licznik czystości.')}</div>
-          <button className="sobriety-btn" onClick={() => navigate('/addiction-config')}>{t('sobriety.configure', 'Konfiguruj nałóg')}</button>
-        </>
-      ) : (
-        <>
-          <div className="sobriety-emoji">🌱</div>
-          <div className="sobriety-motto">{t('sobriety.motto', 'Każdy dzień to Twój sukces!')}</div>
-          <h1 style={{ fontSize: 28, fontWeight: 900, marginBottom: 10, color: theme.accent }}>{t('sobriety.title', 'Czystość od uzależnienia')}</h1>
-          <p style={{ fontSize: 16, marginBottom: 20, color: theme.color }}>{t('sobriety.lead', 'Ten ekran pozwala śledzić czas czystości od wybranego uzależnienia.')}</p>
-          {/* Kamienie milowe */}
-          {elapsed && (
-            <div style={{ margin: '24px 0', textAlign: 'center' }}>
-              <div style={{ fontWeight: 800, fontSize: 20, marginBottom: 8, color: theme.accent }}>{t('sobriety.milestonesTitle', 'Kamienie milowe:')}</div>
-              <div className="milestone-grid">
-                {milestones.map(m => (
-                  <div key={m} className={`milestone-card${achieved.includes(m) ? ' achieved' : ''}`}>
-                    {m} {t('sobriety.days', 'dni')} {achieved.includes(m) && '🏆'}
+
+      <div className="sobrietyVioletContainer">
+        {!config || configLoading ? (
+          <div style={{ textAlign: 'center', padding: '3rem 1rem' }}>
+            <div style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1.125rem', color: 'var(--on-surface)' }}>
+              {t('sobriety.notConfigured', 'Nie skonfigurowano nałogu lub trwa ładowanie.')}
+            </div>
+            <div style={{ fontSize: '1rem', marginBottom: '1.5rem', color: 'var(--on-surface-variant)' }}>
+              {t('sobriety.goToConfig', 'Przejdź do konfiguracji, aby uruchomić licznik czystości.')}
+            </div>
+            <button className="sobrietyVioletCTA" onClick={() => navigate('/addiction-config')}>
+              <span>⚙️</span>
+              {t('sobriety.configure', 'Konfiguruj nałóg')}
+            </button>
+          </div>
+        ) : !startDate ? (
+          <div style={{ textAlign: 'center', padding: '3rem 1rem' }}>
+            <div style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem', color: 'var(--on-surface)' }}>
+              {t('sobriety.startTitle', 'Rozpocznij licznik czystości')}
+            </div>
+            <div style={{ fontSize: '1rem', marginBottom: '2rem', maxWidth: '28rem', margin: '0 auto 2rem' }}>
+              {t('sobriety.startDescription', 'Każdy dzień znaczy. Zacznij liczyć swoją czystość od dzisiaj.')}
+            </div>
+            <button className="sobrietyVioletCTA" onClick={() => setSobrietyStart(new Date().toISOString())}>
+              <span>✨</span>
+              {t('sobriety.setStart', 'Ustaw początek czystości')}
+            </button>
+          </div>
+        ) : (
+          <>
+            {/* HERO SECTION */}
+            <section className="sobrietyVioletHero">
+              <div className="sobrietyVioletCounter">
+                <span className="sobrietyVioletCounterLabel">{t('sobriety.currentStreak', 'Aktualny ciąg')}</span>
+                <div className="sobrietyVioletDays">
+                  <span className="sobrietyVioletDaysNumber">{elapsed?.days || 0}</span>
+                  <span className="sobrietyVioletDaysText">{t('sobriety.days', 'dni')}</span>
+                </div>
+                <div className="sobrietyVioletTimeDetails">
+                  <span><strong>{elapsed?.hours || 0}</strong> {t('sobriety.hours', 'h')}</span>
+                  <span><strong>{elapsed?.minutes || 0}</strong> {t('sobriety.minutes', 'min')}</span>
+                  <span><strong>{elapsed?.seconds || 0}</strong> {t('sobriety.seconds', 'sek')}</span>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="sobrietyVioletActionButtons">
+                  <button className="sobrietyVioletResetButton" onClick={resetSobriety}>
+                    <span>🧼</span> {t('sobriety.reset', 'Resetuj licznik')}
+                  </button>
+                  <button className="sobrietyVioletPanicButton" onClick={() => navigate('/crisis')}>
+                    <span>🆘</span> {t('sobriety.panicButton', 'Panic Button')}
+                  </button>
+                </div>
+              </div>
+
+              {/* Quote Below */}
+              <div className="sobrietyVioletQuote">
+                <blockquote className="sobrietyVioletQuoteText">
+                  {t('sobriety.heroQuote', '"Odzyskiwanie to nie wyścig. To seria małych, świadomych kroków w stronę osoby, którą się stajesz."')}
+                </blockquote>
+              </div>
+            </section>
+
+            {/* MILESTONE PROGRESS */}
+            {nextMilestone && (
+              <section className="sobrietyVioletMilestone">
+                <div className="sobrietyVioletMilestoneHeader">
+                  <div>
+                    <div className="sobrietyVioletMilestoneTitle">{t('sobriety.nextMilestoneTitle', 'Następny kamień milowy')}</div>
+                    <p style={{ fontSize: '0.875rem', color: 'var(--on-surface-variant)', marginTop: '0.25rem' }}>
+                      {nextMilestone - (elapsed?.days || 0)} {t('sobriety.daysUntil', 'dni do kamienia milowego')}{' '}
+                      <strong>{nextMilestone} {t('sobriety.daysShort', 'dni')}</strong>
+                    </p>
                   </div>
-                ))}
-              </div>
-              {nextMilestone && (
-                <div className="milestone-next">
-                  {t('sobriety.nextMilestone', 'Kolejny kamień milowy')}: <span style={{ color: theme.accent2 }}>{nextMilestone} {t('sobriety.days', 'dni')}</span>
+                  <span className="sobrietyVioletMilestonePercent">{nextMilestonePercentage}%</span>
                 </div>
-              )}
-              <div className="milestone-section">
-                <h3>{t('sobriety.milestones', 'Kamienie milowe')}</h3>
-                <KamienieMilowe />
-              </div>
-            </div>
-          )}
-          {/* Gratulacje */}
-          {justReached && (
-            <div style={{
-              background: 'linear-gradient(90deg,#ffe082,#a685ff)',
-              color: theme.accent2,
-              borderRadius: 18,
-              fontWeight: 900,
-              fontSize: 20,
-              padding: '16px 24px',
-              margin: '18px 0',
-              boxShadow: '0 4px 16px #a79cff44',
-            }}>
-              {t('sobriety.congrats', 'Gratulacje! Osiągnąłeś kamień milowy')}: {elapsed.days} {t('sobriety.daysOfSobriety', 'dni czystości')} 🏆
-            </div>
-          )}
-          {config && (config.addiction || config.addictionName) && (
-            <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 14, color: theme.color }}>
-              {t('sobriety.strugglingWith', 'Zmagasz się z')}: <span style={{ color: theme.accent }}>{config.addiction || config.addictionName}</span>
-            </div>
-          )}
-          {loading ? (
-            <div style={{ fontSize: 16, color: theme.accent, margin: '18px 0' }}>{t('sobriety.loading', 'Ładowanie...')}</div>
-          ) : startDate ? (
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 8, color: theme.color }}>
-                {t('sobriety.since', 'Czystość od')}: <span style={{ color: theme.accent }}>{new Date(startDate).toLocaleDateString()}</span>
-              </div>
-              {elapsed && (
-                <div className="sobriety-days">
-                  {elapsed.days} {t('sobriety.days', 'dni')}
-                  <span style={{ fontSize: 19, fontWeight: 500, marginLeft: 10, color: theme.color }}>
-                    {elapsed.hours} {t('sobriety.hours', 'h')}, {elapsed.minutes} {t('sobriety.minutes', 'min')}, {elapsed.seconds} {t('sobriety.seconds', 'sek')}
-                  </span>
+                <div className="sobrietyVioletProgress">
+                  <div className="sobrietyVioletProgressBar" style={{ width: `${nextMilestonePercentage}%` }} />
                 </div>
-              )}
-              <button className="sobriety-btn" onClick={resetSobriety}>
-                <span style={{ fontSize: 22, marginRight: 8 }}>🧼</span> {t('sobriety.reset', 'Resetuj licznik')}
+              </section>
+            )}
+
+            {/* RECENT ACHIEVEMENTS */}
+            <section className="sobrietyVioletAchievementsSection" style={{ marginBottom: '3rem' }}>
+              <h3>
+                <span>🏆</span>
+                {t('sobriety.recentAchievements', 'Ostatnie osiągnięcia')}
+              </h3>
+              <div className="sobrietyVioletAchievements">
+                {/* Achievement 1: Century */}
+                {achieved.length > 0 && achieved.includes(100) && (
+                  <div className="sobrietyVioletAchievementCard">
+                    <div className="sobrietyVioletAchievementMeta">
+                      <div className="sobrietyVioletAchievementIcon">✨</div>
+                      <span className="sobrietyVioletAchievementLabel">{t('sobriety.unlockedYesterday', 'Odblokowany wczoraj')}</span>
+                    </div>
+                    <div>
+                      <div className="sobrietyVioletAchievementCardTitle">{t('sobriety.achievementCentury', '100 dni czystości')}</div>
+                      <div className="sobrietyVioletAchievementCardText">{t('sobriety.achievementCenturyDesc', 'Konsekwencja to Twoja supersiła.')}</div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Achievement 2: Savings */}
+                <div className="sobrietyVioletAchievementCard">
+                  <div className="sobrietyVioletAchievementMeta">
+                    <div className="sobrietyVioletAchievementIcon">💰</div>
+                    <span className="sobrietyVioletAchievementLabel">{t('sobriety.impact', 'Wpływ')}</span>
+                  </div>
+                  <div>
+                    <div className="sobrietyVioletAchievementCardTitle">
+                      ${((elapsed?.days || 0) * 20).toLocaleString()} {t('sobriety.saved', 'oszczędzono')}
+                    </div>
+                    <div className="sobrietyVioletAchievementCardText">{t('sobriety.redirectingResources', 'Kierunek zasobów na wzrost.')}</div>
+                  </div>
+                </div>
+
+                {/* Image Card */}
+                <div className="sobrietyVioletImageCard">
+                  <img 
+                    alt="Nature scenery" 
+                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2391eac9;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%238E66D1;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23grad)'/%3E%3Ctext x='200' y='150' text-anchor='middle' font-size='24' fill='white' font-weight='bold'%3EYour health is blooming%3C/text%3E%3C/svg%3E"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                  <div className="sobrietyVioletImageOverlay">
+                    <p className="sobrietyVioletImageText">{t('sobriety.healthBlooming', 'Twoje zdrowie kwitnie.')}</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* BREATHING GUIDE */}
+            <section className="sobrietyVioletBreathingSection">
+              <div className="sobrietyVioletBreathingContent">
+                <div className="sobrietyVioletBreathingIcon">🫁</div>
+                <h2 className="sobrietyVioletBreathingTitle">{t('sobriety.patienceIsPractice', 'Cierpliwość to ćwiczenie')}</h2>
+                <p className="sobrietyVioletBreathingText">
+                  {t('sobriety.breathingGuideText', 'Zawsze, gdy czujesz pragnienie, poświęć chwilę na oddychanie z przewodnikiem. Jedna minuta to wszystko, co potrzeba, aby zresetować.')}
+                </p>
+                <Link to="/crisis" style={{ textDecoration: 'none' }}>
+                  <button className="sobrietyVioletBreathingBtn">
+                    {t('sobriety.startBreathingExercise', 'Rozpocznij ćwiczenie oddechowe')}
+                  </button>
+                </Link>
+              </div>
+            </section>
+
+            {/* ACTIONS */}
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '2rem' }}>
+              <button 
+                className="sobrietyVioletCTA" 
+                onClick={resetSobriety}
+                style={{ background: 'linear-gradient(to right, #BA1A1A, #D32F2F)', marginTop: 0 }}
+              >
+                <span>🧼</span> {t('sobriety.reset', 'Resetuj licznik')}
+              </button>
+              <button 
+                className="sobrietyVioletCTA"
+                onClick={() => navigate('/addiction-config')}
+                style={{ marginTop: 0 }}
+              >
+                <span>⚙️</span> {t('sobriety.configure', 'Zmień konfigurację')}
               </button>
             </div>
-          ) : (
-            <div style={{ textAlign: 'center' }}>
-              <button className="sobriety-btn" onClick={() => setSobrietyStart(new Date().toISOString())}>{t('sobriety.setStart', 'Ustaw początek czystości')}</button>
-            </div>
-          )}
-        </>
-      )}
-    </div>
+          </>
+        )}
+      </div>
+    </main>
   );
 }
 
 export default SobrietyPage;
+
