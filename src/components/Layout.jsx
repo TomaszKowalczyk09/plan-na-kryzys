@@ -147,7 +147,7 @@ export default function Layout() {
       ) : null}
 
       <main className="main">
-        <div className="container">
+        <div className={clsx('container', pathname === '/knowledge' && 'containerWide')}>
           {/* ...existing code... */}
           <Outlet />
         </div>
