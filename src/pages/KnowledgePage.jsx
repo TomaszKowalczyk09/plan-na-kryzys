@@ -67,7 +67,7 @@ export default function KnowledgePage() {
       <style>{`
         .knowledgeVioletPage .storyScreenInner {
           display: grid;
-          gap: 16px;
+          gap: 18px;
           max-width: 1160px;
           margin: 0 auto;
         }
@@ -91,14 +91,16 @@ export default function KnowledgePage() {
         }
         .knowledgeVioletHeroTop h1 {
           margin: 0;
-          font-size: clamp(24px, 8.6vw, 54px);
+          font-size: clamp(22px, 8vw, 54px);
           line-height: 0.95;
           letter-spacing: -0.04em;
         }
         .knowledgeVioletLead {
           margin: 0;
           color: var(--on-surface-variant);
-          font-weight: 600;
+          font-weight: 650;
+          font-size: 14px;
+          line-height: 1.5;
           max-width: 62ch;
         }
         .knowledgeVioletSearchWrap {
@@ -162,7 +164,7 @@ export default function KnowledgePage() {
         }
         .knowledgeVioletSectionHead h2 {
           margin: 0;
-          font-size: clamp(30px, 7vw, 30px);
+          font-size: clamp(26px, 6.6vw, 30px);
           letter-spacing: -0.03em;
         }
         .knowledgeVioletInlineLink {
@@ -177,12 +179,12 @@ export default function KnowledgePage() {
         }
         .knowledgeVioletCategories {
           display: grid;
-          grid-template-columns: 1fr;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: 12px;
         }
         .knowledgeVioletCategory {
           border-radius: 18px;
-          min-height: 148px;
+          min-height: 132px;
           padding: 12px;
           display: flex;
           flex-direction: column;
@@ -193,7 +195,7 @@ export default function KnowledgePage() {
         }
         .knowledgeVioletCategory h3 {
           margin: 0;
-          font-size: clamp(17px, 4.4vw, 20px);
+          font-size: clamp(16px, 4.2vw, 19px);
           line-height: 1.18;
           letter-spacing: -0.02em;
           max-width: 22ch;
@@ -253,9 +255,9 @@ export default function KnowledgePage() {
             linear-gradient(165deg, #d5a26a 0%, #b3773c 55%, #8f5d2f 100%);
         }
         .knowledgeVioletFeaturedBody {
-          padding: 18px;
+          padding: 14px;
           display: grid;
-          gap: 9px;
+          gap: 8px;
         }
         .knowledgeVioletMeta {
           margin: 0;
@@ -267,7 +269,7 @@ export default function KnowledgePage() {
         }
         .knowledgeVioletFeaturedBody h3 {
           margin: 0;
-          font-size: clamp(24px, 7vw, 54px);
+          font-size: clamp(22px, 6.6vw, 54px);
           line-height: 0.95;
           letter-spacing: -0.04em;
           overflow-wrap: anywhere;
@@ -294,13 +296,13 @@ export default function KnowledgePage() {
           border-radius: 18px;
           border: 1px solid color-mix(in srgb, var(--outline-variant) 70%, transparent);
           background: var(--surface-container-low);
-          padding: 16px;
+          padding: 14px;
           display: grid;
           gap: 8px;
         }
         .knowledgeVioletCompact h4 {
           margin: 0;
-          font-size: clamp(22px, 6.2vw, 28px);
+          font-size: clamp(20px, 5.8vw, 28px);
           line-height: 0.95;
           letter-spacing: -0.04em;
           overflow-wrap: anywhere;
@@ -328,7 +330,7 @@ export default function KnowledgePage() {
         .knowledgeVioletTips {
           display: grid;
           grid-auto-flow: column;
-          grid-auto-columns: minmax(88%, 1fr);
+          grid-auto-columns: minmax(92%, 1fr);
           gap: 12px;
           overflow-x: auto;
           padding-bottom: 4px;
@@ -342,7 +344,7 @@ export default function KnowledgePage() {
           background: var(--surface-container-lowest);
           border: 1px solid color-mix(in srgb, var(--outline-variant) 70%, transparent);
           border-radius: 18px;
-          padding: 16px;
+          padding: 14px;
           display: grid;
           gap: 10px;
           scroll-snap-align: start;
@@ -375,6 +377,9 @@ export default function KnowledgePage() {
           font-weight: 800;
         }
         @media (max-width: 380px) {
+          .knowledgeVioletCategories {
+            grid-template-columns: 1fr;
+          }
           .knowledgeVioletSectionHead {
             align-items: center;
           }
@@ -387,11 +392,6 @@ export default function KnowledgePage() {
           }
           .knowledgeVioletCategory h3 {
             font-size: 16px;
-          }
-        }
-        @media (min-width: 420px) {
-          .knowledgeVioletCategories {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
           }
         }
         @media (min-width: 560px) {
