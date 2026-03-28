@@ -92,7 +92,7 @@ export default function Layout() {
         <header className={clsx('header headerRedesigned', isHeaderCompact && 'headerRedesignedCompact')}>
           <div className="headerInner headerInnerRedesigned">
             <div className="headerLeft">
-              <img className="brandLogo brandLogoRedesigned" src="/logo.svg" alt="Plan na kryzys" />
+              <img className="brandLogo brandLogoRedesigned" src="/unnamed-removebg-preview.png" alt="Plan na kryzys" />
             </div>
             <div className="headerCenter">
               <div className="brand brandRedesigned">{t('Plan na kryzys')}</div>

@@ -46,8 +46,8 @@ const showCheckInNotification = async () => {
     tag: CHECKIN_TAG,
     renotify: false,
     data: { url: '/' },
-    icon: '/logo.svg',
-    badge: '/logo.svg',
+    icon: '/unnamed-removebg-preview.png',
+    badge: '/unnamed-removebg-preview.png',
   }
 
   if ('serviceWorker' in navigator) {

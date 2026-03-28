@@ -10,13 +10,13 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/logo.svg",
+      "src": "/unnamed-removebg-preview.png",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "/logo.svg",
+      "src": "/unnamed-removebg-preview.png",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "maskable"
