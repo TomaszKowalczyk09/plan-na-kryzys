@@ -123,6 +123,51 @@ export default function CrisisPage() {
 
   return (
     <StoryScreen variant={isDarkTheme ? 'dark' : 'light'} className="pageAnim">
+      {/* Crisis Banner */}
+      <div className="pageAnimItem crisisBanner">
+        <div className="crisisBannerTitle">Feeling overwhelmed right now?</div>
+        <div className="crisisBannerText">You're not alone. Take a breath and reach out for help.</div>
+      </div>
+
+      {/* Primary Hotline Button */}
+      <div className="pageAnimItem">
+        <a href="tel:116123" style={{ display: 'block', textDecoration: 'none' }}>
+          <button className="crisisHotlineBtn" style={{ width: '100%', minHeight: '70px', fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
+            📞 {t('crisis.callForHelp', 'Call for Help Now')}
+          </button>
+        </a>
+      </div>
+
+      {/* Grounding Tools */}
+      <div className="pageAnimItem">
+        <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--on-surface-variant)', textTransform: 'uppercase', letterSpacing: '0.3px', marginBottom: '12px' }}>
+          🧘 {t('crisis.groundingTools', 'Grounding Tools')}
+        </div>
+        <div className="groundingToolsGrid">
+          <div className="groundingCard">
+            <div className="groundingCardHeader">
+              <div className="groundingIcon">5️⃣</div>
+              <div className="groundingTitle">5-4-3-2-1 Guide</div>
+            </div>
+            <div className="groundingDescription">Notice 5 things you see, 4 you feel, 3 you hear, 2 you smell, 1 you taste</div>
+          </div>
+          <div className="groundingCard">
+            <div className="groundingCardHeader">
+              <div className="groundingIcon">📦</div>
+              <div className="groundingTitle">Box Breathing</div>
+            </div>
+            <div className="groundingDescription">Breathe in for 4, hold for 4, out for 4, hold for 4. Repeat.</div>
+          </div>
+          <div className="groundingCard">
+            <div className="groundingCardHeader">
+              <div className="groundingIcon">💪</div>
+              <div className="groundingTitle">Muscle Relaxation</div>
+            </div>
+            <div className="groundingDescription">Tense and release each muscle group, starting from toes to head</div>
+          </div>
+        </div>
+      </div>
+
       <StoryCard tone={isDarkTheme ? 'dark' : 'surface'} className="pageAnimItem">
         <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
           <div>

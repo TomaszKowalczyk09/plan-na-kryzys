@@ -1,146 +1,207 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { CloudIcon, StoryCard, StoryScreen, CTAButton } from '../components/StoryUI'
-import { useMoodEntries } from '../hooks/useIndexedDB'
+import { StoryScreen } from '../components/StoryUI'
+import { useMoodEntries, useSobrietyTimer } from '../hooks/useIndexedDB'
 import { useI18n } from '../i18n/index.jsx'
 
 export default function Dashboard() {
-  const { t } = useI18n()
-  const { getEntriesFromDays } = useMoodEntries()
-  const recent = useMemo(() => getEntriesFromDays(14), [getEntriesFromDays])
-  const recentSorted = useMemo(
-    () => [...recent].sort((a, b) => (a.timestamp ?? 0) - (b.timestamp ?? 0)),
-    [recent],
+  const { t, lang } = useI18n()
+  const { getElapsed } = useSobrietyTimer()
+  const { addEntry } = useMoodEntries()
+  const [moodValue, setMoodValue] = useState(4)
+  const [selectedTag, setSelectedTag] = useState('grateful')
+  const [savingMood, setSavingMood] = useState(false)
+  const [saveState, setSaveState] = useState('idle')
+
+  const moodTags = useMemo(
+    () => [
+      { key: 'calm', label: t('dashboard.reflective', 'Reflective') },
+      { key: 'grateful', label: t('dashboard.grateful', 'Grateful') },
+      { key: 'restless', label: t('dashboard.restless', 'Restless') },
+    ],
+    [t],
   )
 
-  const last = recentSorted.at(-1)
-  const lastLabel = last?.date ? new Date(last.date).toLocaleString() : null
-  const lastEmotions = Array.isArray(last?.emotions) ? last.emotions.join(', ') : null
+  const emotionByLang = useMemo(
+    () => ({
+      pl: { calm: 'spokojny', grateful: 'wdzięczny', restless: 'zestresowany' },
+      de: { calm: 'ruhig', grateful: 'dankbar', restless: 'gestresst' },
+    }),
+    [],
+  )
+
+  const elapsed = getElapsed()
+  const currentStreak = elapsed?.days ?? 14
+  const nextMilestone = 30
+  const progressToMilestone = Math.min(100, Math.round((currentStreak / nextMilestone) * 100))
+  const daysToMilestone = Math.max(nextMilestone - currentStreak, 0)
+
+  const onSaveQuickMood = async () => {
+    setSaveState('idle')
+    setSavingMood(true)
+
+    const languageMap = emotionByLang[lang] ?? emotionByLang.pl
+    const moodEmotion = languageMap[selectedTag] ?? languageMap.grateful
+
+    try {
+      await addEntry([moodEmotion], `${t('dashboard.mood', 'Mood')}: ${moodValue}/5`)
+      setSaveState('saved')
+    } catch {
+      setSaveState('error')
+    } finally {
+      setSavingMood(false)
+    }
+  }
 
   return (
-    <StoryScreen variant="light" className="pageAnim">
-      <StoryCard tone="surface" className="pageAnimItem">
-        <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
+    <StoryScreen variant="light" className="pageAnim dashboardPage">
+      <section className="pageAnimItem dashboardCrisisHero">
+        <div className="dashboardCrisisText">
+          <h2>{t('dashboard.overwhelmed', 'Feeling overwhelmed?')}</h2>
+          <p>
+            {t(
+              'dashboard.overwhelmedDesc',
+              'Immediate support is available 24/7 if you need someone to talk to right now.',
+            )}
+          </p>
+        </div>
+        <Link to="/crisis" className="dashboardHeroBtn">
+          {t('dashboard.helpNow', 'Help now')}
+        </Link>
+        <div className="dashboardCrisisGlow" aria-hidden="true" />
+      </section>
+
+      <section className="pageAnimItem dashboardBentoGrid">
+        <article className="dashboardCard dashboardMoodCard">
+          <div className="dashboardCardHead">
+            <div>
+              <span className="dashboardEyebrow">{t('dashboard.todayCheckIn', "Today's check-in")}</span>
+              <h3>{t('dashboard.dailyMood', 'Daily mood')}</h3>
+            </div>
+            <div className="dashboardMoodBadge" aria-hidden="true">
+              😊
+            </div>
+          </div>
+
+          <p className="dashboardBodyText">{t('dashboard.howFeelingNow', 'How are you feeling in this moment?')}</p>
+
+          <div className="dashboardMoodSliderWrap">
+            <input
+              type="range"
+              min="1"
+              max="5"
+              value={moodValue}
+              onChange={(event) => setMoodValue(Number(event.target.value))}
+              aria-label={t('dashboard.mood', 'Mood')}
+            />
+            <div className="dashboardMoodScale">
+              <span>{t('dashboard.calm', 'Calm')}</span>
+              <span>{t('dashboard.neutral', 'Neutral')}</span>
+              <span>{t('dashboard.radiant', 'Radiant')}</span>
+            </div>
+          </div>
+
+          <div className="dashboardMoodTags">
+            {moodTags.map((tag) => (
+              <button
+                key={tag.key}
+                type="button"
+                className={selectedTag === tag.key ? 'isActive' : ''}
+                onClick={() => setSelectedTag(tag.key)}
+                aria-pressed={selectedTag === tag.key}
+              >
+                {tag.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="dashboardMoodActions">
+            <button type="button" className="dashboardSaveMoodBtn" onClick={onSaveQuickMood} disabled={savingMood}>
+              {savingMood ? t('dashboard.saving', 'Saving...') : t('dashboard.saveQuickMood', 'Save mood')}
+            </button>
+            <Link to="/mood" className="dashboardInlineAction">
+              {t('dashboard.dailyCheckIn', 'Daily check in')}
+            </Link>
+          </div>
+
+          {saveState === 'saved' ? (
+            <div className="dashboardSaveMoodNotice isSuccess">{t('dashboard.saved', 'Mood saved')}</div>
+          ) : null}
+          {saveState === 'error' ? (
+            <div className="dashboardSaveMoodNotice isError">{t('dashboard.saveFailed', 'Could not save mood')}</div>
+          ) : null}
+        </article>
+
+        <article className="dashboardCard dashboardSobrietyCard">
+          <span className="dashboardEyebrow dashboardEyebrowDark">{t('dashboard.theJourney', 'The journey')}</span>
+          <h3>{t('dashboard.sobrietyProgress', 'Sobriety progress')}</h3>
+
+          <div className="dashboardSobrietyCount">{currentStreak}</div>
+          <p className="dashboardSobrietySub">{t('dashboard.daysStrong', 'Days strong')}</p>
+
+          <div className="dashboardSobrietyQuote">
+            {t('dashboard.dayAtTime', 'One day at a time becomes a lifetime of freedom.')}
+          </div>
+        </article>
+
+        <article className="dashboardCard dashboardInspirationCard">
+          <div className="dashboardInspirationImage" role="img" aria-label={t('dashboard.dailyInspiration', 'Daily inspiration')} />
           <div>
-            <h1 className="storyTitle">
-              {t('dashboard.titlePrefix')} <span className="storyAccent">{t('dashboard.titleAccent')}</span>
-            </h1>
-            <p className="storyLead">{t('dashboard.lead')}</p>
+            <h3>{t('dashboard.dailyInspiration', 'Daily inspiration')}</h3>
+            <p>{t('dashboard.healingQuote', 'Healing is not linear, and every breath is a fresh start.')}</p>
+            <button type="button" className="dashboardTextBtn">
+              {t('dashboard.saveToJournal', 'Save to journal')}
+            </button>
           </div>
-          <CloudIcon mood="calm" label="Spokojna chmurka" />
-        </div>
+        </article>
 
-        <div className="moodReport mt12">
-          <div className="moodMetric">
-            <div className="moodMetricValue">{recent.length}</div>
-            <div className="moodMetricLabel">{t('dashboard.entries14')}</div>
-          </div>
-          <div className="moodMetric">
-            <div className="moodMetricValue">{lastLabel || t('dashboard.none')}</div>
-            <div className="moodMetricLabel">{t('dashboard.lastEntry')}</div>
-          </div>
-          <div className="moodMetric">
-            <div className="moodMetricValue" style={{ fontSize: 14, fontWeight: 900 }}>
-              {lastEmotions || t('dashboard.none')}
-            </div>
-            <div className="moodMetricLabel">{t('dashboard.lastEmotions')}</div>
-          </div>
-        </div>
-      </StoryCard>
-
-      <div
-        className="pageAnimItem"
-        style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}
-      >
-        <StoryCard tone="surface" style={{ padding: 16 }}>
-          <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
-            <div style={{ display: 'grid', gap: 4 }}>
-              <div className="textStrong">{t('dashboard.mood')}</div>
-              <div className="textMuted textSm">{t('dashboard.quickEntry')}</div>
-            </div>
-            <CloudIcon mood="smile" label="Uśmiechnięta chmurka" />
-          </div>
-          <div style={{ marginTop: 12 }}>
-            <CTAButton as={Link} to="/mood" tone="primary">
-              {t('dashboard.add')}
-            </CTAButton>
-          </div>
-        </StoryCard>
-
-        <StoryCard tone="glass" style={{ padding: 16 }}>
-          <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
-            <div style={{ display: 'grid', gap: 4 }}>
-              <div className="textStrong">{t('dashboard.crisis')}</div>
-              <div className="textMuted textSm">{t('dashboard.hereNow')}</div>
-            </div>
-            <CloudIcon mood="sad" label="Smutna chmurka" />
-          </div>
-          <div style={{ marginTop: 12 }}>
-            <CTAButton as={Link} to="/crisis" tone="dark">
-              {t('dashboard.open')}
-            </CTAButton>
-          </div>
-        </StoryCard>
-
-          <StoryCard tone="surface" style={{ padding: 16 }}>
-            <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
-              <div style={{ display: 'grid', gap: 4 }}>
-                <div className="textStrong">{t('dashboard.sobriety')}</div>
-                <div className="textMuted textSm">{t('dashboard.counter')}</div>
+        <article className="dashboardCard dashboardMilestonesCard">
+          <h3>{t('dashboard.upcomingMilestones', 'Upcoming milestones')}</h3>
+          <ul>
+            <li>
+              <div className="dashboardMilestoneIcon" aria-hidden="true">🌱</div>
+              <div>
+                <p>{t('dashboard.threeWeek', '3-week milestone')}</p>
+                <span>{t('dashboard.daysToGo', '{{count}} days to go', { count: daysToMilestone })}</span>
               </div>
-              <div style={{ fontSize: 22, fontWeight: 900 }}>🧼</div>
-            </div>
-            <div style={{ marginTop: 12 }}>
-              <CTAButton as={Link} to="/sobriety" tone="ghost">
-                {t('dashboard.go')}
-              </CTAButton>
-            </div>
-          </StoryCard>
-        <StoryCard tone="surface" style={{ padding: 16 }}>
-          <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
-            <div style={{ display: 'grid', gap: 4 }}>
-              <div className="textStrong">{t('dashboard.knowledge')}</div>
-              <div className="textMuted textSm">{t('dashboard.quickTopics')}</div>
-            </div>
-            <div style={{ fontSize: 22, fontWeight: 900 }}>📚</div>
-          </div>
-          <div style={{ marginTop: 12 }}>
-            <CTAButton as={Link} to="/knowledge" tone="ghost">
-              {t('dashboard.go')}
-            </CTAButton>
-          </div>
-        </StoryCard>
+            </li>
+            <li className="isMuted">
+              <div className="dashboardMilestoneIcon" aria-hidden="true">🗓️</div>
+              <div>
+                <p>{t('dashboard.monthlyReview', 'Monthly review')}</p>
+                <span>{t('dashboard.sixteenDays', '16 days to go')}</span>
+              </div>
+            </li>
+          </ul>
+        </article>
+      </section>
 
-        <StoryCard tone="surface" style={{ padding: 16 }}>
-          <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
-            <div style={{ display: 'grid', gap: 4 }}>
-              <div className="textStrong">{t('dashboard.friend')}</div>
-              <div className="textMuted textSm">{t('dashboard.howToHelp')}</div>
-            </div>
-            <div style={{ fontSize: 22, fontWeight: 900 }}>🤝</div>
-          </div>
-          <div style={{ marginTop: 12 }}>
-            <CTAButton as={Link} to="/friend" tone="ghost">
-              {t('dashboard.open')}
-            </CTAButton>
-          </div>
-        </StoryCard>
-      </div>
+      <section className="pageAnimItem dashboardBreathingSection">
+        <div className="dashboardBreathingHalo" aria-hidden="true" />
+        <div className="dashboardBreathingInner">
+          <div className="dashboardBreathingLogo" aria-hidden="true">◎</div>
+          <h2>{t('dashboard.findRhythm', 'Find your rhythm')}</h2>
+          <p>
+            {t(
+              'dashboard.breathingDesc',
+              'Take 60 seconds to reset your nervous system with a guided breathing session.',
+            )}
+          </p>
+          <Link to="/knowledge/grounding" className="dashboardBreathingBtn">
+            {t('dashboard.startSession', 'Start session')}
+          </Link>
+        </div>
+      </section>
 
-      <StoryCard tone="surface" className="pageAnimItem">
-        <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
-          <div style={{ display: 'grid', gap: 6 }}>
-            <div className="textStrong">{t('dashboard.discord')}</div>
-            <div className="textMuted">{t('dashboard.discordLead')}</div>
-          </div>
-          <div style={{ fontSize: 22, fontWeight: 900 }}>#</div>
+      <section className="pageAnimItem dashboardProgressSection">
+        <div className="dashboardProgressHeader">
+          <span>{t('dashboard.nextMilestone', 'Next milestone')}</span>
+          <span>{progressToMilestone}%</span>
         </div>
-        <div style={{ marginTop: 14 }}>
-          <CTAButton as="a" href="https://discord.gg/kjHr5E35js" target="_blank" rel="noreferrer" tone="primary">
-            {t('dashboard.join')}
-          </CTAButton>
+        <div className="dashboardProgressBar" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progressToMilestone}>
+          <div className="dashboardProgressFill" style={{ width: `${progressToMilestone}%` }} />
         </div>
-      </StoryCard>
+      </section>
     </StoryScreen>
   )
 }

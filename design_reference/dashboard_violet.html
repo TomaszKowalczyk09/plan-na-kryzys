@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Breath - Your Sanctuary</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#6c43b9",
+              "on-primary": "#ffffff",
+              "primary-container": "#e9ddff",
+              "on-primary-container": "#23005c",
+              "secondary": "#605b71",
+              "on-secondary": "#ffffff",
+              "secondary-container": "#e6dff9",
+              "on-secondary-container": "#1d192b",
+              "tertiary": "#7d5260",
+              "on-tertiary": "#ffffff",
+              "tertiary-container": "#ffd8e4",
+              "on-tertiary-container": "#31111d",
+              "error": "#ba1a1a",
+              "on-error": "#ffffff",
+              "error-container": "#ffdad6",
+              "on-error-container": "#410002",
+              "outline": "#79747e",
+              "background": "#faf9fc",
+              "on-background": "#1c1b1f",
+              "surface": "#faf9fc",
+              "on-surface": "#1c1b1f",
+              "surface-variant": "#e7e0eb",
+              "on-surface-variant": "#49454f",
+              "inverse-surface": "#313033",
+              "inverse-on-surface": "#f4f0f4",
+              "surface-container-highest": "#e6e1e5",
+              "surface-container-high": "#ece6ea",
+              "surface-container": "#f3edf1",
+              "surface-container-low": "#f4f3f6",
+              "surface-container-lowest": "#ffffff",
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Manrope"],
+              "label": ["Manrope"]
+            },
+            borderRadius: {
+              "DEFAULT": "0.5rem",
+              "lg": "1rem",
+              "xl": "1.5rem",
+              "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .editorial-asymmetry {
+            margin-left: 5%;
+            margin-right: 8%;
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="bg-[#faf9fc] dark:bg-[#1a1c1e] sticky top-0 z-50 w-full px-6 py-4 shadow-[0px_0px_40px_0px_rgba(26,28,30,0.06)]">
+<div class="flex justify-between items-center w-full max-w-screen-xl mx-auto">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary/20 bg-surface-container-high">
+<img alt="User profile portrait" class="w-full h-full object-cover" data-alt="User profile avatar in a circular violet frame" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBD-fiF7MZHQAn-I_qdrkERktm_2oYqQ5oLYZHtK6oP_W45xQ2Vo3hwlkWG98PguhLORqhQrdkhBQI9Ry53R8LrO2Kt5oXc8Jo6cJxLA8C3t_gWU_OuUmi2WMYC_57C-91fAPutd9sOVzW_QoIdSqqTlQj1y_fW1bB2SiiIsRcQepajCaAzRO8dXSc34TXhzDm8iVZuQ0wC6Dj2PfxUI38igbdHxuPuzteNAmca-DbvYxhltLl3G9vGm2DUgVTi9hoI1VgskyqqMpM"/>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<img alt="Logo" class="w-6 h-6 object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0ujmWGGau1kREb_fJ4DfIPvBbN59RH44WANF8cqEAXKG3eMgOloFZ4s9rrCnGAb5g0NEPkWcCxrHIRWUL214EURg0wPVu4EmGhkTdxwdNuXayFsFPuzoK-fj27bnTDEVrusR-55ENZPfYgPmxbAycEYDVGgILexxQ8IfjW9l_lpLhsfCnaJfzJzX7yiL64tbkSsxicgkqIX8k2d4e-WUzsQ1etamngd-HPdeE1CPCDBKZFOhgvBwQbVo6_fUeqA7cA-ue3D61vNZ"/>
+<h1 class="font-headline text-xl font-bold tracking-tight text-on-background">Welcome, Breath</h1>
+</div>
+</div>
+</div>
+<button class="p-2 text-primary hover:opacity-80 transition-opacity active:scale-95 duration-300">
+<span class="material-symbols-outlined text-2xl">settings</span>
+</button>
+</div>
+</header>
+<main class="max-w-screen-xl mx-auto px-6 mt-8 space-y-10">
+<!-- Crisis Section (Asymmetrical Placement) -->
+<section class="editorial-asymmetry">
+<div class="bg-error-container/20 p-8 rounded-xl flex flex-col md:flex-row items-center justify-between gap-6 overflow-hidden relative border border-error-container/30">
+<div class="z-10">
+<h2 class="font-headline text-2xl font-bold text-on-error-container mb-2">Feeling overwhelmed?</h2>
+<p class="text-on-surface-variant max-w-xs font-medium">Immediate support is available 24/7 if you need someone to talk to right now.</p>
+</div>
+<button class="z-10 bg-error hover:opacity-90 text-on-error px-10 py-4 rounded-full font-headline font-bold text-lg shadow-[0_10px_30px_rgba(186,26,26,0.2)] transition-all active:scale-95">
+                    Help Now
+                </button>
+<!-- Decorative element -->
+<div class="absolute -right-10 -bottom-10 w-48 h-48 bg-error-container/40 rounded-full blur-3xl"></div>
+</div>
+</section>
+<!-- Bento Grid Main Content -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Daily Mood Card (Large Column) -->
+<div class="md:col-span-8 bg-surface-container-low p-8 rounded-xl border border-surface-variant/50">
+<div class="flex justify-between items-start mb-8">
+<div>
+<span class="font-headline text-primary uppercase tracking-[0.15em] text-xs font-extrabold">Today's Check-in</span>
+<h2 class="font-headline text-3xl font-extrabold mt-1 text-on-surface">Daily Mood</h2>
+</div>
+<div class="p-3 bg-secondary-container rounded-full">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">emoji_emotions</span>
+</div>
+</div>
+<div class="space-y-6">
+<p class="text-on-surface-variant text-lg font-medium leading-relaxed">How are you feeling in this moment?</p>
+<div class="relative py-4">
+<input class="w-full h-2 bg-secondary-container rounded-full appearance-none cursor-pointer accent-primary" max="5" min="1" type="range" value="4"/>
+<div class="flex justify-between mt-4 px-1 text-on-surface-variant font-bold text-xs uppercase tracking-wider">
+<span>Calm</span>
+<span>Neutral</span>
+<span>Radiant</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-3">
+<button class="bg-surface-container-lowest px-6 py-2.5 rounded-full border border-outline/20 text-sm font-bold text-on-surface-variant hover:bg-primary hover:text-on-primary transition-all active:scale-95">Reflective</button>
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/20 active:scale-95">Grateful</button>
+<button class="bg-surface-container-lowest px-6 py-2.5 rounded-full border border-outline/20 text-sm font-bold text-on-surface-variant hover:bg-primary hover:text-on-primary transition-all active:scale-95">Restless</button>
+</div>
+</div>
+</div>
+<!-- Sobriety Progress (Tall Column) -->
+<div class="md:col-span-4 bg-primary-container p-8 rounded-xl flex flex-col justify-between relative overflow-hidden group">
+<div class="absolute top-4 right-4 opacity-10 transition-opacity group-hover:opacity-20">
+<img alt="Logo" class="w-24 h-24 rotate-12" src="https://lh3.googleusercontent.com/aida/ADBb0ujmWGGau1kREb_fJ4DfIPvBbN59RH44WANF8cqEAXKG3eMgOloFZ4s9rrCnGAb5g0NEPkWcCxrHIRWUL214EURg0wPVu4EmGhkTdxwdNuXayFsFPuzoK-fj27bnTDEVrusR-55ENZPfYgPmxbAycEYDVGgILexxQ8IfjW9l_lpLhsfCnaJfzJzX7yiL64tbkSsxicgkqIX8k2d4e-WUzsQ1etamngd-HPdeE1CPCDBKZFOhgvBwQbVo6_fUeqA7cA-ue3D61vNZ"/>
+</div>
+<div>
+<span class="font-headline text-on-primary-container uppercase tracking-[0.15em] text-xs font-extrabold">The Journey</span>
+<h2 class="font-headline text-2xl font-extrabold mt-1 text-on-primary-container">Sobriety Progress</h2>
+</div>
+<div class="py-8 text-center">
+<div class="text-[6rem] font-headline font-extrabold text-primary leading-none tracking-tighter">14</div>
+<div class="text-on-primary-container font-extrabold uppercase tracking-[0.2em] text-xs mt-4">Days Strong</div>
+</div>
+<div class="bg-white/40 backdrop-blur-md rounded-xl p-5 border border-white/20">
+<p class="text-on-primary-container text-sm font-bold italic leading-snug">"One day at a time becomes a lifetime of freedom."</p>
+</div>
+</div>
+<!-- Daily Inspiration (Asymmetric Horizontal) -->
+<div class="md:col-span-7 bg-surface-container-lowest p-8 rounded-xl shadow-[0px_4px_20px_0px_rgba(26,28,30,0.04)] border border-surface-variant/30 flex flex-col md:flex-row gap-8 items-center">
+<div class="w-full md:w-1/3 aspect-square rounded-xl overflow-hidden shadow-inner bg-surface-container">
+<img alt="Daily Inspiration" class="w-full h-full object-cover" data-alt="A small green sprout growing from dark fertile soil in soft morning sunlight, macro photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5I47Vh3W_ku2-AH8YMpJsLGRtsSarWmZIqvKRCM5KE0Ip9CZdyv8xKDl706G7Vo236fmaVTr1-hHKbrqg4bKNsblDlN0YvXVOsEXpzN3yrXWk3Bx7uXlDfEh41AfBWvEM2MYqHp5y-Zq1N7IRlJmRP7TkLsqFl9vF2TMuYytDjnEq9wH_x1lVsX6ULasaR1OYHKKfVuY8FEvQXj-h18CnmCFpsok1SZ2byk_GpWCQ84lKhQy3OYIYqtwIbkVFPTOLJL7usQlTdEg"/>
+</div>
+<div class="w-full md:w-2/3">
+<h3 class="font-headline text-xl font-extrabold mb-3 text-on-surface">Daily Inspiration</h3>
+<p class="text-on-surface-variant italic mb-6 font-medium leading-relaxed">"Healing is not linear, and every breath is a fresh start."</p>
+<button class="text-primary font-extrabold text-sm flex items-center gap-2 hover:opacity-70 transition-all uppercase tracking-widest">
+                        Save to Journal <span class="material-symbols-outlined text-lg">favorite</span>
+</button>
+</div>
+</div>
+<!-- Upcoming Milestones -->
+<div class="md:col-span-5 bg-tertiary-container/20 p-8 rounded-xl border border-tertiary-container/30">
+<h3 class="font-headline text-xl font-extrabold mb-8 text-on-surface">Upcoming Milestones</h3>
+<ul class="space-y-6">
+<li class="flex items-center gap-5">
+<div class="w-12 h-12 rounded-full bg-tertiary-container flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-on-tertiary-container text-2xl">spa</span>
+</div>
+<div>
+<p class="font-extrabold text-on-surface">3-Week Milestone</p>
+<p class="text-[10px] text-primary font-extrabold uppercase tracking-[0.1em]">7 Days to go</p>
+</div>
+</li>
+<li class="flex items-center gap-5">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center opacity-60">
+<span class="material-symbols-outlined text-on-surface-variant text-2xl">calendar_month</span>
+</div>
+<div>
+<p class="font-extrabold text-on-surface opacity-60">Monthly Review</p>
+<p class="text-[10px] text-on-surface-variant font-extrabold uppercase tracking-[0.1em]">16 Days to go</p>
+</div>
+</li>
+</ul>
+</div>
+</section>
+<!-- Specialized Component: Breathing Guide -->
+<section class="relative bg-secondary-container/30 p-12 rounded-xl overflow-hidden text-center border border-secondary-container/50">
+<div class="absolute inset-0 flex items-center justify-center opacity-40">
+<div class="w-80 h-80 bg-primary/20 rounded-full blur-[80px] animate-pulse"></div>
+</div>
+<div class="relative z-10">
+<div class="flex justify-center mb-6">
+<img alt="Logo" class="w-12 h-12 animate-[spin_10s_linear_infinite]" src="https://lh3.googleusercontent.com/aida/ADBb0ujmWGGau1kREb_fJ4DfIPvBbN59RH44WANF8cqEAXKG3eMgOloFZ4s9rrCnGAb5g0NEPkWcCxrHIRWUL214EURg0wPVu4EmGhkTdxwdNuXayFsFPuzoK-fj27bnTDEVrusR-55ENZPfYgPmxbAycEYDVGgILexxQ8IfjW9l_lpLhsfCnaJfzJzX7yiL64tbkSsxicgkqIX8k2d4e-WUzsQ1etamngd-HPdeE1CPCDBKZFOhgvBwQbVo6_fUeqA7cA-ue3D61vNZ"/>
+</div>
+<h2 class="font-headline text-3xl font-extrabold mb-4 text-on-secondary-container">Find Your Rhythm</h2>
+<p class="text-on-surface-variant mb-10 max-w-md mx-auto font-medium text-lg leading-relaxed">Take 60 seconds to reset your nervous system with a guided breathing session.</p>
+<button class="bg-primary text-on-primary px-12 py-5 rounded-full font-extrabold flex items-center gap-3 mx-auto shadow-2xl shadow-primary/30 hover:opacity-90 transition-all active:scale-95 uppercase tracking-widest text-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">air</span>
+                    Start Session
+                </button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-[#f4f3f6]/80 dark:bg-[#1a1c1e]/80 backdrop-blur-xl rounded-t-[1.5rem] shadow-[0px_-4px_20px_0px_rgba(26,28,30,0.04)]">
+<!-- Home (Active) -->
+<a class="flex flex-col items-center justify-center bg-white dark:bg-[#49454f] rounded-full px-5 py-2 text-[#6c43b9] dark:text-[#d3bbff] active:scale-90 duration-200 transition-transform" href="#">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-headline text-[10px] font-bold uppercase tracking-[0.05em] mt-1">Home</span>
+</a>
+<!-- Mood -->
+<a class="flex flex-col items-center justify-center text-[#49454f] dark:text-[#cac4d0] px-5 py-2 hover:text-[#6c43b9] transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined text-2xl">emoji_emotions</span>
+<span class="font-headline text-[10px] font-bold uppercase tracking-[0.05em] mt-1">Mood</span>
+</a>
+<!-- Crisis -->
+<a class="flex flex-col items-center justify-center text-[#49454f] dark:text-[#cac4d0] px-5 py-2 hover:text-[#6c43b9] transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined text-2xl">emergency</span>
+<span class="font-headline text-[10px] font-bold uppercase tracking-[0.05em] mt-1">Crisis</span>
+</a>
+<!-- Sobriety -->
+<a class="flex flex-col items-center justify-center text-[#49454f] dark:text-[#cac4d0] px-5 py-2 hover:text-[#6c43b9] transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined text-2xl">spa</span>
+<span class="font-headline text-[10px] font-bold uppercase tracking-[0.05em] mt-1">Sobriety</span>
+</a>
+<!-- Hub -->
+<a class="flex flex-col items-center justify-center text-[#49454f] dark:text-[#cac4d0] px-5 py-2 hover:text-[#6c43b9] transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined text-2xl">grid_view</span>
+<span class="font-headline text-[10px] font-bold uppercase tracking-[0.05em] mt-1">Hub</span>
+</a>
+</nav>
+</body></html>

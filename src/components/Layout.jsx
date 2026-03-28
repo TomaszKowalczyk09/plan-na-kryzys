@@ -39,11 +39,25 @@ export default function Layout() {
     return systemPrefersDark ? 'dark' : 'light'
   })
 
+  const [isHeaderCompact, setIsHeaderCompact] = useState(false)
+
   useEffect(() => {
     const root = document.documentElement
     root.dataset.theme = theme
     window.localStorage.setItem('theme', theme)
   }, [theme])
+
+  useEffect(() => {
+    if (hideHeader) return undefined
+
+    const onScroll = () => {
+      setIsHeaderCompact(window.scrollY > 20)
+    }
+
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [hideHeader])
 
   const title =
     pathname === '/mood'
@@ -66,7 +80,7 @@ export default function Layout() {
                       ? t('routeTitles.sobriety')
                       : pathname === '/addiction-config'
                         ? t('routeTitles.addictionConfig')
-                        : t('routeTitles.default')
+                        : t('Wsparcie w trudnych chwilach')
 
   const navActiveIndex =
     pathname === '/mood' ? 1 : pathname === '/crisis' ? 2 : pathname === '/knowledge' ? 3 : 0
@@ -75,13 +89,13 @@ export default function Layout() {
     <div className={clsx('app', !hideBottomNav && 'appHasBottomNav')}>
       
       {!hideHeader ? (
-        <header className="header headerRedesigned">
+        <header className={clsx('header headerRedesigned', isHeaderCompact && 'headerRedesignedCompact')}>
           <div className="headerInner headerInnerRedesigned">
             <div className="headerLeft">
               <img className="brandLogo brandLogoRedesigned" src="/logo.svg" alt="Plan na kryzys" />
             </div>
             <div className="headerCenter">
-              <div className="brand brandRedesigned">{t('app.name')}</div>
+              <div className="brand brandRedesigned">{t('Plan na kryzys')}</div>
               <div className="headerTitle">{title}</div>
               {pathname === '/crisis' ? <span className="badgeDanger badgeDangerRedesigned">{t('app.urgent')}</span> : null}
               {/* ...existing code... */}

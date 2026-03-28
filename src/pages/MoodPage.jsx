@@ -117,55 +117,63 @@ export default function MoodPage() {
     }
   }
 
+  // Emotion emoji mapping
+  const emotionEmojis = {
+    spokojny: '😌',
+    zadowolony: '😊',
+    wdzięczny: '🙏',
+    ruhig: '😌',
+    zufrieden: '😊',
+    dankbar: '🙏',
+    zmęczony: '😴',
+    zestresowany: '😰',
+    zaniepokojony: '😟',
+    müde: '😴',
+    gestresst: '😰',
+    besorgt: '😟',
+    przytłoczony: '😵',
+    smutny: '😢',
+    zły: '😠',
+    samotny: '😔',
+    überfordert: '😵',
+    traurig: '😢',
+    wütend: '😠',
+    einsam: '😔',
+  }
+
   return (
     <StoryScreen variant="light" className="pageAnim">
       <StoryCard tone="surface" className="pageAnimItem">
-        <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
-          <div>
-            <h1 className="storyTitle">
-              Jak się czujesz <span className="storyAccent">teraz</span>?
-            </h1>
-            <p className="storyLead">Wybierz 1–3 emocje (albo więcej, jeśli potrzebujesz).</p>
+        <div>
+          <h1 className="storyTitle">
+            Jak się czujesz <span className="storyAccent">teraz</span>?
+          </h1>
+          <p className="storyLead">Wybierz emocje, które teraz czujesz.</p>
+        </div>
+
+        {/* Visual Emotion Selector Grid */}
+        <div className="moodCardGrid mt12">
+          {EMOTIONS.slice(0, 8).map((emotion) => (
+            <button
+              key={emotion}
+              type="button"
+              onClick={() => toggle(emotion)}
+              className={`emotionCard ${selected.includes(emotion) ? 'isActive' : ''}`}
+              aria-pressed={selected.includes(emotion)}
+            >
+              <div className="emotionCardIcon">{emotionEmojis[emotion] || '😐'}</div>
+              <div style={{ fontSize: '12px', fontWeight: 600 }}>{emotion}</div>
+            </button>
+          ))}
+        </div>
+
+        {selected.length > 0 && (
+          <div style={{ marginTop: 12, padding: '12px 14px', background: 'var(--surface-container-low)', borderRadius: '12px', textAlign: 'center', fontWeight: 700, color: 'var(--on-surface)' }}>
+            Wybrane: {selected.length} emocji
           </div>
-          <CloudIcon mood="calm" label="Spokojna chmurka" />
-        </div>
+        )}
 
-        <div style={{ marginTop: 12 }} className="pill">
-          Wybrane: {selected.length}
-        </div>
-
-        <div className="emotionGroupGrid mt12">
-          {EMOTION_SECTIONS.map((section) => {
-            const selectedInSection = selected.filter((e) => section.items.includes(e)).length
-            return (
-              <div key={section.key} className={`emotionGroupCard emotionGroupCard--${section.key}`}>
-                <div className="emotionGroupHeader">
-                  <div>
-                    <div className="emotionGroupTitle">{section.label}</div>
-                    <div className="emotionGroupSub">{section.description}</div>
-                  </div>
-                  <div className="emotionGroupTag">{selectedInSection}</div>
-                </div>
-
-                <div className="emotionButtons">
-                  {section.items.map((e) => (
-                    <button
-                      key={e}
-                      type="button"
-                      onClick={() => toggle(e)}
-                      className={selected.includes(e) ? 'emotionBtn isActive' : 'emotionBtn'}
-                      aria-pressed={selected.includes(e)}
-                    >
-                      {e}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )
-          })}
-        </div>
-
-        <label className="label" htmlFor="notes">Notatka (opcjonalnie)</label>
+        <label className="label" htmlFor="notes" style={{ marginTop: 16 }}>Notatka (opcjonalnie)</label>
         <textarea
           id="notes"
           className="textarea expressionTextarea"
@@ -180,7 +188,7 @@ export default function MoodPage() {
             onClick={onSave}
             disabled={saving || selected.length === 0}
           >
-            {saving ? 'Zapisuję…' : 'Zapisz'}
+            {saving ? 'Zapisuję…' : '💾 Zapisz'}
           </CTAButton>
           <CTAButton tone="ghost" onClick={() => setSelected([])} disabled={saving}>
             Wyczyść

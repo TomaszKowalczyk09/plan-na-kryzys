@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sobriety Tracker - The Violet Editorial</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#6c43b9",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#e9ddff",
+                        "on-primary-container": "#24005a",
+                        "secondary": "#605b71",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#e6dff9",
+                        "on-secondary-container": "#1d192b",
+                        "tertiary": "#7d5260",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#ffd9e3",
+                        "on-tertiary-container": "#31101d",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "background": "#faf9fc",
+                        "on-background": "#1a1c1e",
+                        "surface": "#faf9fc",
+                        "on-surface": "#1a1c1e",
+                        "surface-variant": "#e7e0eb",
+                        "on-surface-variant": "#49454f",
+                        "outline": "#7a757f",
+                        "surface-container-low": "#f4f3f6",
+                        "surface-container": "#edecf0",
+                        "surface-container-high": "#e7e6ea",
+                        "surface-container-highest": "#e1e0e4",
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .editorial-shadow {
+            box-shadow: 0px 40px 60px -20px rgba(108, 67, 185, 0.08);
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-container pb-32">
+<!-- TopAppBar Component Applied -->
+<header class="bg-[#faf9fc] dark:bg-[#1a1c1e] w-full sticky top-0 z-50 px-6 py-4 flex justify-between items-center shadow-[0px_0px_40px_0px_rgba(26,28,30,0.06)]">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20 p-0.5">
+<img alt="User profile portrait" class="rounded-full w-full h-full object-cover" data-alt="User profile avatar in a circular violet frame" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBViqvodzpijmMQc8jPxUwDalwU908hbRSJ48erd4WlyBwV3lzTSdNHq9_GtU3LlVkIP5olvUkrTEgOfP2uHWqs4U4V0NIpZ5iQ0dV2ycJO6BhMJl5BemROgPlGbvLuDQiouYo6iJLDuF9OYuxj4dU3zu__HA-DQnbe8lrP16w5ykzqokyWpGwnz-94HWYeHI0Tiivq_KKaz7Lib3tV02n5I5g3FBHSjjY7wvvHIgqdO4ODwkUobZv4Spvud_lfG8fFsrcgEQJx0VM"/>
+</div>
+<div class="flex items-center gap-2">
+<img alt="Logo" class="w-6 h-6 object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0ujmWGGau1kREb_fJ4DfIPvBbN59RH44WANF8cqEAXKG3eMgOloFZ4s9rrCnGAb5g0NEPkWcCxrHIRWUL214EURg0wPVu4EmGhkTdxwdNuXayFsFPuzoK-fj27bnTDEVrusR-55ENZPfYgPmxbAycEYDVGgILexxQ8IfjW9l_lpLhsfCnaJfzJzX7yiL64tbkSsxicgkqIX8k2d4e-WUzsQ1etamngd-HPdeE1CPCDBKZFOhgvBwQbVo6_fUeqA7cA-ue3D61vNZ"/>
+<h1 class="font-headline font-bold tracking-tight text-[#1a1c1e] dark:text-[#faf9fc] text-lg">Welcome, Breath</h1>
+</div>
+</div>
+<button class="text-[#49454f] dark:text-[#cac4d0] hover:opacity-80 transition-opacity duration-300 active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</header>
+<main class="max-w-screen-xl mx-auto px-6 mt-8">
+<!-- Hero: Large Days Sober Counter -->
+<section class="relative mb-12">
+<div class="flex flex-col md:flex-row md:items-end gap-6 md:gap-12">
+<div class="flex flex-col">
+<span class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant font-bold mb-2">Current Streak</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline text-[7rem] leading-none font-extrabold text-primary tracking-tighter">124</span>
+<span class="font-headline text-4xl font-semibold text-secondary">days</span>
+</div>
+</div>
+<!-- Personal Motivating Quote -->
+<div class="md:mb-6 max-w-sm">
+<blockquote class="italic text-on-surface-variant font-headline text-lg border-l-4 border-primary-container pl-4">
+                        "Recovery is not a race. It's a series of small, intentional steps toward the person you are becoming."
+                    </blockquote>
+</div>
+</div>
+<!-- Check In Button (Floating/Hero CTA) -->
+<div class="mt-8">
+<button class="bg-gradient-to-br from-primary to-[#8E66D1] text-on-primary px-8 py-4 rounded-full font-headline font-bold text-lg inline-flex items-center gap-2 editorial-shadow hover:scale-105 transition-transform">
+<span class="material-symbols-outlined" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                    Daily Check In
+                </button>
+</div>
+</section>
+<!-- Milestone Progress Bar -->
+<section class="mb-12">
+<div class="bg-surface-container-low rounded-xl p-8 editorial-shadow border border-surface-variant/50">
+<div class="flex justify-between items-end mb-4">
+<div>
+<h2 class="font-headline text-2xl font-bold text-on-surface">Next Milestone</h2>
+<p class="text-on-surface-variant font-medium">6 days until the 130-day "Zen Master" badge</p>
+</div>
+<span class="font-headline text-xl font-bold text-primary">80%</span>
+</div>
+<!-- Thick Track Slider style progress -->
+<div class="w-full h-4 bg-secondary-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full shadow-inner" style="width: 80%"></div>
+</div>
+</div>
+</section>
+<!-- Grid of Recent Achievements & Stats -->
+<section class="mb-16">
+<div class="flex items-center gap-3 mb-6">
+<img alt="" class="w-5 h-5 opacity-40" src="https://lh3.googleusercontent.com/aida/ADBb0ujmWGGau1kREb_fJ4DfIPvBbN59RH44WANF8cqEAXKG3eMgOloFZ4s9rrCnGAb5g0NEPkWcCxrHIRWUL214EURg0wPVu4EmGhkTdxwdNuXayFsFPuzoK-fj27bnTDEVrusR-55ENZPfYgPmxbAycEYDVGgILexxQ8IfjW9l_lpLhsfCnaJfzJzX7yiL64tbkSsxicgkqIX8k2d4e-WUzsQ1etamngd-HPdeE1CPCDBKZFOhgvBwQbVo6_fUeqA7cA-ue3D61vNZ"/>
+<h3 class="font-headline text-xl font-bold">Recent Achievements</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Achievement Card 1 -->
+<div class="bg-white dark:bg-[#1a1c1e] p-6 rounded-xl editorial-shadow flex flex-col justify-between h-48 border border-surface-variant">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<span class="font-label text-[10px] font-bold text-outline uppercase tracking-widest">Unlocked Yesterday</span>
+</div>
+<div>
+<h4 class="font-headline font-bold text-on-surface">100 Days Clear</h4>
+<p class="text-sm text-on-surface-variant">Consistency is your superpower.</p>
+</div>
+</div>
+<!-- Achievement Card 2 -->
+<div class="bg-white dark:bg-[#1a1c1e] p-6 rounded-xl editorial-shadow flex flex-col justify-between h-48 border border-surface-variant">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary" data-icon="savings" style="font-variation-settings: 'FILL' 1;">savings</span>
+</div>
+<span class="font-label text-[10px] font-bold text-outline uppercase tracking-widest">Impact</span>
+</div>
+<div>
+<h4 class="font-headline font-bold text-on-surface">$1,240 Saved</h4>
+<p class="text-sm text-on-surface-variant">Redirecting resources to growth.</p>
+</div>
+</div>
+<!-- Image Card -->
+<div class="relative overflow-hidden rounded-xl h-48 group">
+<img alt="Nature scenery" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" data-alt="Sunlight filtering through lush forest ferns and moss, creating a peaceful and growing atmosphere in soft green tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9J_xmXVqtCb5GukTsgDRFddsx7bYXI8hNoQmbQHQ_GpF49bjGWm--rw-EKVyEKh0N2q5YwoZu7DWiBsDQhrqPZrKj1jdEC-JQbldTrWxGBODDrAMw1gVnbT8Kkq-aVW98rCoubXsAV5-i9w5Yw2NcSXzWzgvUK2zveoaVLwn0l_DpEEpv_UQQGynEMHANmmg1KaIve5aWndoHbvJj6pOQ2rUlNyZkWcNOsQXgGTep76CIEctRhny4dqYANVGK0gLZAXX2kTceZcg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex items-end p-6">
+<p class="text-white font-headline font-semibold">Your health is blooming.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Focus Section: Breathing Guide Minimalist -->
+<section class="mb-16">
+<div class="bg-primary-container/20 rounded-xl p-12 text-center relative overflow-hidden border border-primary-container/40">
+<!-- Pulsing light orb decoration -->
+<div class="absolute -top-12 -right-12 w-48 h-48 bg-primary-container rounded-full blur-[60px] opacity-30"></div>
+<div class="absolute -bottom-12 -left-12 w-32 h-32 bg-[#8E66D1] rounded-full blur-[50px] opacity-20"></div>
+<div class="relative z-10 flex flex-col items-center">
+<img alt="Breath focus" class="w-12 h-12 mb-6 animate-pulse" src="https://lh3.googleusercontent.com/aida/ADBb0ujmWGGau1kREb_fJ4DfIPvBbN59RH44WANF8cqEAXKG3eMgOloFZ4s9rrCnGAb5g0NEPkWcCxrHIRWUL214EURg0wPVu4EmGhkTdxwdNuXayFsFPuzoK-fj27bnTDEVrusR-55ENZPfYgPmxbAycEYDVGgILexxQ8IfjW9l_lpLhsfCnaJfzJzX7yiL64tbkSsxicgkqIX8k2d4e-WUzsQ1etamngd-HPdeE1CPCDBKZFOhgvBwQbVo6_fUeqA7cA-ue3D61vNZ"/>
+<h2 class="font-headline text-3xl font-extrabold mb-4 text-on-surface">Patience is Practice</h2>
+<p class="max-w-md mx-auto text-on-surface-variant font-medium mb-8">Whenever you feel a craving, take a moment to breathe with the guide. One minute is all it takes to reset.</p>
+<button class="bg-white text-primary px-8 py-3 rounded-full font-bold editorial-shadow hover:bg-primary hover:text-white transition-all duration-300">
+                        Start Breathing Exercise
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar Component Applied -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-[#f4f3f6]/80 dark:bg-[#1a1c1e]/80 backdrop-blur-xl rounded-t-[1.5rem] shadow-[0px_-4px_20px_0px_rgba(26,28,30,0.04)]">
+<a class="flex flex-col items-center justify-center text-[#49454f] dark:text-[#cac4d0] px-5 py-2 hover:text-[#6c43b9] transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Manrope'] text-[10px] font-bold uppercase tracking-[0.05em] mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#49454f] dark:text-[#cac4d0] px-5 py-2 hover:text-[#6c43b9] transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="emoji_emotions">emoji_emotions</span>
+<span class="font-['Manrope'] text-[10px] font-bold uppercase tracking-[0.05em] mt-1">Mood</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#49454f] dark:text-[#cac4d0] px-5 py-2 hover:text-[#6c43b9] transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="emergency">emergency</span>
+<span class="font-['Manrope'] text-[10px] font-bold uppercase tracking-[0.05em] mt-1">Crisis</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#ffffff] dark:bg-[#49454f] rounded-full px-5 py-2 text-[#6c43b9] dark:text-[#d3bbff] active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="spa" style="font-variation-settings: 'FILL' 1;">spa</span>
+<span class="font-['Manrope'] text-[10px] font-bold uppercase tracking-[0.05em] mt-1">Sobriety</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#49454f] dark:text-[#cac4d0] px-5 py-2 hover:text-[#6c43b9] transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-['Manrope'] text-[10px] font-bold uppercase tracking-[0.05em] mt-1">Hub</span>
+</a>
+</nav>
+</body></html>

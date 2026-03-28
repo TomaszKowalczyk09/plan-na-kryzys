@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mood Tracker | Etheric Violet Edition</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#6c43b9",
+              "primary-container": "#e9ddff",
+              "on-primary-container": "#23005c",
+              "secondary": "#605b71",
+              "secondary-container": "#e6def8",
+              "on-secondary-container": "#1d192b",
+              "tertiary": "#7d5260",
+              "tertiary-container": "#ffd9e3",
+              "on-tertiary-container": "#31101d",
+              "surface": "#faf9fc",
+              "on-surface": "#1a1c1e",
+              "surface-variant": "#f4f3f6",
+              "on-surface-variant": "#49454f",
+              "outline": "#7a757f",
+              "outline-variant": "#cac4d0",
+              "error": "#ba1a1a",
+              "error-container": "#ffdad6",
+              "surface-container-low": "#f4f3f6",
+              "surface-container": "#eeecf1",
+              "surface-container-high": "#e9e7ec",
+              "surface-container-highest": "#e3e1e6",
+              "surface-container-lowest": "#ffffff"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {
+              "DEFAULT": "0.5rem",
+              "lg": "1rem",
+              "xl": "1.5rem",
+              "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .etheric-gradient {
+            background: linear-gradient(135deg, #6c43b9 0%, #8e66d1 100%);
+        }
+        
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top Navigation Shell (Component: TopAppBar) -->
+<header class="bg-[#faf9fc] dark:bg-[#1a1c1e] w-full sticky top-0 z-50 px-6 py-4 shadow-[0px_0px_40px_0px_rgba(26,28,30,0.06)]">
+<div class="flex justify-between items-center w-full max-w-screen-xl mx-auto">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-[#6c43b9]/20 p-0.5">
+<img alt="User profile" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAV9DV3Eo40A4BcnHxcLD1XYfWwxWPUVgEnHk34eI2R27i73Yoc9x6apU4zMT_EyeJ8oNv9KqpvyBEjvuJxkgjUFh5RrNafuJ1MsbwVOVTDAPK278rNoCQS9s3GkokK3V8Pmi7_tp0_J7Y_89kP5nJHFi3tWMOWQlWKYwEjEJam6wwtG2vIM0vtGzJ9JYQnBBzYM_DIUMwomrBfJMTPbNHG2ies0u1MNhiK5q3hHadxycYhSaZxrdSWvjRiI1dIudfUlE4q-IxcXkc"/>
+</div>
+<div class="flex flex-col">
+<span class="text-xs font-bold text-primary uppercase tracking-widest opacity-70">The Curator</span>
+<h1 class="font-headline text-xl font-bold tracking-tight text-[#1a1c1e] dark:text-[#faf9fc]">Welcome, Breath</h1>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<img alt="Logo" class="w-8 h-8 object-contain opacity-80" src="https://lh3.googleusercontent.com/aida/ADBb0ujmWGGau1kREb_fJ4DfIPvBbN59RH44WANF8cqEAXKG3eMgOloFZ4s9rrCnGAb5g0NEPkWcCxrHIRWUL214EURg0wPVu4EmGhkTdxwdNuXayFsFPuzoK-fj27bnTDEVrusR-55ENZPfYgPmxbAycEYDVGgILexxQ8IfjW9l_lpLhsfCnaJfzJzX7yiL64tbkSsxicgkqIX8k2d4e-WUzsQ1etamngd-HPdeE1CPCDBKZFOhgvBwQbVo6_fUeqA7cA-ue3D61vNZ"/>
+<button class="text-on-surface-variant hover:opacity-80 transition-opacity active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</div>
+</header>
+<main class="max-w-screen-xl mx-auto px-6 pt-8 pb-32">
+<!-- Editorial Header -->
+<section class="mb-12">
+<div class="flex items-center gap-2 mb-4">
+<div class="h-px flex-1 bg-outline-variant"></div>
+<img alt="Logo" class="w-6 h-6 object-contain opacity-30" src="https://lh3.googleusercontent.com/aida/ADBb0ujmWGGau1kREb_fJ4DfIPvBbN59RH44WANF8cqEAXKG3eMgOloFZ4s9rrCnGAb5g0NEPkWcCxrHIRWUL214EURg0wPVu4EmGhkTdxwdNuXayFsFPuzoK-fj27bnTDEVrusR-55ENZPfYgPmxbAycEYDVGgILexxQ8IfjW9l_lpLhsfCnaJfzJzX7yiL64tbkSsxicgkqIX8k2d4e-WUzsQ1etamngd-HPdeE1CPCDBKZFOhgvBwQbVo6_fUeqA7cA-ue3D61vNZ"/>
+<div class="h-px flex-1 bg-outline-variant"></div>
+</div>
+<h2 class="font-headline text-[3.5rem] leading-tight font-extrabold tracking-tight text-on-surface mb-4">How are you feeling right now?</h2>
+<p class="text-on-surface-variant text-lg max-w-lg leading-relaxed">Take a deep breath. Acknowledge the present moment without judgment.</p>
+</section>
+<!-- Mood Interaction Grid -->
+<section class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
+<!-- Calm Card -->
+<button class="group flex flex-col items-center justify-center p-6 bg-secondary-container/40 rounded-xl hover:bg-secondary-container transition-all duration-300 active:scale-95 border border-transparent hover:border-primary/20">
+<span class="material-symbols-outlined text-4xl mb-3 text-primary" data-icon="spa">spa</span>
+<span class="font-headline font-bold text-on-secondary-container">Calm</span>
+</button>
+<!-- Joy Card -->
+<button class="group flex flex-col items-center justify-center p-6 bg-tertiary-container/40 rounded-xl hover:bg-tertiary-container transition-all duration-300 active:scale-95 border border-transparent hover:border-primary/20">
+<span class="material-symbols-outlined text-4xl mb-3 text-tertiary" data-icon="wb_sunny">wb_sunny</span>
+<span class="font-headline font-bold text-on-tertiary-container">Joy</span>
+</button>
+<!-- Anxious Card -->
+<button class="group flex flex-col items-center justify-center p-6 bg-surface-container-high rounded-xl hover:bg-surface-container-highest transition-all duration-300 active:scale-95 border border-transparent hover:border-primary/20">
+<span class="material-symbols-outlined text-4xl mb-3 text-on-surface-variant" data-icon="air">air</span>
+<span class="font-headline font-bold text-on-surface-variant">Anxious</span>
+</button>
+<!-- Sad Card -->
+<button class="group flex flex-col items-center justify-center p-6 bg-surface-container-low rounded-xl hover:bg-surface-container-high transition-all duration-300 active:scale-95 border border-transparent hover:border-primary/20">
+<span class="material-symbols-outlined text-4xl mb-3 text-on-surface-variant" data-icon="cloudy_snowing">cloudy_snowing</span>
+<span class="font-headline font-bold text-on-surface-variant">Sad</span>
+</button>
+<!-- Angry Card -->
+<button class="group flex flex-col items-center justify-center p-6 bg-error-container/20 rounded-xl hover:bg-error-container/40 transition-all duration-300 active:scale-95 border border-transparent hover:border-error/20">
+<span class="material-symbols-outlined text-4xl mb-3 text-error" data-icon="bolt">bolt</span>
+<span class="font-headline font-bold text-error">Angry</span>
+</button>
+</section>
+<!-- Asymmetric Layout: Notes & History -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<!-- Left Column: Notes -->
+<div class="lg:col-span-5 space-y-6">
+<div class="bg-surface-container-low p-8 rounded-xl relative overflow-hidden border border-surface-container-high">
+<div class="absolute top-0 right-0 p-4 opacity-5">
+<img alt="Logo" class="w-24 h-24 object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0ujmWGGau1kREb_fJ4DfIPvBbN59RH44WANF8cqEAXKG3eMgOloFZ4s9rrCnGAb5g0NEPkWcCxrHIRWUL214EURg0wPVu4EmGhkTdxwdNuXayFsFPuzoK-fj27bnTDEVrusR-55ENZPfYgPmxbAycEYDVGgILexxQ8IfjW9l_lpLhsfCnaJfzJzX7yiL64tbkSsxicgkqIX8k2d4e-WUzsQ1etamngd-HPdeE1CPCDBKZFOhgvBwQbVo6_fUeqA7cA-ue3D61vNZ"/>
+</div>
+<label class="block font-headline text-xl font-bold mb-4 text-on-surface" for="mood-notes">Add Notes</label>
+<textarea class="w-full bg-surface-container-lowest border-outline-variant rounded-lg p-4 text-on-surface placeholder:text-outline-variant focus:ring-2 focus:ring-primary/20 focus:border-primary resize-none transition-all" id="mood-notes" placeholder="What's on your mind?" rows="5"></textarea>
+<button class="mt-6 w-full etheric-gradient text-white py-4 px-8 rounded-full font-headline font-bold text-lg shadow-xl shadow-primary/20 hover:opacity-90 transition-all active:scale-[0.98]">
+                    Save Mood
+                </button>
+</div>
+<!-- Pulse Guide -->
+<div class="bg-primary-container/30 p-8 rounded-xl flex items-center justify-between border border-primary-container/50">
+<div>
+<h4 class="font-headline font-bold text-on-primary-container">Mindful Moment</h4>
+<p class="text-sm text-on-surface-variant">Take 3 deep breaths before saving.</p>
+</div>
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center relative">
+<div class="absolute inset-0 rounded-full bg-primary/20 animate-ping"></div>
+<img alt="Logo" class="w-6 h-6 object-contain relative z-10" src="https://lh3.googleusercontent.com/aida/ADBb0ujmWGGau1kREb_fJ4DfIPvBbN59RH44WANF8cqEAXKG3eMgOloFZ4s9rrCnGAb5g0NEPkWcCxrHIRWUL214EURg0wPVu4EmGhkTdxwdNuXayFsFPuzoK-fj27bnTDEVrusR-55ENZPfYgPmxbAycEYDVGgILexxQ8IfjW9l_lpLhsfCnaJfzJzX7yiL64tbkSsxicgkqIX8k2d4e-WUzsQ1etamngd-HPdeE1CPCDBKZFOhgvBwQbVo6_fUeqA7cA-ue3D61vNZ"/>
+</div>
+</div>
+</div>
+<!-- Right Column: Recent Mood History Chart -->
+<div class="lg:col-span-7">
+<div class="mb-6 flex justify-between items-end">
+<h3 class="font-headline text-2xl font-bold tracking-tight">Recent Mood History</h3>
+<span class="text-xs font-bold text-primary uppercase tracking-[0.1em]">Last 7 Days</span>
+</div>
+<div class="bg-surface-container p-8 rounded-xl min-h-[300px] flex flex-col justify-between border border-surface-container-highest">
+<!-- Custom Chart Visual -->
+<div class="flex items-end justify-between h-48 gap-3">
+<div class="flex-1 flex flex-col items-center gap-3">
+<div class="w-full bg-secondary-container rounded-t-lg transition-all" style="height: 60%"></div>
+<span class="text-[10px] font-bold text-outline uppercase">Mon</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-3">
+<div class="w-full bg-primary-container rounded-t-lg transition-all" style="height: 85%"></div>
+<span class="text-[10px] font-bold text-outline uppercase">Tue</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-3">
+<div class="w-full bg-secondary-container rounded-t-lg transition-all" style="height: 40%"></div>
+<span class="text-[10px] font-bold text-outline uppercase">Wed</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-3">
+<div class="w-full bg-surface-container-highest rounded-t-lg transition-all" style="height: 55%"></div>
+<span class="text-[10px] font-bold text-outline uppercase">Thu</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-3">
+<div class="w-full bg-primary rounded-t-lg border-2 border-primary-container shadow-lg shadow-primary/10 transition-all" style="height: 95%"></div>
+<span class="text-[10px] font-bold text-primary uppercase">Fri</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-3">
+<div class="w-full bg-surface-container-highest rounded-t-lg transition-all" style="height: 30%"></div>
+<span class="text-[10px] font-bold text-outline uppercase">Sat</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-3">
+<div class="w-full bg-secondary-container rounded-t-lg transition-all" style="height: 70%"></div>
+<span class="text-[10px] font-bold text-outline uppercase">Sun</span>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-outline-variant flex flex-wrap items-center gap-6">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="text-xs font-bold text-on-surface-variant uppercase">Positive</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-secondary-container"></div>
+<span class="text-xs font-bold text-on-surface-variant uppercase">Neutral</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-surface-container-highest"></div>
+<span class="text-xs font-bold text-on-surface-variant uppercase">Tense</span>
+</div>
+</div>
+</div>
+<!-- Editorial Quote -->
+<div class="mt-10 relative px-10">
+<span class="absolute left-0 top-0 font-headline text-6xl text-primary/10">“</span>
+<p class="font-headline italic text-xl text-on-surface-variant leading-relaxed">
+                    Emotional awareness is the first step toward inner peace. Every feeling is a temporary visitor.
+                </p>
+<div class="mt-4 flex justify-end">
+<img alt="Logo" class="w-10 h-10 object-contain opacity-20 grayscale" src="https://lh3.googleusercontent.com/aida/ADBb0ujmWGGau1kREb_fJ4DfIPvBbN59RH44WANF8cqEAXKG3eMgOloFZ4s9rrCnGAb5g0NEPkWcCxrHIRWUL214EURg0wPVu4EmGhkTdxwdNuXayFsFPuzoK-fj27bnTDEVrusR-55ENZPfYgPmxbAycEYDVGgILexxQ8IfjW9l_lpLhsfCnaJfzJzX7yiL64tbkSsxicgkqIX8k2d4e-WUzsQ1etamngd-HPdeE1CPCDBKZFOhgvBwQbVo6_fUeqA7cA-ue3D61vNZ"/>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Shell (Component: BottomNavBar) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-[#f4f3f6]/80 dark:bg-[#1a1c1e]/80 backdrop-blur-xl shadow-[0px_-4px_20px_0px_rgba(26,28,30,0.04)] rounded-t-[1.5rem]">
+<a class="flex flex-col items-center justify-center text-[#49454f] dark:text-[#cac4d0] px-5 py-2 hover:text-[#6c43b9] transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span class="font-headline text-[10px] font-bold uppercase tracking-[0.05em]">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#ffffff] dark:bg-[#49454f] rounded-full px-5 py-2 text-[#6c43b9] dark:text-[#d3bbff] active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="emoji_emotions">emoji_emotions</span>
+<span class="font-headline text-[10px] font-bold uppercase tracking-[0.05em]">Mood</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#49454f] dark:text-[#cac4d0] px-5 py-2 hover:text-[#6c43b9] transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="emergency">emergency</span>
+<span class="font-headline text-[10px] font-bold uppercase tracking-[0.05em]">Crisis</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#49454f] dark:text-[#cac4d0] px-5 py-2 hover:text-[#6c43b9] transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="spa">spa</span>
+<span class="font-headline text-[10px] font-bold uppercase tracking-[0.05em]">Sobriety</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#49454f] dark:text-[#cac4d0] px-5 py-2 hover:text-[#6c43b9] transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="grid_view">grid_view</span>
+<span class="font-headline text-[10px] font-bold uppercase tracking-[0.05em]">Hub</span>
+</a>
+</nav>
+</body></html>

@@ -1,127 +1,43 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useI18n } from '../i18n/index.jsx'
 
+const MAIN_TABS = [
+  { path: '/dashboard', label: 'Nastrój', icon: '😌' },
+  { path: '/mood', label: 'Dziennik', icon: '📝' },
+  { path: '/crisis', label: 'Kryzys', icon: '⚠️' },
+  { path: '/knowledge', label: 'Wiedza', icon: '💡' },
+];
 
 export default function TabNavigation() {
-  const { get, t } = useI18n()
-  const tabs = get('nav.tabs', [])
-  const [open, setOpen] = useState(false);
-  const [animating, setAnimating] = useState(false);
-  const menuRef = useRef(null);
+  const { t } = useI18n()
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const handleMenuClick = () => {
-    setOpen(true);
-    setTimeout(() => setAnimating(true), 10);
-  };
-  const handleClose = () => {
-    setAnimating(false);
-    setTimeout(() => setOpen(false), 300);
-  };
-  const handleTabClick = (path) => {
-    setOpen(false);
-    navigate(path);
-  };
+  // Determine active tab
+  let activeIndex = 0;
+  if (pathname === '/mood' || pathname.startsWith('/mood/')) activeIndex = 1;
+  else if (pathname === '/crisis' || pathname.startsWith('/crisis/')) activeIndex = 2;
+  else if (pathname === '/knowledge' || pathname.startsWith('/knowledge/')) activeIndex = 3;
+  else activeIndex = 0; // Dashboard/Start (includes '/', '/dashboard')
 
   return (
-    <>
-      <div style={{
-        position: 'fixed',
-        left: '50%',
-        bottom: 24,
-        transform: 'translateX(-50%)',
-        zIndex: 100,
-        background: 'rgba(30, 30, 60, 0.85)',
-        backdropFilter: 'blur(16px)',
-        borderRadius: 24,
-        boxShadow: '0 8px 32px #0004',
-        padding: '12px 24px',
-        display: 'flex',
-        gap: 12,
-        minWidth: 80,
-        maxWidth: 120,
-        width: 'auto',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-        <button
-          aria-label={t('nav.menu')}
-          onClick={handleMenuClick}
-          style={{
-            background: 'none',
-            border: 'none',
-            fontSize: 32,
-            color: '#fff',
-            cursor: 'pointer',
-            padding: 0,
-            borderRadius: 16,
-            width: 48,
-            height: 48,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <span role="img" aria-label="menu">☰</span>
-        </button>
-      </div>
-      {open && (
-        <div
-          ref={menuRef}
-          style={{
-            position: 'fixed',
-            inset: 0,
-            background: 'rgba(10,10,20,0.85)',
-            zIndex: 2000,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            transition: 'opacity 0.3s, transform 0.3s',
-            opacity: animating ? 1 : 0,
-            transform: animating ? 'scale(1)' : 'scale(0.96)',
-          }}
-        >
+    <nav className="nav">
+      <div className="navInner" style={{ '--active': activeIndex }}>
+        <div className="navHighlight"></div>
+        {MAIN_TABS.map((tab, index) => (
           <button
-            onClick={handleClose}
-            aria-label={t('nav.close')}
-            style={{
-              position: 'absolute',
-              top: 32,
-              right: 32,
-              fontSize: 32,
-              background: 'none',
-              border: 'none',
-              color: '#fff',
-              cursor: 'pointer',
-              transition: 'color .2s',
-            }}
-          >✕</button>
-          <nav style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-            {tabs.map(tab => (
-              <button
-                key={tab.path}
-                onClick={() => handleTabClick(tab.path)}
-                style={{
-                  fontSize: 28,
-                  fontWeight: pathname === tab.path ? 800 : 500,
-                  color: pathname === tab.path ? '#a685ff' : '#fff',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: '12px 32px',
-                  borderRadius: 18,
-                  transition: 'color .2s',
-                }}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </nav>
-        </div>
-      )}
-    </>
+            key={tab.path}
+            onClick={() => navigate(tab.path)}
+            className={`navLink ${activeIndex === index ? 'navLinkActive' : ''}`}
+            data-ico={tab.icon}
+            title={tab.label}
+            aria-current={activeIndex === index ? 'page' : undefined}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+    </nav>
   );
 }
