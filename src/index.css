@@ -3305,3 +3305,404 @@ input[type='checkbox'] {
     grid-column: span 5;
   }
 }
+
+/* ===== Mood Page (Violet editorial) ===== */
+.moodVioletPage .storyScreenInner {
+  gap: 16px;
+}
+
+.moodVioletHero {
+  display: grid;
+  gap: 12px;
+}
+
+.moodVioletHeroDivider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.moodVioletLine {
+  height: 1px;
+  flex: 1;
+  background: color-mix(in srgb, var(--outline-variant) 85%, transparent);
+}
+
+.moodVioletDot {
+  color: color-mix(in srgb, var(--primary) 40%, var(--outline));
+  font-weight: 700;
+}
+
+.moodVioletHero h1 {
+  margin: 0;
+  font-size: clamp(40px, 8.5vw, 66px);
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+}
+
+.moodVioletHero p {
+  margin: 0;
+  color: var(--on-surface-variant);
+  font-size: 18px;
+  line-height: 1.45;
+  max-width: 36ch;
+}
+
+.moodVioletMoodGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.moodVioletMoodCard {
+  border: 1px solid transparent;
+  border-radius: 18px;
+  min-height: 108px;
+  padding: 16px 12px;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 10px;
+  font-weight: 700;
+  color: var(--on-surface);
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.moodVioletMoodCard:hover {
+  transform: translateY(-2px);
+}
+
+.moodVioletMoodCard:active {
+  transform: scale(0.985);
+}
+
+.moodVioletMoodCard.isActive {
+  border-color: color-mix(in srgb, var(--primary) 30%, transparent);
+  box-shadow: 0 12px 24px rgba(108, 67, 185, 0.14);
+}
+
+.moodVioletMoodCard--calm {
+  background: color-mix(in srgb, var(--primary-container) 58%, transparent);
+}
+
+.moodVioletMoodCard--joy {
+  background: color-mix(in srgb, var(--tertiary-container) 36%, transparent);
+}
+
+.moodVioletMoodCard--anxious,
+.moodVioletMoodCard--sad {
+  background: color-mix(in srgb, var(--surface-container-high) 95%, transparent);
+}
+
+.moodVioletMoodCard--angry {
+  background: color-mix(in srgb, var(--error-container) 26%, transparent);
+}
+
+.moodVioletMoodIcon {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.moodVioletMoodLabel {
+  font-size: 18px;
+}
+
+.moodVioletColumns {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.moodVioletColumns > * {
+  min-width: 0;
+}
+
+.moodVioletNotesCard {
+  border-radius: 20px;
+  background: var(--surface-container-low);
+  border: 1px solid color-mix(in srgb, var(--outline-variant) 70%, transparent);
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.moodVioletNotesCard::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--primary) 20%, transparent);
+  opacity: 0.32;
+  pointer-events: none;
+}
+
+.moodVioletNotesLabel {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.moodVioletTextarea {
+  width: 100%;
+  min-height: 128px;
+  border-radius: 14px;
+  border: 1px solid var(--outline-variant);
+  padding: 14px;
+  font-size: 15px;
+  color: var(--on-surface);
+  background: color-mix(in srgb, var(--surface-container-lowest) 80%, transparent);
+  resize: vertical;
+}
+
+.moodVioletTextarea::placeholder {
+  color: color-mix(in srgb, var(--outline) 80%, white 20%);
+}
+
+.moodVioletSaveBtn {
+  margin-top: 14px;
+  width: 100%;
+  min-height: 52px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #6c43b9 0%, #8f68d1 100%);
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 800;
+  box-shadow: 0 14px 30px rgba(108, 67, 185, 0.26);
+}
+
+.moodVioletSaveBtn:disabled {
+  opacity: 0.75;
+}
+
+.moodVioletSaveState {
+  margin: 10px 0 0;
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.moodVioletSaveState.isSuccess {
+  background: color-mix(in srgb, #87c67a 24%, transparent);
+  color: color-mix(in srgb, #1d4a12 90%, var(--on-surface));
+}
+
+.moodVioletSaveState.isError {
+  background: color-mix(in srgb, var(--error-container) 62%, transparent);
+  color: var(--on-error-container);
+}
+
+.moodVioletMindfulCard {
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--primary-container) 30%, transparent);
+  border: 1px solid color-mix(in srgb, var(--primary-container) 76%, transparent);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  align-self: start;
+}
+
+.moodVioletMindfulCard h3 {
+  margin: 0;
+  font-size: clamp(24px, 3vw, 32px);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.moodVioletMindfulCard p {
+  margin: 4px 0 0;
+  color: var(--on-surface-variant);
+  line-height: 1.4;
+}
+
+.moodVioletPulse {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--primary);
+  font-weight: 700;
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  animation: moodPulse 2.3s ease-in-out infinite;
+}
+
+.moodVioletHistorySection {
+  display: grid;
+  gap: 12px;
+}
+
+.moodVioletHistoryHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.moodVioletHistoryHead h2 {
+  margin: 0;
+  font-size: 32px;
+  letter-spacing: -0.03em;
+}
+
+.moodVioletHistoryHead span {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.moodVioletChartCard {
+  border-radius: 20px;
+  background: var(--surface-container);
+  border: 1px solid color-mix(in srgb, var(--outline-variant) 70%, transparent);
+  padding: 16px;
+}
+
+.moodVioletBars {
+  height: 210px;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 9px;
+  align-items: end;
+}
+
+.moodVioletBarCol {
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+  align-items: end;
+}
+
+.moodVioletBar {
+  width: 100%;
+  border-radius: 10px 10px 4px 4px;
+  min-height: 18%;
+  transition: height 300ms ease;
+}
+
+.moodVioletBar--positive {
+  background: var(--primary);
+}
+
+.moodVioletBar--neutral {
+  background: color-mix(in srgb, var(--secondary-container) 75%, transparent);
+}
+
+.moodVioletBar--negative {
+  background: color-mix(in srgb, var(--surface-container-highest) 88%, transparent);
+}
+
+.moodVioletBar.isToday {
+  outline: 2px solid color-mix(in srgb, var(--primary-container) 70%, transparent);
+  box-shadow: 0 10px 18px rgba(108, 67, 185, 0.18);
+}
+
+.moodVioletBarCol span {
+  font-size: 10px;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--on-surface-variant) 70%, transparent);
+}
+
+.moodVioletBarCol span.isToday {
+  color: var(--primary);
+}
+
+.moodVioletLegend {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid color-mix(in srgb, var(--outline-variant) 70%, transparent);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.moodVioletLegend div {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 800;
+  color: var(--on-surface-variant);
+}
+
+.moodVioletLegend .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.moodVioletLegend .dot.positive { background: var(--primary); }
+.moodVioletLegend .dot.neutral { background: color-mix(in srgb, var(--secondary-container) 75%, transparent); }
+.moodVioletLegend .dot.tense { background: color-mix(in srgb, var(--surface-container-highest) 88%, transparent); }
+
+.moodVioletQuote {
+  margin: 6px 0 0;
+  padding: 0 4px;
+  font-size: clamp(22px, 4.4vw, 32px);
+  font-style: italic;
+  line-height: 1.35;
+  color: color-mix(in srgb, var(--on-surface-variant) 92%, var(--on-surface));
+}
+
+@keyframes moodPulse {
+  0%,
+  100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@media (min-width: 1100px) {
+  .moodVioletMoodGrid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .moodVioletHero h1 {
+    max-width: 12ch;
+  }
+}
+
+@media (min-width: 860px) and (max-width: 1099px) {
+  .moodVioletMoodGrid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .moodVioletHero h1 {
+    font-size: clamp(34px, 11vw, 56px);
+  }
+
+  .moodVioletHero p {
+    font-size: 15px;
+  }
+
+  .moodVioletMoodCard {
+    min-height: 92px;
+    border-radius: 14px;
+    padding: 12px;
+  }
+
+  .moodVioletMoodLabel {
+    font-size: 16px;
+  }
+
+  .moodVioletNotesLabel,
+  .moodVioletHistoryHead h2 {
+    font-size: 30px;
+  }
+
+  .moodVioletQuote {
+    font-size: 19px;
+  }
+}

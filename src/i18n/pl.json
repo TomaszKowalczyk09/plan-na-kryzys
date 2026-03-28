@@ -554,5 +554,29 @@
     "saving": "Zapisywanie...",
     "saved": "Nastrój zapisany",
     "saveFailed": "Nie udało się zapisać nastroju"
+  },
+  "moodPage": {
+    "title": "Jak się teraz czujesz?",
+    "subtitle": "Weź głęboki oddech. Zauważ ten moment bez oceniania.",
+    "calm": "Spokój",
+    "joy": "Radość",
+    "anxious": "Niepokój",
+    "sad": "Smutek",
+    "angry": "Złość",
+    "addNotes": "Dodaj notatkę",
+    "notesPlaceholder": "Co masz teraz w głowie?",
+    "saveMood": "Zapisz nastrój",
+    "saving": "Zapisywanie...",
+    "saved": "Nastrój zapisany",
+    "error": "Nie udało się zapisać nastroju",
+    "mindfulTitle": "Uważna chwila",
+    "mindfulText": "Weź 3 głębokie oddechy przed zapisem.",
+    "historyTitle": "Ostatnia historia nastroju",
+    "last7": "Ostatnie 7 dni",
+    "historyAria": "Wykres nastroju z ostatnich 7 dni",
+    "positive": "Pozytywne",
+    "neutral": "Neutralne",
+    "tense": "Napięcie",
+    "quote": "Świadomość emocji to pierwszy krok do wewnętrznego spokoju. Każde uczucie jest tylko chwilowym gościem."
   }
 }

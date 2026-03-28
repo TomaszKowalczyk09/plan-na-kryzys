@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react'
-import { getEmotions } from '../data/emotions'
 import { useMoodEntries } from '../hooks/useIndexedDB'
-import { CloudIcon, CTAButton, StoryCard, StoryScreen } from '../components/StoryUI'
+import { StoryScreen } from '../components/StoryUI'
 import { useI18n } from '../i18n/index.jsx'
 
 const EMOTION_GROUPS = {
@@ -15,9 +14,9 @@ const getCategoryForEntry = (entry) => {
   if (emotions.length === 0) return 'neutral'
 
   let score = 0
-  emotions.forEach((e) => {
-    if (EMOTION_GROUPS.positive.has(e)) score += 2
-    else if (EMOTION_GROUPS.neutral.has(e)) score += 1
+  emotions.forEach((emotion) => {
+    if (EMOTION_GROUPS.positive.has(emotion)) score += 2
+    else if (EMOTION_GROUPS.neutral.has(emotion)) score += 1
   })
 
   const avg = score / emotions.length
@@ -27,263 +26,224 @@ const getCategoryForEntry = (entry) => {
 }
 
 export default function MoodPage() {
-  const { lang } = useI18n()
-  const EMOTIONS = useMemo(() => getEmotions(lang), [lang])
-  const EMOTION_SECTIONS = useMemo(
-    () => [
-      {
-        key: 'positive',
-        label: 'Pozytywne',
-        description: 'Lekkość, spokój, wdzięczność',
-        items: EMOTIONS.filter((e) => EMOTION_GROUPS.positive.has(e)),
-      },
-      {
-        key: 'neutral',
-        label: 'Neutralne',
-        description: 'Stany przejściowe i napięcie',
-        items: EMOTIONS.filter((e) => EMOTION_GROUPS.neutral.has(e)),
-      },
-      {
-        key: 'negative',
-        label: 'Trudne',
-        description: 'Ból, przeciążenie, smutek',
-        items: EMOTIONS.filter((e) => EMOTION_GROUPS.negative.has(e)),
-      },
-    ],
-    [EMOTIONS],
-  )
-  const { addEntry, getEntriesFromDays, loading } = useMoodEntries()
-  const [selected, setSelected] = useState([])
+  const { t, lang } = useI18n()
+  const { addEntry, getEntriesFromDays } = useMoodEntries()
+
+  const [selectedMood, setSelectedMood] = useState('calm')
   const [notes, setNotes] = useState('')
   const [saving, setSaving] = useState(false)
+  const [saveState, setSaveState] = useState('idle')
 
-  const recent = useMemo(() => getEntriesFromDays(14), [getEntriesFromDays])
-  const recentSorted = useMemo(
-    () => [...recent].sort((a, b) => (a.timestamp ?? 0) - (b.timestamp ?? 0)),
-    [recent],
+  const moodOptions = useMemo(
+    () => [
+      {
+        key: 'calm',
+        label: t('moodPage.calm', 'Calm'),
+        icon: '🪷',
+        emotion: lang === 'de' ? 'ruhig' : 'spokojny',
+        tone: 'calm',
+      },
+      {
+        key: 'joy',
+        label: t('moodPage.joy', 'Joy'),
+        icon: '☀️',
+        emotion: lang === 'de' ? 'zufrieden' : 'zadowolony',
+        tone: 'joy',
+      },
+      {
+        key: 'anxious',
+        label: t('moodPage.anxious', 'Anxious'),
+        icon: '〰️',
+        emotion: lang === 'de' ? 'gestresst' : 'zestresowany',
+        tone: 'anxious',
+      },
+      {
+        key: 'sad',
+        label: t('moodPage.sad', 'Sad'),
+        icon: '🌧️',
+        emotion: lang === 'de' ? 'traurig' : 'smutny',
+        tone: 'sad',
+      },
+      {
+        key: 'angry',
+        label: t('moodPage.angry', 'Angry'),
+        icon: '⚡',
+        emotion: lang === 'de' ? 'wütend' : 'zły',
+        tone: 'angry',
+      },
+    ],
+    [lang, t],
   )
 
-  const emotionCounts = useMemo(() => {
-    const counts = {}
-    recent.forEach((entry) => {
-      ;(entry.emotions || []).forEach((e) => {
-        counts[e] = (counts[e] || 0) + 1
+  const recent = useMemo(
+    () => getEntriesFromDays(14).sort((a, b) => (a.timestamp ?? 0) - (b.timestamp ?? 0)),
+    [getEntriesFromDays],
+  )
+
+  const weekDays = useMemo(
+    () =>
+      Array.from({ length: 7 }, (_, index) => {
+        const date = new Date()
+        date.setHours(12, 0, 0, 0)
+        date.setDate(date.getDate() - (6 - index))
+        return date
+      }),
+    [],
+  )
+
+  const weekBars = useMemo(() => {
+    const recent7 = recent.slice(-7)
+    const byDay = new Map()
+
+    recent7.forEach((entry) => {
+      const date = entry?.date ? new Date(entry.date) : new Date(entry?.timestamp ?? Date.now())
+      const key = date.toDateString()
+      if (!byDay.has(key)) byDay.set(key, [])
+      byDay.get(key).push(entry)
+    })
+
+    return weekDays.map((day) => {
+      const key = day.toDateString()
+      const entries = byDay.get(key) ?? []
+      const counts = { positive: 0, neutral: 0, negative: 0 }
+
+      entries.forEach((entry) => {
+        counts[getCategoryForEntry(entry)] += 1
       })
+
+      let dominant = 'neutral'
+      if (counts.positive >= counts.neutral && counts.positive >= counts.negative) dominant = 'positive'
+      else if (counts.negative > counts.positive && counts.negative >= counts.neutral) dominant = 'negative'
+
+      const total = counts.positive + counts.neutral + counts.negative
+      const ratio = total > 0 ? (counts.positive * 1 + counts.neutral * 0.65 + counts.negative * 0.35) / total : 0.3
+      const height = Math.max(18, Math.min(100, Math.round(ratio * 100)))
+
+      return {
+        dayLabel: day.toLocaleDateString(lang === 'de' ? 'de-DE' : 'pl-PL', { weekday: 'short' }).toUpperCase(),
+        height,
+        dominant,
+        isToday: day.toDateString() === new Date().toDateString(),
+      }
     })
-    return counts
-  }, [recent])
-
-  const topEmotion = useMemo(() => {
-    const entries = Object.entries(emotionCounts)
-    if (entries.length === 0) return null
-    entries.sort((a, b) => b[1] - a[1])
-    return entries[0][0]
-  }, [emotionCounts])
-
-  const categoryCounts = useMemo(() => {
-    const counts = { positive: 0, neutral: 0, negative: 0 }
-    recent.forEach((entry) => {
-      counts[getCategoryForEntry(entry)] += 1
-    })
-    return counts
-  }, [recent])
-
-  const distribution = useMemo(() => {
-    const total = categoryCounts.positive + categoryCounts.neutral + categoryCounts.negative
-    const safeTotal = total || 1
-    return {
-      total,
-      positive: Math.round((categoryCounts.positive / safeTotal) * 100),
-      neutral: Math.round((categoryCounts.neutral / safeTotal) * 100),
-      negative: Math.round((categoryCounts.negative / safeTotal) * 100),
-    }
-  }, [categoryCounts])
-
-  const toggle = (e) => {
-    setSelected((prev) =>
-      prev.includes(e) ? prev.filter((x) => x !== e) : [...prev, e],
-    )
-  }
+  }, [lang, recent, weekDays])
 
   const onSave = async () => {
-    if (selected.length === 0) return
+    const chosen = moodOptions.find((mood) => mood.key === selectedMood)
+    if (!chosen) return
+
+    setSaveState('idle')
     setSaving(true)
     try {
-      await addEntry(selected, notes.trim())
-      setSelected([])
+      await addEntry([chosen.emotion], notes.trim())
       setNotes('')
+      setSaveState('saved')
+    } catch {
+      setSaveState('error')
     } finally {
       setSaving(false)
     }
   }
 
-  // Emotion emoji mapping
-  const emotionEmojis = {
-    spokojny: '😌',
-    zadowolony: '😊',
-    wdzięczny: '🙏',
-    ruhig: '😌',
-    zufrieden: '😊',
-    dankbar: '🙏',
-    zmęczony: '😴',
-    zestresowany: '😰',
-    zaniepokojony: '😟',
-    müde: '😴',
-    gestresst: '😰',
-    besorgt: '😟',
-    przytłoczony: '😵',
-    smutny: '😢',
-    zły: '😠',
-    samotny: '😔',
-    überfordert: '😵',
-    traurig: '😢',
-    wütend: '😠',
-    einsam: '😔',
-  }
-
   return (
-    <StoryScreen variant="light" className="pageAnim">
-      <StoryCard tone="surface" className="pageAnimItem">
-        <div>
-          <h1 className="storyTitle">
-            Jak się czujesz <span className="storyAccent">teraz</span>?
-          </h1>
-          <p className="storyLead">Wybierz emocje, które teraz czujesz.</p>
+    <StoryScreen variant="light" className="pageAnim moodVioletPage">
+      <section className="pageAnimItem moodVioletHero">
+        <div className="moodVioletHeroDivider" aria-hidden="true">
+          <div className="moodVioletLine" />
+          <div className="moodVioletDot">◌</div>
+          <div className="moodVioletLine" />
         </div>
+        <h1>{t('moodPage.title', 'How are you feeling right now?')}</h1>
+        <p>{t('moodPage.subtitle', 'Take a deep breath. Acknowledge the present moment without judgment.')}</p>
+      </section>
 
-        {/* Visual Emotion Selector Grid */}
-        <div className="moodCardGrid mt12">
-          {EMOTIONS.slice(0, 8).map((emotion) => (
-            <button
-              key={emotion}
-              type="button"
-              onClick={() => toggle(emotion)}
-              className={`emotionCard ${selected.includes(emotion) ? 'isActive' : ''}`}
-              aria-pressed={selected.includes(emotion)}
-            >
-              <div className="emotionCardIcon">{emotionEmojis[emotion] || '😐'}</div>
-              <div style={{ fontSize: '12px', fontWeight: 600 }}>{emotion}</div>
-            </button>
-          ))}
-        </div>
-
-        {selected.length > 0 && (
-          <div style={{ marginTop: 12, padding: '12px 14px', background: 'var(--surface-container-low)', borderRadius: '12px', textAlign: 'center', fontWeight: 700, color: 'var(--on-surface)' }}>
-            Wybrane: {selected.length} emocji
-          </div>
-        )}
-
-        <label className="label" htmlFor="notes" style={{ marginTop: 16 }}>Notatka (opcjonalnie)</label>
-        <textarea
-          id="notes"
-          className="textarea expressionTextarea"
-          value={notes}
-          onChange={(ev) => setNotes(ev.target.value)}
-          placeholder="Co się wydarzyło? Co było trudne / co pomogło?"
-        />
-
-        <div className="row mt12" style={{ gap: 10 }}>
-          <CTAButton
-            tone="primary"
-            onClick={onSave}
-            disabled={saving || selected.length === 0}
+      <section className="pageAnimItem moodVioletMoodGrid">
+        {moodOptions.map((mood) => (
+          <button
+            key={mood.key}
+            type="button"
+            onClick={() => setSelectedMood(mood.key)}
+            className={`moodVioletMoodCard moodVioletMoodCard--${mood.tone} ${selectedMood === mood.key ? 'isActive' : ''}`}
+            aria-pressed={selectedMood === mood.key}
           >
-            {saving ? 'Zapisuję…' : '💾 Zapisz'}
-          </CTAButton>
-          <CTAButton tone="ghost" onClick={() => setSelected([])} disabled={saving}>
-            Wyczyść
-          </CTAButton>
-        </div>
-      </StoryCard>
+            <span className="moodVioletMoodIcon" aria-hidden="true">{mood.icon}</span>
+            <span className="moodVioletMoodLabel">{mood.label}</span>
+          </button>
+        ))}
+      </section>
 
-      <StoryCard tone="surface" className="pageAnimItem">
-        <div className="rowBetween" style={{ alignItems: 'flex-start' }}>
+      <section className="pageAnimItem moodVioletColumns">
+        <article className="moodVioletNotesCard">
+          <label className="moodVioletNotesLabel" htmlFor="mood-notes">
+            {t('moodPage.addNotes', 'Add notes')}
+          </label>
+          <textarea
+            id="mood-notes"
+            className="moodVioletTextarea"
+            value={notes}
+            onChange={(event) => setNotes(event.target.value)}
+            placeholder={t('moodPage.notesPlaceholder', "What's on your mind?")}
+          />
+
+          <button
+            type="button"
+            className="moodVioletSaveBtn"
+            onClick={onSave}
+            disabled={saving}
+          >
+            {saving ? t('moodPage.saving', 'Saving...') : t('moodPage.saveMood', 'Save mood')}
+          </button>
+
+          {saveState === 'saved' ? (
+            <p className="moodVioletSaveState isSuccess">{t('moodPage.saved', 'Mood saved')}</p>
+          ) : null}
+          {saveState === 'error' ? (
+            <p className="moodVioletSaveState isError">{t('moodPage.error', 'Could not save mood')}</p>
+          ) : null}
+        </article>
+
+        <aside className="moodVioletMindfulCard">
           <div>
-            <h2 className="sectionTitle" style={{ fontSize: 20 }}>Podsumowanie (14 dni)</h2>
-            <p className="p" style={{ marginTop: 6 }}>Ostatnie 14 dni w skrócie.</p>
+            <h3>{t('moodPage.mindfulTitle', 'Mindful moment')}</h3>
+            <p>{t('moodPage.mindfulText', 'Take 3 deep breaths before saving.')}</p>
           </div>
-          <CloudIcon mood="smile" label="Uśmiechnięta chmurka" />
+          <div className="moodVioletPulse" aria-hidden="true">◌</div>
+        </aside>
+      </section>
+
+      <section className="pageAnimItem moodVioletHistorySection">
+        <div className="moodVioletHistoryHead">
+          <h2>{t('moodPage.historyTitle', 'Recent mood history')}</h2>
+          <span>{t('moodPage.last7', 'Last 7 days')}</span>
         </div>
 
-        <div className="moodReport mt12">
-          <div className="moodMetric">
-            <div className="moodMetricValue">{recent.length}</div>
-            <div className="moodMetricLabel">Wpisy</div>
-          </div>
-          <div className="moodMetric">
-            <div className="moodMetricValue">{topEmotion || '—'}</div>
-            <div className="moodMetricLabel">Najczęstsza emocja</div>
-          </div>
-          <div className="moodMetric">
-            <div className="moodMetricValue">
-              {recentSorted.at(-1)?.date ? new Date(recentSorted.at(-1).date).toLocaleDateString() : '—'}
-            </div>
-            <div className="moodMetricLabel">Ostatni wpis</div>
-          </div>
-        </div>
-
-        {distribution.total === 0 ? (
-          <p className="p mt12">Dodaj pierwszy wpis, aby zobaczyć rozkład nastroju.</p>
-        ) : (
-          <div className="moodDistribution mt12">
-            <div className="moodBar" aria-label="Rozkład nastroju z ostatnich 14 dni">
-              <span className="moodBarSegment moodBarPositive" style={{ width: `${distribution.positive}%` }} />
-              <span className="moodBarSegment moodBarNeutral" style={{ width: `${distribution.neutral}%` }} />
-              <span className="moodBarSegment moodBarNegative" style={{ width: `${distribution.negative}%` }} />
-            </div>
-            <div className="moodBarLegend">
-              <span className="moodLegendItem"><span className="moodDot moodDotPositive" />Pozytywne {distribution.positive}%</span>
-              <span className="moodLegendItem"><span className="moodDot moodDotNeutral" />Neutralne {distribution.neutral}%</span>
-              <span className="moodDot moodDotNegative" />Trudne {distribution.negative}%
-            </div>
-          </div>
-        )}
-
-        <div className="moodLegend mt12">
-          <div className="moodLegendItem"><span className="moodDot moodDotPositive" />Pozytywne ({categoryCounts.positive})</div>
-          <div className="moodLegendItem"><span className="moodDot moodDotNeutral" />Neutralne ({categoryCounts.neutral})</div>
-          <div className="moodLegendItem"><span className="moodDot moodDotNegative" />Trudne ({categoryCounts.negative})</div>
-        </div>
-
-        <div className="moodTimeline mt12" aria-label="Oś nastroju z ostatnich 14 dni">
-          {recentSorted.map((entry) => {
-            const category = getCategoryForEntry(entry)
-            const label = Array.isArray(entry.emotions) ? entry.emotions.join(', ') : ''
-            return (
-              <span
-                key={entry.id ?? entry.timestamp}
-                className={`moodDot moodDot${category === 'positive' ? 'Positive' : category === 'negative' ? 'Negative' : 'Neutral'}`}
-                title={`${new Date(entry.date).toLocaleDateString()}${label ? ` • ${label}` : ''}`}
-              />
-            )
-          })}
-        </div>
-      </StoryCard>
-
-      <StoryCard tone="surface" className="pageAnimItem">
-        <h2 className="sectionTitle" style={{ fontSize: 20 }}>Ostatnie wpisy</h2>
-        <p className="p" style={{ marginTop: 6 }}>To nie jest ocena. To tylko ślad, który może pomóc zauważyć zmianę.</p>
-
-        {loading ? (
-          <p className="p">Wczytuję…</p>
-        ) : recent.length === 0 ? (
-          <p className="p">Brak wpisów. Spróbuj dodać pierwszy.</p>
-        ) : (
-          <div className="stackSm mt12">
-            {recent.map((it) => (
-              <div key={it.id ?? it.timestamp} className="cardInset">
-                <div className="rowBetween">
-                  <div className="textStrong">{new Date(it.date).toLocaleString()}</div>
-                  <div className="textMuted textSm">
-                    {Array.isArray(it.emotions) ? it.emotions.join(', ') : ''}
-                  </div>
-                </div>
-                {it.notes ? <div className="textMuted mt6">{it.notes}</div> : null}
+        <div className="moodVioletChartCard">
+          <div className="moodVioletBars" role="img" aria-label={t('moodPage.historyAria', 'Mood chart for the last 7 days')}>
+            {weekBars.map((bar, index) => (
+              <div key={`${bar.dayLabel}-${index}`} className="moodVioletBarCol">
+                <div
+                  className={`moodVioletBar moodVioletBar--${bar.dominant} ${bar.isToday ? 'isToday' : ''}`}
+                  style={{ height: `${bar.height}%` }}
+                />
+                <span className={bar.isToday ? 'isToday' : ''}>{bar.dayLabel}</span>
               </div>
             ))}
           </div>
-        )}
-      </StoryCard>
+
+          <div className="moodVioletLegend">
+            <div><span className="dot positive" />{t('moodPage.positive', 'Positive')}</div>
+            <div><span className="dot neutral" />{t('moodPage.neutral', 'Neutral')}</div>
+            <div><span className="dot tense" />{t('moodPage.tense', 'Tense')}</div>
+          </div>
+        </div>
+
+        <blockquote className="moodVioletQuote">
+          {t(
+            'moodPage.quote',
+            'Emotional awareness is the first step toward inner peace. Every feeling is a temporary visitor.',
+          )}
+        </blockquote>
+      </section>
     </StoryScreen>
   )
 }
