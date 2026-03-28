@@ -141,6 +141,21 @@
     "tense": "Angespannt",
     "quote": "Emotionale Achtsamkeit ist der erste Schritt zu innerem Frieden. Jedes Gefühl ist nur ein vorübergehender Besucher."
   },
+  "crisisPage": {
+    "breatheTitle": "Atme mit uns",
+    "breatheLead": "Folge dem Licht. Lockere deine Schultern.",
+    "inhale": "Einatmen",
+    "immediateSupport": "Sofortige Hilfe",
+    "groundingTools": "Grounding-Tools",
+    "viewAll": "Alle anzeigen",
+    "tool54321": "Nutze deine Sinne, um in den Moment zurückzukehren.",
+    "startGuide": "Anleitung starten",
+    "boxBreath": "Box-Atmung",
+    "boxBreathDesc": "4 s ein, 4 s halten, 4 s aus, 4 s halten.",
+    "muscleRelaxation": "Muskelentspannung",
+    "muscleRelaxationDesc": "Spanne den Körper an und löse die Spannung",
+    "quote": "Dieses Gefühl ist vorübergehend. Du bist sicher."
+  },
   "crisis": {
     "important": "Wichtig",
     "module": "Modul",

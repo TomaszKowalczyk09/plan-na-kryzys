@@ -578,5 +578,20 @@
     "neutral": "Neutralne",
     "tense": "Napięcie",
     "quote": "Świadomość emocji to pierwszy krok do wewnętrznego spokoju. Każde uczucie jest tylko chwilowym gościem."
+  },
+  "crisisPage": {
+    "breatheTitle": "Oddychaj z nami",
+    "breatheLead": "Podążaj za światłem. Rozluźnij ramiona.",
+    "inhale": "Wdech",
+    "immediateSupport": "Natychmiastowe wsparcie",
+    "groundingTools": "Narzędzia uziemiające",
+    "viewAll": "Zobacz wszystko",
+    "tool54321": "Zaangażuj zmysły, aby wrócić do chwili obecnej.",
+    "startGuide": "Rozpocznij",
+    "boxBreath": "Oddech pudełkowy",
+    "boxBreathDesc": "4 s wdech, 4 s zatrzymanie, 4 s wydech, 4 s zatrzymanie.",
+    "muscleRelaxation": "Relaksacja mięśni",
+    "muscleRelaxationDesc": "Napinaj i rozluźniaj ciało",
+    "quote": "To uczucie minie. Jesteś bezpieczny_a."
   }
 }

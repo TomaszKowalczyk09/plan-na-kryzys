@@ -3706,3 +3706,386 @@ input[type='checkbox'] {
     font-size: 19px;
   }
 }
+
+/* ===== Crisis Page (Violet) ===== */
+.crisisVioletPage .storyScreenInner {
+  gap: 18px;
+}
+
+.crisisVioletBreathing {
+  border-radius: 22px;
+  background: var(--surface-container-low);
+  border: 1px solid color-mix(in srgb, var(--outline-variant) 74%, transparent);
+  padding: 20px 18px;
+}
+
+.crisisVioletBreathingInner {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.crisisVioletBreathing h2 {
+  margin: 0;
+  color: var(--primary);
+  font-size: clamp(38px, 6.2vw, 54px);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+}
+
+.crisisVioletBreathing p {
+  margin: 0;
+  color: var(--on-surface-variant);
+  font-size: 16px;
+  max-width: 26ch;
+}
+
+.crisisVioletOrbWrap {
+  margin-top: 8px;
+  width: min(78vw, 360px);
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+
+.crisisVioletOrbGlow {
+  position: absolute;
+  width: 88%;
+  height: 88%;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--primary-container) 80%, transparent) 0%, transparent 70%);
+  filter: blur(28px);
+  animation: crisisOrbPulse 3.2s ease-in-out infinite;
+}
+
+.crisisVioletOrbCenter {
+  position: relative;
+  z-index: 1;
+  width: min(42vw, 174px);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--primary-container) 88%, transparent);
+  border: 4px solid color-mix(in srgb, var(--surface-container-lowest) 70%, transparent);
+}
+
+.crisisVioletOrbCenter span {
+  color: var(--primary);
+  font-weight: 800;
+  font-size: 23px;
+}
+
+.crisisVioletPager {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.crisisVioletPager span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--outline-variant) 90%, transparent);
+}
+
+.crisisVioletPager span.isActive {
+  background: var(--primary);
+}
+
+.crisisVioletSection {
+  display: grid;
+  gap: 12px;
+}
+
+.crisisVioletSectionHead h3 {
+  margin: 0;
+  font-size: 35px;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+}
+
+.crisisVioletPrimaryCall {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border-radius: 16px;
+  padding: 16px 18px;
+  color: #ffffff;
+  background: linear-gradient(145deg, #6c43b9 0%, #4c2d8a 100%);
+  box-shadow: 0 16px 24px rgba(76, 45, 138, 0.25);
+}
+
+.crisisVioletPrimaryCall strong {
+  display: block;
+  font-size: 30px;
+  letter-spacing: -0.02em;
+}
+
+.crisisVioletPrimaryCall span {
+  display: block;
+  opacity: 0.92;
+  margin-top: 2px;
+  font-size: 16px;
+}
+
+.crisisVioletPrimaryCall .icon {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.crisisVioletMiniGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.crisisVioletMiniCard {
+  min-width: 0;
+  border-radius: 14px;
+  background: var(--surface-container-lowest);
+  border: 1px solid color-mix(in srgb, var(--outline-variant) 72%, transparent);
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 8px;
+  text-align: center;
+  min-height: 110px;
+  padding: 12px;
+}
+
+.crisisVioletMiniCard .icon {
+  color: var(--primary);
+  font-size: 20px;
+}
+
+.crisisVioletMiniCard strong {
+  font-size: 20px;
+  line-height: 1.16;
+}
+
+.crisisVioletViewAll {
+  font-size: 18px;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.crisisVioletToolCard {
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid color-mix(in srgb, var(--outline-variant) 66%, transparent);
+}
+
+.crisisVioletToolCard h4 {
+  margin: 0;
+  font-size: 36px;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+}
+
+.crisisVioletToolCard p {
+  margin: 10px 0 0;
+  color: var(--on-surface-variant);
+  font-size: 16px;
+  max-width: 26ch;
+}
+
+.crisisVioletToolCardMain {
+  background: color-mix(in srgb, var(--secondary-container) 82%, transparent);
+  position: relative;
+  overflow: hidden;
+}
+
+.crisisVioletToolBtn {
+  margin-top: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--on-secondary-container) 92%, #000000 8%);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.crisisVioletToolCardMain .watermark {
+  position: absolute;
+  right: -10px;
+  bottom: -30px;
+  font-size: 180px;
+  color: color-mix(in srgb, var(--on-secondary-container) 12%, transparent);
+  line-height: 1;
+}
+
+.crisisVioletToolCardBox {
+  background: color-mix(in srgb, var(--primary-container) 74%, transparent);
+}
+
+.crisisVioletToolCardBox .icon {
+  color: var(--primary);
+  font-size: 34px;
+  line-height: 1;
+}
+
+.crisisVioletToolCardBox .progress {
+  margin-top: 18px;
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  overflow: hidden;
+}
+
+.crisisVioletToolCardBox .progress div {
+  width: 34%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--primary);
+}
+
+.crisisVioletToolRow {
+  border-radius: 14px;
+  background: var(--surface-container);
+  border: 1px solid color-mix(in srgb, var(--outline-variant) 65%, transparent);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.crisisVioletToolRow .left {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.crisisVioletToolRow .icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--surface-container-lowest) 90%, transparent);
+  display: grid;
+  place-items: center;
+  color: var(--primary);
+}
+
+.crisisVioletToolRow h4 {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.12;
+}
+
+.crisisVioletToolRow p {
+  margin: 2px 0 0;
+  color: var(--on-surface-variant);
+  font-size: 14px;
+}
+
+.crisisVioletToolRow .arrow {
+  color: var(--outline);
+  font-size: 28px;
+}
+
+.crisisVioletQuoteBanner {
+  border-radius: 18px;
+  min-height: 122px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 14px 18px;
+  background:
+    linear-gradient(180deg, rgba(151, 174, 219, 0.78), rgba(112, 155, 215, 0.78)),
+    radial-gradient(circle at 60% 130%, rgba(255, 255, 255, 0.35), transparent 48%);
+}
+
+.crisisVioletQuoteBanner p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.98);
+  font-size: 34px;
+  line-height: 1.28;
+  font-style: italic;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.14);
+}
+
+@keyframes crisisOrbPulse {
+  0%,
+  100% { transform: scale(0.95); }
+  50% { transform: scale(1.06); }
+}
+
+@media (max-width: 640px) {
+  .crisisVioletBreathing {
+    padding: 16px 14px;
+  }
+
+  .crisisVioletBreathing h2 {
+    font-size: clamp(28px, 9.5vw, 46px);
+  }
+
+  .crisisVioletBreathing p {
+    font-size: 14px;
+  }
+
+  .crisisVioletOrbCenter span {
+    font-size: 19px;
+  }
+
+  .crisisVioletSectionHead h3 {
+    font-size: 31px;
+  }
+
+  .crisisVioletPrimaryCall strong {
+    font-size: 27px;
+  }
+
+  .crisisVioletPrimaryCall span {
+    font-size: 14px;
+  }
+
+  .crisisVioletMiniCard strong {
+    font-size: 17px;
+  }
+
+  .crisisVioletToolCard h4 {
+    font-size: 34px;
+  }
+
+  .crisisVioletToolCard p {
+    font-size: 14px;
+  }
+
+  .crisisVioletToolBtn {
+    font-size: 14px;
+  }
+
+  .crisisVioletToolRow h4 {
+    font-size: 28px;
+  }
+
+  .crisisVioletToolRow p {
+    font-size: 13px;
+  }
+
+  .crisisVioletQuoteBanner p {
+    font-size: 22px;
+  }
+}
+
+@media (min-width: 900px) {
+  .crisisVioletPage .storyScreenInner {
+    max-width: 760px;
+  }
+
+  .crisisVioletToolCardMain,
+  .crisisVioletToolCardBox {
+    min-height: 220px;
+  }
+}
