@@ -3748,6 +3748,10 @@ input[type='checkbox'] {
   display: grid;
   place-items: center;
   position: relative;
+  border: none;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
 }
 
 .crisisVioletOrbGlow {
@@ -3757,7 +3761,7 @@ input[type='checkbox'] {
   border-radius: 50%;
   background: radial-gradient(circle, color-mix(in srgb, var(--primary-container) 80%, transparent) 0%, transparent 70%);
   filter: blur(28px);
-  animation: crisisOrbPulse 3.2s ease-in-out infinite;
+  transition: transform var(--breath-dur, 4s) ease-in-out;
 }
 
 .crisisVioletOrbCenter {
@@ -3768,14 +3772,42 @@ input[type='checkbox'] {
   border-radius: 50%;
   display: grid;
   place-items: center;
+  gap: 4px;
   background: color-mix(in srgb, var(--primary-container) 88%, transparent);
   border: 4px solid color-mix(in srgb, var(--surface-container-lowest) 70%, transparent);
+  transition: transform var(--breath-dur, 4s) ease-in-out;
 }
 
 .crisisVioletOrbCenter span {
   color: var(--primary);
   font-weight: 800;
   font-size: 23px;
+}
+
+.crisisVioletOrbCenter small {
+  color: color-mix(in srgb, var(--primary) 72%, var(--on-surface));
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.crisisVioletOrbWrap.isRunning.is-inhale .crisisVioletOrbCenter {
+  transform: scale(1.1);
+}
+
+.crisisVioletOrbWrap.isRunning.is-hold .crisisVioletOrbCenter {
+  transform: scale(1.1);
+}
+
+.crisisVioletOrbWrap.isRunning.is-exhale .crisisVioletOrbCenter {
+  transform: scale(0.9);
+}
+
+.crisisVioletOrbWrap.isRunning.is-inhale .crisisVioletOrbGlow {
+  transform: scale(1.08);
+}
+
+.crisisVioletOrbWrap.isRunning.is-exhale .crisisVioletOrbGlow {
+  transform: scale(0.88);
 }
 
 .crisisVioletPager {
@@ -3793,6 +3825,28 @@ input[type='checkbox'] {
 
 .crisisVioletPager span.isActive {
   background: var(--primary);
+}
+
+.crisisVioletBreathControls {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.crisisVioletBreathBtn {
+  border: none;
+  border-radius: 999px;
+  min-height: 36px;
+  padding: 6px 14px;
+  background: var(--primary);
+  color: var(--on-primary);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.crisisVioletBreathBtn.ghost {
+  background: var(--surface-container-high);
+  color: var(--on-surface);
 }
 
 .crisisVioletSection {

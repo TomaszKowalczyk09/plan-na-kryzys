@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getHotlines } from '../data/hotlines'
 import { StoryScreen } from '../components/StoryUI'
@@ -7,12 +7,71 @@ import { useI18n } from '../i18n/index.jsx'
 export default function CrisisPage() {
   const { lang, t } = useI18n()
   const hotlines = useMemo(() => getHotlines(lang), [lang])
+  const [isBreathing, setIsBreathing] = useState(false)
+  const [elapsedSeconds, setElapsedSeconds] = useState(0)
+
+  const breathingPhases = useMemo(
+    () => [
+      { key: 'inhale', label: t('crisisPage.inhale', 'Inhale'), duration: 4 },
+      { key: 'hold', label: t('crisisPage.hold', 'Hold'), duration: 3 },
+      { key: 'exhale', label: t('crisisPage.exhale', 'Exhale'), duration: 5 },
+    ],
+    [t],
+  )
+
+  const cycleDuration = useMemo(
+    () => breathingPhases.reduce((sum, phase) => sum + phase.duration, 0),
+    [breathingPhases],
+  )
+
+  const phaseState = useMemo(() => {
+    const cyclePosition = cycleDuration > 0 ? elapsedSeconds % cycleDuration : 0
+    let accumulator = 0
+
+    for (const phase of breathingPhases) {
+      if (cyclePosition < accumulator + phase.duration) {
+        const elapsedInPhase = cyclePosition - accumulator
+        return {
+          phase,
+          phaseElapsed: elapsedInPhase,
+          phaseProgress: phase.duration > 0 ? elapsedInPhase / phase.duration : 0,
+        }
+      }
+      accumulator += phase.duration
+    }
+
+    return {
+      phase: breathingPhases[0],
+      phaseElapsed: 0,
+      phaseProgress: 0,
+    }
+  }, [breathingPhases, cycleDuration, elapsedSeconds])
+
+  useEffect(() => {
+    if (!isBreathing) return undefined
+    const timer = window.setInterval(() => {
+      setElapsedSeconds((previous) => previous + 1)
+    }, 1000)
+
+    return () => window.clearInterval(timer)
+  }, [isBreathing])
 
   const primaryHotline = hotlines[0]
   const secondaryHotline = hotlines[1]
   const tertiaryHotline = hotlines[2]
 
   const callHref = (phone) => `tel:${String(phone ?? '').replace(/[^\d+]/g, '')}`
+  const activePhaseKey = phaseState.phase?.key ?? 'inhale'
+  const remainingPhaseSeconds = Math.max(phaseState.phase.duration - phaseState.phaseElapsed, 1)
+
+  const toggleBreathing = () => {
+    setIsBreathing((previous) => !previous)
+  }
+
+  const resetBreathing = () => {
+    setIsBreathing(false)
+    setElapsedSeconds(0)
+  }
 
   return (
     <StoryScreen variant="light" className="pageAnim crisisVioletPage">
@@ -21,17 +80,33 @@ export default function CrisisPage() {
           <h2>{t('crisisPage.breatheTitle', 'Breathe with us')}</h2>
           <p>{t('crisisPage.breatheLead', 'Follow the light. Soften your shoulders.')}</p>
 
-          <div className="crisisVioletOrbWrap" aria-hidden="true">
+          <button
+            type="button"
+            className={`crisisVioletOrbWrap is-${activePhaseKey} ${isBreathing ? 'isRunning' : 'isPaused'}`}
+            onClick={toggleBreathing}
+            aria-label={isBreathing ? t('crisisPage.pause', 'Pause breathing') : t('crisisPage.start', 'Start breathing')}
+            style={{ '--breath-dur': `${phaseState.phase.duration}s` }}
+          >
             <div className="crisisVioletOrbGlow" />
             <div className="crisisVioletOrbCenter">
-              <span>{t('crisisPage.inhale', 'Inhale')}</span>
+              <span>{phaseState.phase.label}</span>
+              <small>{remainingPhaseSeconds}s</small>
             </div>
+          </button>
+
+          <div className="crisisVioletPager" aria-label={t('crisisPage.phaseCounter', 'Breathing phase')}>
+            {breathingPhases.map((phase) => (
+              <span key={phase.key} className={phase.key === activePhaseKey ? 'isActive' : ''} />
+            ))}
           </div>
 
-          <div className="crisisVioletPager" aria-hidden="true">
-            <span className="isActive" />
-            <span />
-            <span />
+          <div className="crisisVioletBreathControls">
+            <button type="button" onClick={toggleBreathing} className="crisisVioletBreathBtn">
+              {isBreathing ? t('crisisPage.pause', 'Pause') : t('crisisPage.start', 'Start')}
+            </button>
+            <button type="button" onClick={resetBreathing} className="crisisVioletBreathBtn ghost">
+              {t('crisisPage.reset', 'Reset')}
+            </button>
           </div>
         </div>
       </section>
