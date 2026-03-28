@@ -585,11 +585,22 @@
     "inhale": "Wdech",
     "hold": "Zatrzymaj",
     "exhale": "Wydech",
+    "presetBox": "Box 4-4-4-4",
+    "presetCalm": "Spokój 4-2-6",
+    "presetFocus": "Skupienie 5-0-5",
+    "breathModes": "Tryby oddychania",
     "start": "Start",
     "pause": "Pauza",
     "reset": "Reset",
+    "rounds": "Rundy",
+    "time": "Czas",
     "phaseCounter": "Faza oddychania",
     "immediateSupport": "Natychmiastowe wsparcie",
+    "quickActions": "Szybkie działania",
+    "quickActionWater": "Wypij szklankę wody",
+    "quickActionMove": "Poruszaj się przez 1 minutę",
+    "quickActionContact": "Napisz wiadomość do bezpiecznej osoby",
+    "resetActions": "Resetuj działania",
     "groundingTools": "Narzędzia uziemiające",
     "viewAll": "Zobacz wszystko",
     "tool54321": "Zaangażuj zmysły, aby wrócić do chwili obecnej.",
@@ -598,6 +609,9 @@
     "boxBreathDesc": "4 s wdech, 4 s zatrzymanie, 4 s wydech, 4 s zatrzymanie.",
     "muscleRelaxation": "Relaksacja mięśni",
     "muscleRelaxationDesc": "Napinaj i rozluźniaj ciało",
-    "quote": "To uczucie minie. Jesteś bezpieczny_a."
+    "quote": "To uczucie minie. Jesteś bezpieczny_a.",
+    "quote2": "Nie jesteś swoimi myślami. Możesz pozwolić im odpłynąć.",
+    "quote3": "Małe kroki to też postęp. Oddychaj dalej.",
+    "tapForNextQuote": "Dotknij, aby zobaczyć kolejne wsparcie"
   }
 }

@@ -4,17 +4,71 @@ import { getHotlines } from '../data/hotlines'
 import { StoryScreen } from '../components/StoryUI'
 import { useI18n } from '../i18n/index.jsx'
 
+const QUICK_ACTIONS_STORAGE_KEY = 'crisis_quick_actions_v1'
+
 export default function CrisisPage() {
-  const { lang, t } = useI18n()
-  const hotlines = useMemo(() => getHotlines(lang), [lang])
+  const { t } = useI18n()
+  const hotlines = useMemo(() => getHotlines('pl'), [])
   const [isBreathing, setIsBreathing] = useState(false)
   const [elapsedSeconds, setElapsedSeconds] = useState(0)
+  const [selectedPresetKey, setSelectedPresetKey] = useState('box')
+  const [quickActions, setQuickActions] = useState([false, false, false])
+  const [quoteIndex, setQuoteIndex] = useState(0)
 
-  const breathingPhases = useMemo(
+  const breathingPresets = useMemo(
     () => [
-      { key: 'inhale', label: t('crisisPage.inhale', 'Inhale'), duration: 4 },
-      { key: 'hold', label: t('crisisPage.hold', 'Hold'), duration: 3 },
-      { key: 'exhale', label: t('crisisPage.exhale', 'Exhale'), duration: 5 },
+      {
+        key: 'box',
+        label: t('crisisPage.presetBox', 'Box 4-4-4-4'),
+        phases: [
+          { key: 'inhale', label: t('crisisPage.inhale', 'Wdech'), duration: 4 },
+          { key: 'hold-a', label: t('crisisPage.hold', 'Zatrzymaj'), duration: 4 },
+          { key: 'exhale', label: t('crisisPage.exhale', 'Wydech'), duration: 4 },
+          { key: 'hold-b', label: t('crisisPage.hold', 'Zatrzymaj'), duration: 4 },
+        ],
+      },
+      {
+        key: 'calm',
+        label: t('crisisPage.presetCalm', 'Spokój 4-2-6'),
+        phases: [
+          { key: 'inhale', label: t('crisisPage.inhale', 'Wdech'), duration: 4 },
+          { key: 'hold', label: t('crisisPage.hold', 'Zatrzymaj'), duration: 2 },
+          { key: 'exhale', label: t('crisisPage.exhale', 'Wydech'), duration: 6 },
+        ],
+      },
+      {
+        key: 'focus',
+        label: t('crisisPage.presetFocus', 'Skupienie 5-0-5'),
+        phases: [
+          { key: 'inhale', label: t('crisisPage.inhale', 'Wdech'), duration: 5 },
+          { key: 'exhale', label: t('crisisPage.exhale', 'Wydech'), duration: 5 },
+        ],
+      },
+    ],
+    [t],
+  )
+
+  const selectedPreset = useMemo(
+    () => breathingPresets.find((preset) => preset.key === selectedPresetKey) ?? breathingPresets[0],
+    [breathingPresets, selectedPresetKey],
+  )
+
+  const breathingPhases = selectedPreset.phases
+
+  const quickActionLabels = useMemo(
+    () => [
+      t('crisisPage.quickActionWater', 'Wypij szklankę wody'),
+      t('crisisPage.quickActionMove', 'Poruszaj się przez 1 minutę'),
+      t('crisisPage.quickActionContact', 'Napisz wiadomość do bezpiecznej osoby'),
+    ],
+    [t],
+  )
+
+  const rotatingQuotes = useMemo(
+    () => [
+      t('crisisPage.quote', 'To uczucie minie. Jesteś bezpieczny_a.'),
+      t('crisisPage.quote2', 'Nie jesteś swoimi myślami. Możesz pozwolić im odpłynąć.'),
+      t('crisisPage.quote3', 'Małe kroki to też postęp. Oddychaj dalej.'),
     ],
     [t],
   )
@@ -56,6 +110,26 @@ export default function CrisisPage() {
     return () => window.clearInterval(timer)
   }, [isBreathing])
 
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(QUICK_ACTIONS_STORAGE_KEY)
+      const parsed = raw ? JSON.parse(raw) : null
+      if (Array.isArray(parsed) && parsed.length === quickActionLabels.length) {
+        setQuickActions(parsed.map(Boolean))
+      }
+    } catch {
+      // ignore storage errors in offline mode
+    }
+  }, [quickActionLabels.length])
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(QUICK_ACTIONS_STORAGE_KEY, JSON.stringify(quickActions))
+    } catch {
+      // ignore storage errors in offline mode
+    }
+  }, [quickActions])
+
   const primaryHotline = hotlines[0]
   const secondaryHotline = hotlines[1]
   const tertiaryHotline = hotlines[2]
@@ -63,6 +137,8 @@ export default function CrisisPage() {
   const callHref = (phone) => `tel:${String(phone ?? '').replace(/[^\d+]/g, '')}`
   const activePhaseKey = phaseState.phase?.key ?? 'inhale'
   const remainingPhaseSeconds = Math.max(phaseState.phase.duration - phaseState.phaseElapsed, 1)
+  const completedBreathRounds = cycleDuration > 0 ? Math.floor(elapsedSeconds / cycleDuration) : 0
+  const completedQuickActions = quickActions.filter(Boolean).length
 
   const toggleBreathing = () => {
     setIsBreathing((previous) => !previous)
@@ -73,18 +149,44 @@ export default function CrisisPage() {
     setElapsedSeconds(0)
   }
 
+  const toggleQuickAction = (index) => {
+    setQuickActions((previous) => previous.map((value, currentIndex) => (currentIndex === index ? !value : value)))
+  }
+
+  const resetQuickActions = () => {
+    setQuickActions(quickActionLabels.map(() => false))
+  }
+
   return (
     <StoryScreen variant="light" className="pageAnim crisisVioletPage">
       <section className="pageAnimItem crisisVioletBreathing">
         <div className="crisisVioletBreathingInner">
-          <h2>{t('crisisPage.breatheTitle', 'Breathe with us')}</h2>
-          <p>{t('crisisPage.breatheLead', 'Follow the light. Soften your shoulders.')}</p>
+          <h2>{t('crisisPage.breatheTitle', 'Oddychaj z nami')}</h2>
+          <p>{t('crisisPage.breatheLead', 'Podążaj za światłem. Rozluźnij ramiona.')}</p>
+
+          <div className="crisisVioletPresetRow" role="tablist" aria-label={t('crisisPage.breathModes', 'Tryby oddychania')}>
+            {breathingPresets.map((preset) => (
+              <button
+                key={preset.key}
+                type="button"
+                role="tab"
+                className={`crisisVioletPresetBtn ${selectedPresetKey === preset.key ? 'isActive' : ''}`}
+                onClick={() => {
+                  setSelectedPresetKey(preset.key)
+                  setElapsedSeconds(0)
+                }}
+                aria-selected={selectedPresetKey === preset.key}
+              >
+                {preset.label}
+              </button>
+            ))}
+          </div>
 
           <button
             type="button"
-            className={`crisisVioletOrbWrap is-${activePhaseKey} ${isBreathing ? 'isRunning' : 'isPaused'}`}
+            className={`crisisVioletOrbWrap is-${activePhaseKey.startsWith('hold') ? 'hold' : activePhaseKey} ${isBreathing ? 'isRunning' : 'isPaused'}`}
             onClick={toggleBreathing}
-            aria-label={isBreathing ? t('crisisPage.pause', 'Pause breathing') : t('crisisPage.start', 'Start breathing')}
+            aria-label={isBreathing ? t('crisisPage.pause', 'Pauza oddychania') : t('crisisPage.start', 'Start oddychania')}
             style={{ '--breath-dur': `${phaseState.phase.duration}s` }}
           >
             <div className="crisisVioletOrbGlow" />
@@ -94,7 +196,7 @@ export default function CrisisPage() {
             </div>
           </button>
 
-          <div className="crisisVioletPager" aria-label={t('crisisPage.phaseCounter', 'Breathing phase')}>
+          <div className="crisisVioletPager" aria-label={t('crisisPage.phaseCounter', 'Faza oddychania')}>
             {breathingPhases.map((phase) => (
               <span key={phase.key} className={phase.key === activePhaseKey ? 'isActive' : ''} />
             ))}
@@ -102,18 +204,23 @@ export default function CrisisPage() {
 
           <div className="crisisVioletBreathControls">
             <button type="button" onClick={toggleBreathing} className="crisisVioletBreathBtn">
-              {isBreathing ? t('crisisPage.pause', 'Pause') : t('crisisPage.start', 'Start')}
+              {isBreathing ? t('crisisPage.pause', 'Pauza') : t('crisisPage.start', 'Start')}
             </button>
             <button type="button" onClick={resetBreathing} className="crisisVioletBreathBtn ghost">
               {t('crisisPage.reset', 'Reset')}
             </button>
+          </div>
+
+          <div className="crisisVioletBreathStats">
+            <span>{t('crisisPage.rounds', 'Rundy')}: {completedBreathRounds}</span>
+            <span>{t('crisisPage.time', 'Czas')}: {elapsedSeconds}s</span>
           </div>
         </div>
       </section>
 
       <section className="pageAnimItem crisisVioletSection">
         <div className="crisisVioletSectionHead">
-          <h3>{t('crisisPage.immediateSupport', 'Immediate support')}</h3>
+          <h3>{t('crisisPage.immediateSupport', 'Natychmiastowe wsparcie')}</h3>
         </div>
 
         {primaryHotline ? (
@@ -145,27 +252,53 @@ export default function CrisisPage() {
 
       <section className="pageAnimItem crisisVioletSection">
         <div className="crisisVioletSectionHead rowBetween">
-          <h3>{t('crisisPage.groundingTools', 'Grounding tools')}</h3>
+          <h3>{t('crisisPage.quickActions', 'Szybkie działania')}</h3>
+          <span className="crisisVioletQuickCount">{completedQuickActions}/{quickActions.length}</span>
+        </div>
+
+        <div className="crisisVioletQuickList">
+          {quickActionLabels.map((label, index) => (
+            <button
+              key={label}
+              type="button"
+              onClick={() => toggleQuickAction(index)}
+              className={`crisisVioletQuickItem ${quickActions[index] ? 'isDone' : ''}`}
+              aria-pressed={quickActions[index]}
+            >
+              <span className="dot" aria-hidden="true" />
+              <span>{label}</span>
+            </button>
+          ))}
+        </div>
+
+        <button type="button" onClick={resetQuickActions} className="crisisVioletResetActions">
+          {t('crisisPage.resetActions', 'Resetuj działania')}
+        </button>
+      </section>
+
+      <section className="pageAnimItem crisisVioletSection">
+        <div className="crisisVioletSectionHead rowBetween">
+          <h3>{t('crisisPage.groundingTools', 'Narzędzia uziemiające')}</h3>
           <Link to="/knowledge/grounding" className="crisisVioletViewAll">
-            {t('crisisPage.viewAll', 'View all')}
+            {t('crisisPage.viewAll', 'Zobacz wszystko')}
           </Link>
         </div>
 
         <article className="crisisVioletToolCard crisisVioletToolCardMain">
           <div>
             <h4>5-4-3-2-1</h4>
-            <p>{t('crisisPage.tool54321', 'Engage your senses to return to the present moment.')}</p>
+            <p>{t('crisisPage.tool54321', 'Zaangażuj zmysły, aby wrócić do chwili obecnej.')}</p>
           </div>
           <Link to="/knowledge/grounding" className="crisisVioletToolBtn">
-            {t('crisisPage.startGuide', 'Start guide')}
+            {t('crisisPage.startGuide', 'Rozpocznij')}
           </Link>
           <span className="watermark" aria-hidden="true">◉</span>
         </article>
 
         <article className="crisisVioletToolCard crisisVioletToolCardBox">
           <div className="icon">▣</div>
-          <h4>{t('crisisPage.boxBreath', 'Box breath')}</h4>
-          <p>{t('crisisPage.boxBreathDesc', '4s in, 4s hold, 4s out, 4s hold.')}</p>
+          <h4>{t('crisisPage.boxBreath', 'Oddech pudełkowy')}</h4>
+          <p>{t('crisisPage.boxBreathDesc', '4 s wdech, 4 s zatrzymanie, 4 s wydech, 4 s zatrzymanie.')}</p>
           <div className="progress"><div /></div>
         </article>
 
@@ -173,17 +306,18 @@ export default function CrisisPage() {
           <div className="left">
             <div className="icon">🧍</div>
             <div>
-              <h4>{t('crisisPage.muscleRelaxation', 'Muscle relaxation')}</h4>
-              <p>{t('crisisPage.muscleRelaxationDesc', 'Tense and release your body')}</p>
+              <h4>{t('crisisPage.muscleRelaxation', 'Relaksacja mięśni')}</h4>
+              <p>{t('crisisPage.muscleRelaxationDesc', 'Napinaj i rozluźniaj ciało')}</p>
             </div>
           </div>
           <span className="arrow">›</span>
         </Link>
       </section>
 
-      <section className="pageAnimItem crisisVioletQuoteBanner">
-        <p>{t('crisisPage.quote', 'This feeling is temporary. You are safe.')}</p>
-      </section>
+      <button type="button" className="pageAnimItem crisisVioletQuoteBanner" onClick={() => setQuoteIndex((index) => (index + 1) % rotatingQuotes.length)}>
+        <p>{rotatingQuotes[quoteIndex]}</p>
+        <small>{t('crisisPage.tapForNextQuote', 'Dotknij, aby zobaczyć kolejne wsparcie')}</small>
+      </button>
     </StoryScreen>
   )
 }
