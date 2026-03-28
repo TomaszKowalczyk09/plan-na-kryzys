@@ -117,16 +117,46 @@ export default function MoodPage() {
 
       const total = counts.positive + counts.neutral + counts.negative
       const ratio = total > 0 ? (counts.positive * 1 + counts.neutral * 0.65 + counts.negative * 0.35) / total : 0.3
-      const height = Math.max(18, Math.min(100, Math.round(ratio * 100)))
+      const value = Math.max(18, Math.min(100, Math.round(ratio * 100)))
 
       return {
         dayLabel: day.toLocaleDateString(lang === 'de' ? 'de-DE' : 'pl-PL', { weekday: 'short' }).toUpperCase(),
-        height,
+        value,
         dominant,
         isToday: day.toDateString() === new Date().toDateString(),
       }
     })
   }, [lang, recent, weekDays])
+
+  const lineChart = useMemo(() => {
+    const count = weekBars.length
+    if (count === 0) {
+      return { points: [], linePoints: '', areaPoints: '' }
+    }
+
+    const xStart = 4
+    const xEnd = 96
+    const yTop = 8
+    const yBottom = 92
+
+    const points = weekBars.map((bar, index) => {
+      const x = count === 1 ? 50 : xStart + (index * (xEnd - xStart)) / (count - 1)
+      const normalized = bar.value / 100
+      const y = yBottom - normalized * (yBottom - yTop)
+      return {
+        ...bar,
+        x: Number(x.toFixed(2)),
+        y: Number(y.toFixed(2)),
+      }
+    })
+
+    const linePoints = points.map((p) => `${p.x},${p.y}`).join(' ')
+    const areaPoints = `4,92 ${linePoints} 96,92`
+
+    return { points, linePoints, areaPoints }
+  }, [weekBars])
+
+  const chartAnimKey = `${recent.length}-${recent[recent.length - 1]?.timestamp ?? 0}`
 
   const onSave = async () => {
     const chosen = moodOptions.find((mood) => mood.key === selectedMood)
@@ -218,15 +248,36 @@ export default function MoodPage() {
         </div>
 
         <div className="moodVioletChartCard">
-          <div className="moodVioletBars" role="img" aria-label={t('moodPage.historyAria', 'Mood chart for the last 7 days')}>
-            {weekBars.map((bar, index) => (
-              <div key={`${bar.dayLabel}-${index}`} className="moodVioletBarCol">
-                <div
-                  className={`moodVioletBar moodVioletBar--${bar.dominant} ${bar.isToday ? 'isToday' : ''}`}
-                  style={{ height: `${bar.height}%` }}
+          <div className="moodVioletLineChart" role="img" aria-label={t('moodPage.historyAria', 'Mood chart for the last 7 days')}>
+            <svg
+              key={chartAnimKey}
+              className="moodVioletLineSvg"
+              viewBox="0 0 100 100"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <line className="moodVioletGuide" x1="4" y1="25" x2="96" y2="25" />
+              <line className="moodVioletGuide" x1="4" y1="50" x2="96" y2="50" />
+              <line className="moodVioletGuide" x1="4" y1="75" x2="96" y2="75" />
+              <polyline className="moodVioletArea" points={lineChart.areaPoints} />
+              <polyline className="moodVioletLine" points={lineChart.linePoints} />
+              {lineChart.points.map((point, index) => (
+                <circle
+                  key={`${point.dayLabel}-${index}`}
+                  cx={point.x}
+                  cy={point.y}
+                  r={point.isToday ? '2.4' : '1.7'}
+                  className={`moodVioletPoint moodVioletPoint--${point.dominant} ${point.isToday ? 'isToday' : ''}`}
                 />
-                <span className={bar.isToday ? 'isToday' : ''}>{bar.dayLabel}</span>
-              </div>
+              ))}
+            </svg>
+          </div>
+
+          <div className="moodVioletDayLabels">
+            {weekBars.map((bar, index) => (
+              <span key={`${bar.dayLabel}-${index}`} className={bar.isToday ? 'isToday' : ''}>
+                {bar.dayLabel}
+              </span>
             ))}
           </div>
 
