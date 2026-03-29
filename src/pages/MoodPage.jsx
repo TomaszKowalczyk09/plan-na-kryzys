@@ -9,6 +9,47 @@ const EMOTION_GROUPS = {
   negative: new Set(['przytłoczony', 'smutny', 'zły', 'samotny', 'überfordert', 'traurig', 'wütend', 'einsam']),
 }
 
+EMOTION_GROUPS.positive.add('lugn')
+EMOTION_GROUPS.positive.add('nöjd')
+EMOTION_GROUPS.positive.add('tacksam')
+EMOTION_GROUPS.neutral.add('trött')
+EMOTION_GROUPS.neutral.add('stressad')
+EMOTION_GROUPS.neutral.add('orolig')
+EMOTION_GROUPS.negative.add('överväldigad')
+EMOTION_GROUPS.negative.add('ledsen')
+EMOTION_GROUPS.negative.add('arg')
+EMOTION_GROUPS.negative.add('ensam')
+
+const MOOD_EMOTIONS_BY_LANG = {
+  pl: {
+    calm: 'spokojny',
+    joy: 'zadowolony',
+    anxious: 'zestresowany',
+    sad: 'smutny',
+    angry: 'zły',
+  },
+  de: {
+    calm: 'ruhig',
+    joy: 'zufrieden',
+    anxious: 'gestresst',
+    sad: 'traurig',
+    angry: 'wütend',
+  },
+  se: {
+    calm: 'lugn',
+    joy: 'nöjd',
+    anxious: 'stressad',
+    sad: 'ledsen',
+    angry: 'arg',
+  },
+}
+
+const DATE_LOCALE_BY_LANG = {
+  pl: 'pl-PL',
+  de: 'de-DE',
+  se: 'sv-SE',
+}
+
 const getCategoryForEntry = (entry) => {
   const emotions = Array.isArray(entry.emotions) ? entry.emotions : []
   if (emotions.length === 0) return 'neutral'
@@ -28,6 +69,8 @@ const getCategoryForEntry = (entry) => {
 export default function MoodPage() {
   const { t, lang } = useI18n()
   const { addEntry, getEntriesFromDays } = useMoodEntries()
+  const moodEmotions = MOOD_EMOTIONS_BY_LANG[lang] ?? MOOD_EMOTIONS_BY_LANG.pl
+  const dateLocale = DATE_LOCALE_BY_LANG[lang] ?? DATE_LOCALE_BY_LANG.pl
 
   const [selectedMood, setSelectedMood] = useState('calm')
   const [notes, setNotes] = useState('')
@@ -40,39 +83,39 @@ export default function MoodPage() {
         key: 'calm',
         label: t('moodPage.calm', 'Calm'),
         icon: '🪷',
-        emotion: lang === 'de' ? 'ruhig' : 'spokojny',
+        emotion: moodEmotions.calm,
         tone: 'calm',
       },
       {
         key: 'joy',
         label: t('moodPage.joy', 'Joy'),
         icon: '☀️',
-        emotion: lang === 'de' ? 'zufrieden' : 'zadowolony',
+        emotion: moodEmotions.joy,
         tone: 'joy',
       },
       {
         key: 'anxious',
         label: t('moodPage.anxious', 'Anxious'),
         icon: '〰️',
-        emotion: lang === 'de' ? 'gestresst' : 'zestresowany',
+        emotion: moodEmotions.anxious,
         tone: 'anxious',
       },
       {
         key: 'sad',
         label: t('moodPage.sad', 'Sad'),
         icon: '🌧️',
-        emotion: lang === 'de' ? 'traurig' : 'smutny',
+        emotion: moodEmotions.sad,
         tone: 'sad',
       },
       {
         key: 'angry',
         label: t('moodPage.angry', 'Angry'),
         icon: '⚡',
-        emotion: lang === 'de' ? 'wütend' : 'zły',
+        emotion: moodEmotions.angry,
         tone: 'angry',
       },
     ],
-    [lang, t],
+    [moodEmotions, t],
   )
 
   const recent = useMemo(
@@ -120,13 +163,13 @@ export default function MoodPage() {
       const value = Math.max(18, Math.min(100, Math.round(ratio * 100)))
 
       return {
-        dayLabel: day.toLocaleDateString(lang === 'de' ? 'de-DE' : 'pl-PL', { weekday: 'short' }).toUpperCase(),
+        dayLabel: day.toLocaleDateString(dateLocale, { weekday: 'short' }).toUpperCase(),
         value,
         dominant,
         isToday: day.toDateString() === new Date().toDateString(),
       }
     })
-  }, [lang, recent, weekDays])
+  }, [dateLocale, recent, weekDays])
 
   const lineChart = useMemo(() => {
     const count = weekBars.length

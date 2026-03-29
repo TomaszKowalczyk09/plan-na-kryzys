@@ -1,7 +1,8 @@
 import pl from '../i18n/pl.json'
 import de from '../i18n/de.json'
+import se from '../i18n/se.json'
 
-const DICTS = { pl, de }
+const DICTS = { pl, de, se }
 
 function pickDict(lang = 'pl') {
 	return DICTS[lang] ?? DICTS.pl

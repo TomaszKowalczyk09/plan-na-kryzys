@@ -1,8 +1,9 @@
 import { createContext, useCallback, useContext, useMemo, useState } from 'react'
 import pl from './pl.json'
 import de from './de.json'
+import se from './se.json'
 
-const DICTS = { pl, de }
+const DICTS = { pl, de, se }
 const FALLBACK_LANG = 'pl'
 const STORAGE_KEY = 'app_lang'
 

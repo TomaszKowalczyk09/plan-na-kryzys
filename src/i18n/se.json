@@ -1,0 +1,636 @@
+{
+  "app": {
+    "name": "Krisplan",
+    "headerDescription": "Offline. Inga konton. Data sparas endast på enheten.",
+    "footer": "Utvecklad av Tomasz Kowalczyk och Łukasz Majka",
+    "info": "Information",
+    "urgent": "Akut",
+    "themeToLight": "Byt till ljust tema",
+    "themeToDark": "Byt till mörkt tema"
+  },
+  "nav": {
+    "menu": "Meny",
+    "close": "Stäng meny",
+    "tabs": [
+      { "path": "/", "label": "Start" },
+      { "path": "/mood", "label": "Mående" },
+      { "path": "/crisis", "label": "Kris" },
+      { "path": "/knowledge", "label": "Kunskap" },
+      { "path": "/sobriety", "label": "Beroende" },
+      { "path": "/friend", "label": "För en vän" },
+      { "path": "/about", "label": "Om appen" }
+    ]
+  },
+  "routeTitles": {
+    "default": "Krisplan",
+    "mood": "Mitt mående",
+    "crisis": "Kris",
+    "knowledge": "Kunskap",
+    "friend": "För en vän",
+    "about": "Om appen",
+    "privacy": "Integritetspolicy",
+    "terms": "Användarvillkor",
+    "cssrs": "C-SSRS Test",
+    "sobriety": "Nykterhet",
+    "addictionConfig": "Konfigurera beroende"
+  },
+  "firstRun": {
+    "next": "Nästa",
+    "back": "Bakåt",
+    "continue": "Fortsätt",
+    "swipe": "↓ Svep för att fortsätta",
+    "finish": "Börja använda appen",
+    "saving": "Sparar...",
+    "terms": "Villkor",
+    "privacy": "Integritet",
+    "slide1": {
+      "title": "Ta hand om ditt",
+      "accent": "mående",
+      "lead": "Enkla inlägg, tydliga sammanfattningar och verktyg som du alltid kan bära med dig."
+    },
+    "slide2": {
+      "title": "Hjälp i",
+      "accent": "kris",
+      "lead": "Konkreta steg „här och nu”, hjälpnummer och en säkerhetsplan."
+    },
+    "slide3": {
+      "title": "Du är inte",
+      "accent": "ensam",
+      "lead": "Detta är inte en larmtjänst. Om du är i omedelbar fara — ring 112.",
+      "consent": "Jag förstår reglerna: data är lokal, inga konton finns, och jag tar själv kontakt med vården vid behov."
+    }
+  },
+  "knowledge": {
+    "title": "Snabb",
+    "accent": "kunskap",
+    "lead": "Kortfattat innehåll. Om du känner att du mår sämre — gå till „Kris”.",
+    "groundingGuide": "Grundning: en guide",
+    "tileSub": "Kort och koncist",
+    "cloudLabel": "Lugnt moln",
+    "modal": {
+      "title": "Grundning",
+      "ariaLabel": "Grundning steg för steg",
+      "close": "Stäng",
+      "closeAria": "Stäng guiden",
+      "task": "Uppgift",
+      "back": "Bakåt",
+      "restart": "Börja om",
+      "next": "Nästa",
+      "finish": "Avsluta",
+      "steps": [
+        {
+          "title": "Grundning: 5–4–3–2–1",
+          "text": [
+            "Detta är en kort teknik som hjälper dig att flytta uppmärksamheten till „här och nu”.",
+            "Gå framåt i lugn takt. Om något steg känns svårt, hoppa över det och gå vidare."
+          ],
+          "prompt": "Börja med att se dig omkring i din omgivning."
+        },
+        {
+          "title": "Steg 1/5: Syn (5 saker)",
+          "text": ["Namnge 5 saker du ser. De kan vara små: en färg, en form, en skugga, en text."],
+          "prompt": "Säg tyst för dig själv eller högt: „Jag ser...” och räkna upp 5 saker."
+        },
+        {
+          "title": "Steg 2/5: Beröring (4 saker)",
+          "text": ["Namnge 4 saker som du känner genom beröring (t.ex. tyget mot huden, stolsryggen, telefonen i handen)."],
+          "prompt": "Rör vid 1–2 föremål och lägg märke till textur och temperatur."
+        },
+        {
+          "title": "Steg 3/5: Hörsel (3 ljud)",
+          "text": ["Namnge 3 ljud. Nära eller långt borta. Även mycket tysta."],
+          "prompt": "Stanna upp i 10 sekunder och „jaga” efter ljud."
+        },
+        {
+          "title": "Steg 4/5: Doft (2 saker)",
+          "text": ["Namnge 2 dofter. Om det är svårt — namnge 2 saker som du „känner i luften” (t.ex. friskt, varmt)."],
+          "prompt": "Ta 2 lugna andetag genom näsan."
+        },
+        {
+          "title": "Steg 5/5: Smak (1 sak)",
+          "text": ["Namnge 1 smak. Det kan vara „neutralt”."],
+          "prompt": "Om du kan, ta en klunk vatten och lägg märke till smaken."
+        },
+        {
+          "title": "Slut",
+          "text": [
+            "Bra jobbat. Det var allt.",
+            "Avsluta med att pressa fötterna mot golvet i 10 sekunder och släpp sedan. Upprepa 2 gånger.",
+            "Om du vill: andas in i 4 sekunder, andas ut i 6 sekunder (6 gånger)."
+          ],
+          "prompt": "Du kan avsluta eller börja om från början."
+        }
+      ]
+    }
+  },
+  "addictionConfig": {
+    "title": "Konfigurera beroendespårning",
+    "addictionLabel": "Ditt beroende:",
+    "addictionPlaceholder": "T.ex. alkohol, nikotin, spel",
+    "questions": [
+      "Varför vill du bryta ditt beroende?",
+      "Vilka fördelar ger det dig att sluta?",
+      "Vad motiverar dig till förändring?",
+      "Vilket stöd kan du få?"
+    ],
+    "save": "Spara",
+    "saving": "Sparar...",
+    "saved": "Beroendekonfiguration sparad!"
+  },
+  "sobriety": {
+    "notConfigured": "Inget beroende konfigurerat eller så laddas data.",
+    "goToConfig": "Gå till konfiguration för att starta nykterhetsräknaren.",
+    "configure": "Konfigurera beroende",
+    "motto": "Varje dag är en framgång!",
+    "title": "Frihet från beroende",
+    "lead": "Den här skärmen låter dig spåra tiden du varit fri från ditt valda beroende.",
+    "milestonesTitle": "Milstolpar:",
+    "milestones": "Milstolpar",
+    "nextMilestone": "Nästa milstolpe",
+    "congrats": "Grattis! Du har nått en milstolpe",
+    "daysOfSobriety": "dagar i frihet",
+    "strugglingWith": "Du kämpar mot",
+    "loading": "Laddar...",
+    "since": "Fri sedan",
+    "reset": "Nollställ räknaren",
+    "setStart": "Ställ in startdatum",
+    "days": "dagar",
+    "daysShort": "dagar",
+    "hours": "t",
+    "minutes": "min",
+    "seconds": "sek",
+    "currentStreak": "Nuvarande period",
+    "heroQuote": "\"Tillfrisknande är inte ett lopp. Det är en serie små, medvetna steg mot personen du håller på att bli.\"",
+    "nextMilestoneTitle": "Nästa milstolpe",
+    "daysUntil": "dagar kvar till milstolpe",
+    "recentAchievements": "Senaste prestationer",
+    "unlockedYesterday": "Låstes upp igår",
+    "achievementCentury": "100 dagar fri",
+    "achievementCenturyDesc": "Uthållighet är din superkraft.",
+    "impact": "Inverkan",
+    "saved": "sparat",
+    "redirectingResources": "Omdirigerar resurser till tillväxt.",
+    "healthBlooming": "Din hälsa blomstrar.",
+    "patienceIsPractice": "Tålamod kräver övning",
+    "breathingGuideText": "Varje gång du känner sug, ta en stund för guidad andning. En minut är allt som behövs för att återställa systemet.",
+    "startBreathingExercise": "Starta andningsövning",
+    "startTitle": "Starta nykterhetsräknaren",
+    "startDescription": "Varje dag räknas. Börja räkna din frihet från och med idag.",
+    "panicButton": "Panikknapp"
+  },
+  "about": {
+    "done": "Klar",
+    "deleteData": "Radera data",
+    "deleting": "Raderar...",
+    "exportJson": "Exportera JSON",
+    "exportMoodCsv": "Exportera mående (CSV)",
+    "exportPlanTxt": "Exportera säkerhetsplan (TXT)",
+    "sections": {
+      "about": {
+        "title": "Om appen",
+        "body": ["Krisplan är en PWA-app som ger stöd vid svåra känslor. Den ersätter inte professionell hjälp."]
+      },
+      "documents": {
+        "title": "Dokument",
+        "terms": "Användarvillkor",
+        "privacy": "Integritetspolicy"
+      },
+      "disclaimers": {
+        "title": "Viktiga förbehåll",
+        "items": [
+          "Detta är inte en larmtjänst. Appen ringer inte automatiskt 112 och tillkallar inte räddningstjänst.",
+          "Om du är i omedelbar fara — ring 112.",
+          "Innehållet är allmänt och informativt. Om du känner att situationen är övermäktig, be en betrodd vuxen eller en specialist om hjälp."
+        ]
+      },
+      "privacyShort": {
+        "title": "Integritet (kortfattat)",
+        "body": [
+          "Appen fungerar offline-first. Dina anteckningar om mående och din säkerhetsplan sparas lokalt på din enhet (IndexedDB). Vi skickar inte denna data till någon server.",
+          "Om du delar telefon med andra, kom ihåg att de kan ha tillgång till data i denna webbläsare."
+        ]
+      },
+      "delete": {
+        "title": "Radera min data",
+        "body": "Raderar lokalt: måendeinlägg, säkerhetsplan och inställningar för denna app i denna webbläsare."
+      },
+      "export": {
+        "title": "Exportera min data",
+        "body": "Exporterar lokalt: måendeinlägg, säkerhetsplan och inställningar för denna app i denna webbläsare."
+      },
+      "reports": {
+        "title": "Rapportering",
+        "body": "Fel, förslag och inaktuella telefonnummer kan rapporteras till: tomasz.kowalczyk@gminagryfino.pl."
+      },
+      "credits": {
+        "title": "Credits",
+        "initiative": "Initiativ: Ledamöter i Ungdomsfullmäktige i Gryfino.",
+        "adminLabel": "Administratör och ansvarig person:",
+        "adminName": "Tomasz Kowalczyk",
+        "adminEmail": "tomasz.kowalczyk@gminagryfino.pl",
+        "discordLabel": "Discord-server:",
+        "discordAction": "gå med",
+        "discordUrl": "https://discord.gg/kjHr5E35js",
+        "discordOwnerLabel": "Ansvarig för Discord-servern:",
+        "discordOwnerName": "Łukasz Majka",
+        "discordOwnerEmail": "lukasz.majka@gminagryfino.pl"
+      },
+      "version": {
+        "title": "Version",
+        "body": "MVP 1.0 (lokal data, offline-first)"
+      }
+    }
+  },
+  "privacy": {
+    "title": "Integritetspolicy",
+    "updated": "Senast uppdaterad: 4 februari 2026",
+    "sections": [
+      {
+        "title": "1. Personuppgiftsansvarig",
+        "body": [
+          "Ansvarig person är Tomasz Kowalczyk (tomasz.kowalczyk@gminagryfino.pl).",
+          "Appen är ett resultat av arbete utfört av ledamöter i Ungdomsfullmäktige i Gryfino."
+        ]
+      },
+      {
+        "title": "2. Vilken data behandlar vi?",
+        "body": ["Appen kan spara data lokalt på din enhet som du själv skriver in, t.ex.:"],
+        "bullets": [
+          "måendeinlägg (datum/tid, valda känslor, valfri notering)",
+          "säkerhetsplan (innehåll i formulärfält)",
+          "inställningar (t.ex. bekräftelse på att du läst juridisk information)"
+        ]
+      },
+      {
+        "title": "3. Var lagras datan?",
+        "body": [
+          "Datan lagras lokalt i din webbläsare (IndexedDB) på din enhet. Vi skickar inte denna data till en server och delar den inte med tredje part.",
+          "Om du använder samma enhet och webbläsare som andra personer, kan de potentiellt få tillgång till den lokalt sparade datan."
+        ]
+      },
+      {
+        "title": "4. Cookies/analys",
+        "body": ["I denna MVP-version använder vi ingen extern analys eller spårningsverktyg. Appen kan använda webbläsarens lagringsmekanismer som krävs för offline-funktion (PWA-cache) och för att spara den data du matar in."]
+      },
+      {
+        "title": "5. Hur raderar man data?",
+        "body": ["Du kan radera data inifrån appen på skärmen „Om appen” → „Radera data”. Du kan också rensa webbplatsdata i din webbläsares inställningar."]
+      },
+      {
+        "title": "6. Kontakt",
+        "body": ["Kontakt: tomasz.kowalczyk@gminagryfino.pl"]
+      },
+      {
+        "title": "7. Rättslig grund (GDPR)",
+        "body": [
+          "Inlägg och säkerhetsplan sparas lokalt på din enhet på din begäran för att appen ska fungera. Appen har inga användarkonton och skickar inte innehållet i inläggen till en server.",
+          "Om funktioner som kräver serverbehandling eller analys läggs till i framtiden, kommer denna policy att uppdateras."
+        ]
+      },
+      {
+        "title": "8. Mottagare av uppgifter",
+        "body": [
+          "Vi delar inte användarens inlägg med tredje part eftersom de inte skickas till en server.",
+          "Hostingleverantören (som tillhandahåller appfilerna) kan behandla tekniska standarduppgifter om anslutningen, såsom IP-adress i serverloggar."
+        ]
+      },
+      {
+        "title": "9. Lagringsperiod",
+        "body": ["Data som sparats i appen lagras lokalt tills den raderas av användaren (funktionen „Radera data”) eller tills webbplatsdata rensas i webbläsaren."]
+      },
+      {
+        "title": "10. Dina rättigheter",
+        "body": ["Du har rätt till information om integritetsregler samt att radera data som lagras lokalt i appen. I denna version av appen har vi inte tillgång till innehållet i dina inlägg."]
+      },
+      {
+        "title": "11. Klagomål till tillsynsmyndighet",
+        "body": ["Om du anser att behandlingen av uppgifter bryter mot reglerna kan du lämna ett klagomål till Integritetsskyddsmyndigheten (IMY)."]
+      },
+      {
+        "title": "12. Känsliga uppgifter och säkerhet",
+        "body": [
+          "Innehållet i inläggen kan röra psykisk hälsa, vilket kan utgöra känsliga personuppgifter. Av denna anledning skickar appen inte detta innehåll till en server.",
+          "Kom ihåg att om enheten delas kan andra som använder samma webbläsare få tillgång till lokalt sparad data."
+        ]
+      }
+    ]
+  },
+  "terms": {
+    "title": "Användarvillkor",
+    "updated": "Senast uppdaterad: 4 februari 2026",
+    "sections": [
+      {
+        "title": "1. Allmän information",
+        "body": [
+          "Appen „Krisplan” (nedan: „Appen”) är ett informations- och stödverktyg. Den fungerar som en PWA (webbapp) och kan köras offline.",
+          "Appen är ett resultat av arbete utfört av Ungdomsfullmäktige i Gryfino.",
+          "Administratör och ansvarig person: Tomasz Kowalczyk • Kontakt: tomasz.kowalczyk@gminagryfino.pl"
+        ]
+      },
+      {
+        "title": "2. Tjänstens karaktär",
+        "bullets": [
+          "Appen är inte en larmtjänst. Den ringer inte automatiskt 112 och tillkallar inte räddningstjänst.",
+          "Appen utgör inte diagnos eller terapi och ersätter inte kontakt med en specialist.",
+          "Vid omedelbar livsfara eller hälsorisk bör man omedelbart ringa 112."
+        ]
+      },
+      {
+        "title": "3. Appens omfattning",
+        "body": [
+          "Appen tillhandahåller bland annat en måendedagbok, säkerhetsplan, lista över hjälpnummer samt utbildningsmaterial. Data som matas in sparas lokalt på användarens enhet.",
+          "Appen garanterar inte ständig övervakning, intervention eller kontakt med institutioner. Beslut om att kontakta hjälpnummer fattas av användaren."
+        ]
+      },
+      {
+        "title": "4. Användarregler",
+        "body": [
+          "Du använder appen frivilligt och på eget ansvar. Du förbinder dig att använda den i enlighet med lag och dessa villkor.",
+          "Administratören kan tillfälligt begränsa åtkomst till appen vid missbruk eller tekniskt underhåll."
+        ]
+      },
+      {
+        "title": "5. Data och integritet",
+        "body": ["Data som matas in i appen lagras lokalt på användarens enhet. Detaljer finns i integritetspolicyn."]
+      },
+      {
+        "title": "6. Ansvar",
+        "body": [
+          "Vi strävar efter att innehållet ska vara lättförståeligt och varsamt, men det är av allmän karaktär. Appen tillhandahåller inte ständig övervakning eller intervention.",
+          "Administratören ansvarar inte för följderna av beslut fattade baserat på innehåll tillgängligt i appen."
+        ]
+      },
+      {
+        "title": "7. Upphovsrätt",
+        "body": ["Appens innehåll och layout skyddas av upphovsrätt. Kopiering och spridning utan administratörens medgivande är förbjuden, såvida inte lagstiftning anger annat."]
+      },
+      {
+        "title": "8. Ändringar i villkoren",
+        "body": ["Villkoren kan uppdateras. Vid väsentliga ändringar kan appen be om en ny bekräftelse."]
+      },
+      {
+        "title": "9. Kontakt",
+        "body": ["Kontakt: tomasz.kowalczyk@gminagryfino.pl"]
+      },
+      {
+        "title": "10. Tekniska krav",
+        "body": ["För att använda appen behöver du en enhet med en modern webbläsare. Appen kan installeras som en PWA. Vissa funktioner (t.ex. installation eller uppdatering) kan kräva internetanslutning."]
+      },
+      {
+        "title": "11. Rapportering och kontakt",
+        "body": ["Om du upptäcker ett fel, ett inaktuellt telefonnummer eller innehåll som behöver korrigeras, kan du skriva till: tomasz.kowalczyk@gminagryfino.pl."]
+      },
+      {
+        "title": "12. Dokument",
+        "body": ["Integritetsregler beskrivs i integritetspolicyn. Dokumenten finns tillgängliga i appen under sektionen „Om appen”."]
+      }
+    ]
+  },
+  "data": {
+    "emotions": [
+      "lugn",
+      "nöjd",
+      "tacksam",
+      "trött",
+      "stressad",
+      "överväldigad",
+      "ledsen",
+      "arg",
+      "ensam",
+      "orolig"
+    ],
+    "hotlinesMeta": {
+      "lastUpdated": "2026-02-04",
+      "note": "Nummer och öppettider kan ändras. Vid akut livsfara: 112."
+    },
+    "hotlines": [
+      {
+        "id": "116111",
+        "name": "Stödlinje för barn och unga",
+        "phone": "116111",
+        "note": "Kostnadsfritt. Stöd för barn och ungdomar."
+      },
+      {
+        "id": "800121212",
+        "name": "Barnombudsmannens stödlinje",
+        "phone": "800121212",
+        "note": "Kostnadsfritt. För barn och ungdomar."
+      },
+      {
+        "id": "112",
+        "name": "Nödnummer",
+        "phone": "112",
+        "note": "Vid akut livsfara — ring."
+      }
+    ],
+    "friendGuide": {
+      "title": "Hur man stöttar en vän som har det svårt",
+      "sections": [
+        {
+          "title": "Tecken på att någon kan behöva hjälp",
+          "bullets": [
+            "Drar sig plötsligt undan, slutar svara, undviker människor.",
+            "Säger att „det inte finns någon mening”, „jag har fått nog”, „jag vill försvinna”.",
+            "Ser mycket överväldigad ut eller visar långvarig sorg/ångest.",
+            "Stora förändringar i sömn, matvanor, energi eller skolarbete."
+          ]
+        },
+        {
+          "title": "Hur man börjar ett samtal (korta meningar)",
+          "bullets": [
+            "„Jag är orolig för dig. Vad är det som händer?”",
+            "„Jag finns här. Vi kan prata nu eller senare.”",
+            "„Du behöver inte hantera detta ensam.”",
+            "„Vill du bara att jag lyssnar, eller ska vi leta efter en lösning?”"
+          ]
+        },
+        {
+          "title": "Vad som hjälper i samtalet",
+          "bullets": [
+            "Lyssna och fråga lugnt: „Kan du berätta mer?”",
+            "Sätt ord på det du ser utan att döma: „Jag ser att detta är tungt för dig.”",
+            "Fråga om säkerhet: „Har du tankar på att skada dig själv?”",
+            "Om svaret oroar dig — lämna inte personen ensam med det."
+          ]
+        },
+        {
+          "title": "Vad man bör undvika att säga",
+          "bullets": [
+            "„Andra har det värre”.",
+            "„Ryck upp dig”.",
+            "„Du överdriver / dramatiserar”.",
+            "„Det går säkert över” (om det bagatelliserar lidandet)."
+          ]
+        },
+        {
+          "title": "När man ska berätta för en vuxen (även om personen inte vill)",
+          "bullets": [
+            "När någon pratar om att skada sig själv eller verkar tappa kontrollen.",
+            "När du är rädd för personens liv eller hälsa.",
+            "När situationen förvärras och du inte vet vad du ska göra.",
+            "Säg det rakt ut: „Det här är för allvarligt för mig, vi behöver en vuxen.”"
+          ]
+        },
+        {
+          "title": "Vad du kan göra nu",
+          "bullets": [
+            "Föreslå att ni söker hjälp tillsammans: skolkurator, förälder/vårdnadshavare, en betrodd vuxen.",
+            "Vid behov — gå tillsammans till fliken „Kris” och välj ett nummer att kontakta.",
+            "Ta hand om dig själv också. Om det blir för mycket för dig, sök stöd för egen del."
+          ]
+        }
+      ]
+    },
+    "knowledgeArticles": [
+      {
+        "id": "emotions",
+        "title": "Känslor — varför finns de?",
+        "body": [
+          "Känslor är signaler. De informerar om att något är viktigt eller svårt för dig.",
+          "Vissa känslor är behagliga, andra smärtsamma. Båda grupperna kan behövas.",
+          "Om känslorna är mycket starka och varar länge är det bra att söka stöd."
+        ]
+      },
+      {
+        "id": "stress",
+        "title": "När blir stress ett problem?",
+        "body": [
+          "Stress är normalt. Det blir ett problem när du inte kan vila och det kommer tillbaka hela tiden.",
+          "Symtom kan finnas i kroppen (spänningar, magont) och i tankarna (ständigt ältande).",
+          "Små steg hjälper: sömn, mat, rörelse, samtal, att skriva ner sina tankar."
+        ]
+      },
+      {
+        "id": "crisis",
+        "title": "Vad är en psykisk kris?",
+        "warning": "Om du mår sämre av att läsa detta, gå till fliken „Kris”.",
+        "body": [
+          "En kris är ett ögonblick då det är så svårt att dina vanliga metoder slutar fungera.",
+          "I en kris är säkerhet och snabbt stöd från en annan människa det viktigaste.",
+          "Om du har tankar på att skada dig själv — gå till fliken „Kris”."
+        ]
+      }
+    ]
+  },
+  "dashboard": {
+    "titlePrefix": "Ditt",
+    "titleAccent": "center",
+    "lead": "Genvägar till de viktigaste modulerna och en snabb sammanfattning.",
+    "entries14": "Inlägg (14 dagar)",
+    "lastEntry": "Senaste inlägget",
+    "lastEmotions": "Senaste känslorna",
+    "none": "—",
+    "mood": "Mitt mående",
+    "quickEntry": "Snabbval",
+    "add": "Lägg till",
+    "crisis": "Kris",
+    "hereNow": "Här och nu",
+    "open": "Öppna",
+    "sobriety": "Nykterhet",
+    "counter": "Din räknare",
+    "go": "Gå till",
+    "knowledge": "Kunskap",
+    "quickTopics": "Snabba ämnen",
+    "friend": "För en vän",
+    "howToHelp": "Hur man hjälper",
+    "discord": "Discord",
+    "discordLead": "Gå med i servern — information och kontakt med communityt.",
+    "join": "Gå med",
+    "currentStreak": "NUVARANDE PERIOD",
+    "daysStrong": "dagar i rad",
+    "dailyCheckIn": "Daglig check-in",
+    "nextMilestone": "Nästa milstolpe",
+    "days": "dagar",
+    "recentAchievements": "Senaste prestationer",
+    "community": "Community",
+    "overwhelmed": "Känner du dig överväldigad?",
+    "overwhelmedDesc": "Omedelbart stöd finns tillgängligt 24/7 om du behöver prata med någon nu.",
+    "helpNow": "Hjälp nu",
+    "todayCheckIn": "Dagens check-in",
+    "dailyMood": "Dagligt mående",
+    "howFeelingNow": "Hur mår du just nu?",
+    "calm": "Lugn",
+    "neutral": "Neutral",
+    "radiant": "Bra",
+    "reflective": "Reflekterande",
+    "grateful": "Tacksamhet",
+    "restless": "Rastlös",
+    "theJourney": "Resan",
+    "sobrietyProgress": "Framsteg",
+    "dayAtTime": "En dag i taget blir till ett helt liv i frihet.",
+    "dailyInspiration": "Dagens inspiration",
+    "healingQuote": "Läkning är inte linjär, och varje andetag är en ny start.",
+    "saveToJournal": "Spara i dagboken",
+    "upcomingMilestones": "Kommande milstolpar",
+    "threeWeek": "3-veckorsmilstolpe",
+    "daysToGo": "{{count}} dagar kvar",
+    "monthlyReview": "Månadsöversikt",
+    "sixteenDays": "16 dagar kvar",
+    "findRhythm": "Hitta din rytm",
+    "breathingDesc": "Ta 60 sekunder för att lugna nervsystemet med en guidad andningssession.",
+    "startSession": "Starta session",
+    "saveQuickMood": "Spara mående",
+    "saving": "Sparar...",
+    "saved": "Mående sparat",
+    "saveFailed": "Kunde inte spara mående"
+  },
+  "moodPage": {
+    "title": "Hur känner du dig just nu?",
+    "subtitle": "Ta ett djupt andetag. Lägg märke till detta ögonblick utan att döma.",
+    "calm": "Lugn",
+    "joy": "Glädje",
+    "anxious": "Oro",
+    "sad": "Sorg",
+    "angry": "Ilska",
+    "addNotes": "Lägg till en notering",
+    "notesPlaceholder": "Vad tänker du på just nu?",
+    "saveMood": "Spara mående",
+    "saving": "Sparar...",
+    "saved": "Mående sparat",
+    "error": "Kunde inte spara mående",
+    "mindfulTitle": "Medveten stund",
+    "mindfulText": "Ta 3 djupa andetag innan du sparar.",
+    "historyTitle": "Senaste måendehistorik",
+    "last7": "Senaste 7 dagarna",
+    "historyAria": "Diagram över mående de senaste 7 dagarna",
+    "positive": "Positivt",
+    "neutral": "Neutralt",
+    "tense": "Spänt",
+    "quote": "Medvetenhet om känslor är det första steget till inre lugn. Varje känsla är bara en tillfällig gäst."
+  },
+  "crisisPage": {
+    "breatheTitle": "Andas med oss",
+    "breatheLead": "Följ ljuset. Slappna av i axlarna.",
+    "inhale": "Andas in",
+    "hold": "Håll",
+    "exhale": "Andas ut",
+    "presetBox": "Box 4-4-4-4",
+    "presetCalm": "Lugn 4-2-6",
+    "presetFocus": "Fokus 5-0-5",
+    "breathModes": "Andningslägen",
+    "start": "Start",
+    "pause": "Paus",
+    "reset": "Nollställ",
+    "rounds": "Varv",
+    "time": "Tid",
+    "phaseCounter": "Andningsfas",
+    "immediateSupport": "Omedelbart stöd",
+    "quickActions": "Snabba åtgärder",
+    "quickActionWater": "Drick ett glas vatten",
+    "quickActionMove": "Rör på dig i 1 minut",
+    "quickActionContact": "Skriv ett meddelande till en trygg person",
+    "resetActions": "Återställ åtgärder",
+    "groundingTools": "Grundningsverktyg",
+    "viewAll": "Visa alla",
+    "tool54321": "Aktivera dina sinnen för att återvända till nuet.",
+    "startGuide": "Starta",
+    "boxBreath": "Boxandning",
+    "boxBreathDesc": "4s in, 4s håll, 4s ut, 4s håll.",
+    "muscleRelaxation": "Muskelavslappning",
+    "muscleRelaxationDesc": "Spänn och slappna av i kroppen",
+    "quote": "Den här känslan kommer att gå över. Du är säker.",
+    "quote2": "Du är inte dina tankar. Du kan låta dem flyta förbi.",
+    "quote3": "Små steg är också framsteg. Fortsätt andas.",
+    "tapForNextQuote": "Tryck för att se nästa stödmeddelande"
+  }
+}

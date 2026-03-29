@@ -136,6 +136,7 @@ export default function Layout() {
               >
                 <option value="pl">PL</option>
                 <option value="de">DE</option>
+                <option value="se">SV</option>
               </select>
               <Link to="/about" className="btn btnRedesigned" style={{ padding: '8px 16px', fontWeight: 600 }}>
                 {t('app.info')}
