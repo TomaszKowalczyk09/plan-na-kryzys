@@ -11,6 +11,12 @@
   "nav": {
     "menu": "Menu",
     "close": "Zamknij menu",
+    "bottomTabs": {
+      "dashboard": "Nastrój",
+      "journal": "Dziennik",
+      "crisis": "Kryzys",
+      "knowledge": "Wiedza"
+    },
     "tabs": [
       { "path": "/", "label": "Start" },
       { "path": "/mood", "label": "Nastrój" },

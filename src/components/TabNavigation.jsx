@@ -3,10 +3,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useI18n } from '../i18n/index.jsx'
 
 const MAIN_TABS = [
-  { path: '/dashboard', label: 'Nastrój', icon: '😌' },
-  { path: '/mood', label: 'Dziennik', icon: '📝' },
-  { path: '/crisis', label: 'Kryzys', icon: '⚠️' },
-  { path: '/knowledge', label: 'Wiedza', icon: '💡' },
+  { path: '/dashboard', label: 'Nastrój', labelKey: 'nav.bottomTabs.dashboard', icon: '😌' },
+  { path: '/mood', label: 'Dziennik', labelKey: 'nav.bottomTabs.journal', icon: '📝' },
+  { path: '/crisis', label: 'Kryzys', labelKey: 'nav.bottomTabs.crisis', icon: '⚠️' },
+  { path: '/knowledge', label: 'Wiedza', labelKey: 'nav.bottomTabs.knowledge', icon: '💡' },
 ];
 
 export default function TabNavigation() {
@@ -25,18 +25,22 @@ export default function TabNavigation() {
     <nav className="nav">
       <div className="navInner" style={{ '--active': activeIndex }}>
         <div className="navHighlight"></div>
-        {MAIN_TABS.map((tab, index) => (
+        {MAIN_TABS.map((tab, index) => {
+          const label = t(tab.labelKey, tab.label)
+
+          return (
           <button
             key={tab.path}
             onClick={() => navigate(tab.path)}
             className={`navLink ${activeIndex === index ? 'navLinkActive' : ''}`}
             data-ico={tab.icon}
-            title={tab.label}
+            title={label}
             aria-current={activeIndex === index ? 'page' : undefined}
           >
-            {tab.label}
+            {label}
           </button>
-        ))}
+          )
+        })}
       </div>
     </nav>
   );

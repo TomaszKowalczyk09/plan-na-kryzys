@@ -11,6 +11,12 @@
   "nav": {
     "menu": "Menü",
     "close": "Menü schließen",
+    "bottomTabs": {
+      "dashboard": "Stimmung",
+      "journal": "Tagebuch",
+      "crisis": "Krise",
+      "knowledge": "Wissen"
+    },
     "tabs": [
       { "path": "/", "label": "Start" },
       { "path": "/mood", "label": "Stimmung" },
